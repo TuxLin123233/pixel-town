@@ -6,11 +6,11 @@
 [![Frontend](https://img.shields.io/badge/%E5%89%8D%E7%AB%AF-Vue%203-brightgreen.svg?style=for-the-badge)]()
 [![Storage](https://img.shields.io/badge/%E5%AD%98%E5%82%A8-Cloudflare%20KV-blue.svg?style=for-the-badge)]()
 [![Hardware](https://img.shields.io/badge/%E7%81%AF%E6%9D%BF-ESP32--C3%20%2B%20WS2812-red.svg?style=for-the-badge)]()
-[![GitHub last commit](https://img.shields.io/github/last-commit/TuxLin123233/light-field.svg?style=for-the-badge)]()
+[![GitHub last commit](https://img.shields.io/github/last-commit/TuxLin123233/pixel-town.svg?style=for-the-badge)]()
 
 </div>
 
-一个挂在 Cloudflare Pages 上的像素画板小镇：画画、存档、展示，还有联机房间、画廊点赞榜、公会、信箱、聊天等一系列小镇玩法。
+一个挂在 Cloudflare Pages 上的像素画板小镇：画画、存档、展示，还有小镇串门、家具布置、卡牌闯关、好友聊天等一系列玩法。
 
 同时支持 **ESP32-C3 + WS2812 灯板**硬件接入 —— 画板上的作品能实时投到 16×16 物理灯板上展示。
 
@@ -32,8 +32,8 @@
 
 <table align="center">
   <tr>
-    <td><img src="宣传图/朋友圈-1.png" alt="3888种头像" width="240"></td>
-    <td><img src="宣传图/朋友圈-2.png" alt="654件家具" width="240"></td>
+    <td><img src="宣传图/朋友圈-1.png" alt="3888 种头像" width="240"></td>
+    <td><img src="宣传图/朋友圈-2.png" alt="654 件家具" width="240"></td>
     <td><img src="宣传图/朋友圈-3.png" alt="按钮与选择" width="240"></td>
   </tr>
   <tr>
@@ -56,7 +56,7 @@
 
 - **三种创作模式**：像素画（逐格上色，含题目与帧动画）/ 像素喷漆（按住拖着喷）/ 像素重力（撒一把，看颗粒自己往下堆）
 - **可切换画布尺寸**：16×16（默认）/ 32×32 / 64×64
-- **作品名 / 作者名分开填**：单人标「作品名 + 一位作者」；联机发布自动标「房间作品名 + 全部画家名」
+- **作品名 / 作者名分开填**：单人标「作品名 + 一位作者」
 - **本地草稿自动保存**：刷新 / 返回不丢失
 - **作品库**：画板展示最新 10 条，画廊卡片流滚动懒加载（每页 24 张）
 - **点赞 + 佳作展示**：Top 5 支持总榜 / 今日 / 本周切换
@@ -69,11 +69,28 @@
 - **防抄袭**：仅可预览不可载入；内容完全相同拒绝重复（409）
 - **历史容量**：最多 1000 条，超出自动删最旧
 
-### 联机房间
+### 小镇玩法
 
-- 最多 **3 人**协同作画（轮询同步）
-- 共享作品名，最后一个成员退出立即删除
-- 未正常退出由 KV 30 分钟 TTL 自动清理
+- **小镇地图**：显示所有住户，点房子串门（只能看，动不了人家的东西）
+- **我的小屋**：摆家具、贴墙纸、挑窗外天气
+- **家具商店**：六百多件家具，光尘兑换
+- **卡牌屋**：十层小塔，三选一扩牌
+- **大锅饭**：给镇上的邻居做道菜端过去
+
+### 社交系统
+
+- **好友系统**：加好友、私信聊天
+- **信箱**：接收系统通知和好友消息
+- **关注 / 粉丝**：关注喜欢的画师，看他们的动态
+- **个人主页**：展示作品、创作数据、成就
+
+### 成长体系
+
+- **光尘**：社区货币，点赞作品获得，可兑换家具
+- **每日任务**：每天完成小任务赚光尘
+- **成就系统**：解锁各种里程碑
+- **排行榜**：作品榜、光尘榜
+- **签到**：连续签到拿奖励
 
 ### 硬件灯板
 
@@ -122,9 +139,24 @@
 | --- | --- |
 | `/paint` | 画板主页（编辑 + 上传 + 最新 10 条） |
 | `/gallery` | 全部作品卡片流（懒加载，可预览 + 点赞 + 分享） |
-| `/room` | 联机房间（创建 / 加入，3 人协同作画） |
+| `/town` | 小镇地图（串门、入口卡片） |
+| `/town/home` | 个人小屋（摆家具、贴墙纸） |
+| `/town/bag` | 家具商店 |
+| `/town/card` | 卡牌屋 |
+| `/town/hotpot` | 大锅饭 |
+| `/mine` | 我的（作品、光尘、任务、成就） |
+| `/chat` | 好友聊天 |
+| `/mail` | 信箱 |
+| `/u` | 画师主页 |
+| `/rank` | 排行榜 |
+| `/tasks` | 每日任务 |
+| `/achieve` | 成就 |
+| `/avatar` | 头像设置 |
+| `/intro` | 个人信息 |
+| `/settings` | 设置 |
 | `/admin` | 管理后台（`x-admin-key` 校验） |
 | `/terms` | 服务条款 |
+| `/faq` | 常见问题 |
 
 ---
 
@@ -134,8 +166,8 @@
 
 ```sh
 # 克隆仓库
-git clone https://github.com/TuxLin123233/light-field.git
-cd light-field/web
+git clone https://github.com/TuxLin123233/pixel-town.git
+cd pixel-town/web
 
 # 本地开发（需要 Wrangler CLI）
 npx wrangler pages dev public
@@ -170,9 +202,13 @@ npx wrangler pages dev public
 | `GET /api/get` | 最新作品 + 历史（`?single=1` 随机一张，灯板用） |
 | `POST /api/like` | 点赞 |
 | `GET /api/like` | 按赞数 Top N（`range=today\|week\|all`） |
-| `POST /api/room` | 房间统一入口（`action=create/join/leave/draw/title`） |
-| `GET /api/room?code=` | 拉取房间画布、版本号与成员 |
 | `POST /api/admin/*` | 管理：`delete` / `clear` / `verify` |
+| `GET /api/town` | 小镇数据（住户、地图） |
+| `POST /api/town` | 小镇操作（布置小屋等） |
+| `GET /api/dust` | 光尘余额 |
+| `POST /api/follow` | 关注/取关 |
+| `GET /api/chat` | 聊天消息 |
+| `POST /api/chat` | 发送消息 |
 
 ---
 
@@ -189,7 +225,7 @@ npx wrangler pages dev public
 
 ## 版本控制
 
-- 本仓库为**像素小镇总仓库**：GitHub `TuxLin123233/light-field`
+- 本仓库为**像素小镇总仓库**：GitHub `TuxLin123233/pixel-town`
 - 早期嵌入式端历史保留在 `realm` remote（`light-realm`）
 
 ---
