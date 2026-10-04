@@ -29,6 +29,7 @@ const views = {
   card: () => import('./views/card.js'),
   hotpot: () => import('./views/hotpot.js'),
   bag: () => import('./views/bag.js'),
+  stats: () => import('./views/stats.js'),
 }
 
 // 缓存已加载的视图模块
@@ -130,6 +131,7 @@ const routes = [
   { path: '/paint', component: () => loadView('paint') },
   { path: '/gallery', component: () => loadView('gallery') },
   { path: '/mine', component: () => loadView('mine') },
+  { path: '/stats', component: () => loadView('stats') },
   // 「我的」的两个过滤页：只显示自己的东西，不混进社区
   { path: '/mine/works', component: () => loadView('mine') },
   { path: '/mine/gifted', component: () => loadView('mine') },
@@ -209,6 +211,7 @@ const NAV_ITEMS = [
   { path: '/paint', ico: '🎨', px: 'palette', name: '画板' },
   { path: '/gallery', ico: '🌆', px: 'frame', name: '社区' },
   { path: '/town', ico: '🏘️', px: 'house', name: '小镇' },
+  { path: '/stats', ico: '📊', name: '数据' },
   { path: '/mine', ico: '🌱', px: 'user', name: '我的' },
 ]
 function readLS(k, d) {
@@ -240,7 +243,7 @@ function applyNavPosition() {
    再挂一条导航栏既占屏幕又容易点错。
    和好友聊天时（/chat?to=xxx）也在这个名单之外，所以一并隐掉了 ——
    不然键盘弹起来时导航栏会压在输入框上。 */
-const NAV_PAGES = ['/paint', '/gallery', '/town', '/mine']
+const NAV_PAGES = ['/paint', '/gallery', '/town', '/stats', '/mine']
 
 function hideNav(route) {
   if (!route) return false
