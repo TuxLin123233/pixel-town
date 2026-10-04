@@ -6,6 +6,7 @@ import { hitTrade, checkText } from './_illegal.js'
 import { readActiveUser, pickToken, BANNED_ERROR } from './_auth.js'
 import { creditDust, dayStamp } from './_dust.js'
 import { inspectArtwork } from './_camera.js'
+import { rewardInviterFirstWork } from './_invite.js'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -304,6 +305,15 @@ export async function onRequestPost(context) {
     return json({ error: 'KV write failed: ' + err.message }, 500)
   }
 
+  /* 邀请奖励（阶段二）：这是该作者第一次发布作品、且他是被人邀请来的，
+     给邀请人发一笔大额光尘。内部有一次性标记，重复发布不会再发。
+     任何异常都不能影响发布本身。 */
+  let inviteReward = 0
+  try {
+    const ir = await rewardInviterFirstWork(env.LIGHTFIELD_KV, who.user)
+    if (ir.ok) inviteReward = ir.amount
+  } catch (e) {}
+
   /* 发布奖励：每发一幅得 1 个光尘，每天最多靠发布拿 10 个。
      计数存在 pub:<uid>:<东八区天序号>，天然按天分开，过期自动清掉。
      上限 10 是防刷：一幅画 1 个，10 幅封顶，多发也不加。 */
@@ -342,6 +352,7 @@ export async function onRequestPost(context) {
     dustCapped,
     dustTotalToday: dustTotal,
     dustCapToday: PUBLISH_DUST_DAILY_CAP,
+    inviteReward,
   })
 }
 

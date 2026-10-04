@@ -38,6 +38,7 @@ import {
 import { clientIp, checkLimit, bumpFail, clearFail, tooMany } from './_ratelimit.js'
 import { readBook, writeBook, publicView } from './_dust.js'
 import { ensureOffers } from './_mail.js'
+import { validateCode, bindByCode } from './_invite.js'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -121,18 +122,35 @@ export async function onRequestPost(context) {
     const existed = await readUserByName(kv, username)
     if (existed) return json({ error: '这个用户名已经被占用了' }, 409)
 
+    // 邀请码（可选）：建号之前先验码 —— 码无效就直接报错，
+    // 不能账号建了一半才告诉用户码错了，留下个占着名字的空号。
+    const inviteRaw = String(body.invite || '').trim()
+    const uid = newUid()
+    if (inviteRaw) {
+      const check = await validateCode(kv, inviteRaw, uid)
+      if (!check.ok) return json({ error: check.message }, 400)
+    }
+
     const user = {
-      uid: newUid(),
+      uid,
       username,
       pw: await hashPassword(password),
       bio: '',
       createdAt: Date.now(),
     }
     await writeUser(kv, user)
+
+    // 绑定邀请人（不可更改），新人立刻拿到见面礼
+    let inviteReward = 0
+    if (inviteRaw) {
+      const bound = await bindByCode(kv, user, inviteRaw)
+      if (bound.ok) inviteReward = bound.reward
+    }
+
     // 新号立刻收到活动信件（国庆礼包 + 新手指南）
     await ensureOffers(kv, user.uid).catch(() => {})
     const token = await issueToken(env, user)
-    return json({ ok: true, token, username: user.username })
+    return json({ ok: true, token, username: user.username, inviteReward })
   }
 
   /* ---------------- 登录 ---------------- */

@@ -84,6 +84,7 @@ export default {
         color: var(--text-muted);
         margin-bottom: 5px;
       }
+      .auth-label-tip { color: var(--accent, #5b8def); font-weight: 600; }
       .auth-input {
         width: 100%;
         height: 46px;
@@ -187,6 +188,12 @@ export default {
           <input class="auth-input" id="authPw2" type="password" maxlength="64"
                  autocomplete="new-password" placeholder="再输一次">
         </div>
+        <div class="auth-field" id="inviteField" hidden>
+          <label class="auth-label" for="authInvite">邀请码 <span class="auth-label-tip">选填 · 填了立得 20 光尘</span></label>
+          <input class="auth-input" id="authInvite" type="text" maxlength="7"
+                 autocomplete="off" placeholder="好友的邀请码，没有可不填"
+                 style="text-transform:uppercase;letter-spacing:2px">
+        </div>
 
         <button class="auth-btn" id="authGo" type="button">登录</button>
         <div class="auth-msg" id="authMsg"></div>
@@ -227,6 +234,7 @@ export default {
       $('tabLogin').classList.toggle('on', !reg)
       $('tabRegister').classList.toggle('on', reg)
       $('pw2Field').hidden = !reg
+      $('inviteField').hidden = !reg
       $('authTitle').textContent = reg ? '创建账号' : '欢迎回到小镇'
       $('authSub').textContent = reg
         ? '一个用户名一个身份，之后作品与光尘都归它'
@@ -270,13 +278,13 @@ export default {
       return { ok: res.ok, status: res.status, data }
     }
 
-    function showLoggedIn(username) {
+    function showLoggedIn(username, note) {
       $('authForm').hidden = true
       $('authDone').hidden = false
       $('adName').textContent = username
-      const d = new Date()
       $('adSub').textContent =
-        '账号创建于 ' + d.getFullYear() + '.' + String(d.getMonth() + 1).padStart(2, '0')
+        note ||
+        ('账号创建于 ' + new Date().getFullYear() + '.' + String(new Date().getMonth() + 1).padStart(2, '0'))
       // 通知「我的」页刷新成登录态
       window.dispatchEvent(new CustomEvent('lw-auth-changed', { detail: { username } }))
     }
@@ -295,7 +303,7 @@ export default {
       try {
         const r = await post(
           isRegister
-            ? { action: 'register', username, password: pw }
+            ? { action: 'register', username, password: pw, invite: $('authInvite').value.trim() }
             : { action: 'login', username, password: pw }
         )
         if (!r.ok) {
@@ -309,7 +317,11 @@ export default {
         }
         save(r.data.token, r.data.username || username)
         if (window.sfx) window.sfx('ok')
-        showLoggedIn(r.data.username || username)
+        const note =
+          isRegister && r.data.inviteReward > 0
+            ? '🎁 邀请奖励 ' + r.data.inviteReward + ' 光尘已到账，去发布第一幅作品吧'
+            : ''
+        showLoggedIn(r.data.username || username, note)
       } catch (e) {
         say('网络异常，请检查连接', 'err')
       } finally {
@@ -327,6 +339,13 @@ export default {
     })
     $('authPw2').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') submit()
+    })
+    $('authInvite').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') submit()
+    })
+    // 邀请码统一大写、只留字母数字，和服务端口径一致
+    $('authInvite').addEventListener('input', (e) => {
+      e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7)
     })
     $('authMine').addEventListener('click', () => {
       location.href = '/mine'
@@ -355,6 +374,16 @@ export default {
         })
         .catch(() => {})
     }
-    setMode(false)
+    // 从邀请链接来：/login?invite=CODE —— 自动切到注册页并填好码
+    let prefillInvite = ''
+    try {
+      prefillInvite = new URLSearchParams(location.search).get('invite') || ''
+    } catch (e) {}
+    if (prefillInvite && !saved) {
+      $('authInvite').value = prefillInvite.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7)
+      setMode(true)
+    } else {
+      setMode(false)
+    }
   },
 }

@@ -424,6 +424,21 @@ export default {
       <section class="group">
         <div class="ver red">
           <div class="ver-body">
+            <div class="ver-title"><span class="ver-tag">v1.4.7</span> 邀请好友赚光尘 · 数据页改版 <span class="ver-date">2026-10</span></div>
+            <ul class="ver-list">
+              <li><span class="li-tag tag-new">新功能</span><b>邀请码上线</b>：「我的」页新增「🎁 邀请好友」卡片，每个人都有一个专属邀请码和邀请链接。好友注册时填上你的码，他<b>立刻到账 20 光尘</b>；等好友发布<b>第一幅作品</b>，你<b>立刻到账 100 光尘</b> —— 拉上真的会画画的朋友，奖励才兑现</li>
+              <li><span class="li-tag tag-new">新功能</span>注册页多了「邀请码」一栏（选填）。从邀请链接打开会自动切到注册页并把码填好；老用户没赶上填码的，也能在邀请卡片里一次性补绑</li>
+              <li><span class="li-tag tag-announce">规则</span>邀请码<b>绑定一次就不能更改</b>，一个账号只能被邀请一次，不能填自己的码；每笔邀请奖励只发一次，单个邀请人最多拿 50 份「首作奖励」，防止批量注册号刷光尘</li>
+              <li><span class="li-tag tag-ui">界面</span><b>数据页改版</b>：新增小镇冷知识（总像素格数、开张天数、最活跃时段、还在等赞的作品…）、近 14 天创作热度柱状图、本周主题赛投票榜、创作方式分布、热门标签；居民数改为按<b>真实注册账号</b>统计，不再拿署名凑数</li>
+              <li><span class="li-tag tag-announce">移除</span>数据页的「最受欢迎作品」和「活跃创作者」两张榜单下线；登录系统上线前那些没有归属账号的匿名老作品，不再计入任何作品类统计</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="group">
+        <div class="ver red">
+          <div class="ver-body">
             <div class="ver-title"><span class="ver-tag">v1.5.2</span> 确认框改成小镇自己的（不再被浏览器插按钮） <span class="ver-date">2026-10</span></div>
             <ul class="ver-list">
               <li><span class="li-tag tag-fix">修复</span><b>确认框里冒出「关闭网页」按钮</b>的问题。以前的确认框用的是浏览器自带的，<b>按钮由浏览器说了算</b> —— 有些手机浏览器和内置 WebView 会自作主张多塞一个按钮，想点确认却把页面关了。现在改成小镇自己画的对话框，按钮就只有「取消」和「确认」，一个不多、一个不少</li>

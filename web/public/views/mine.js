@@ -541,6 +541,83 @@ export default {
         text-underline-offset: 3px;
       }
       .me-hero-bio.empty { color: var(--text-faint); }
+
+      /* 邀请好友卡片 */
+      .invite-rules {
+        font-size: 12.5px;
+        color: var(--text-muted);
+        line-height: 1.75;
+        margin-bottom: 12px;
+      }
+      .invite-rules b { color: var(--accent); font-size: 15px; font-weight: 800; padding: 0 1px; }
+      .invite-code-row { display: flex; gap: 8px; align-items: stretch; }
+      .invite-code {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        font-weight: 800;
+        letter-spacing: 4px;
+        color: #fff;
+        background: linear-gradient(135deg, #ff9a5b, #ff7043);
+        border-radius: 12px;
+        padding: 11px 8px;
+        font-variant-numeric: tabular-nums;
+        user-select: all;
+      }
+      .invite-copy {
+        flex: none;
+        padding: 0 16px;
+        border-radius: 12px;
+        border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+        background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .invite-copy:active { transform: scale(0.95); }
+      .invite-stat {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+      .invite-stat b { color: var(--text); font-size: 13px; }
+      .invite-bind {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px dashed var(--border-strong, rgba(128,128,128,0.3));
+      }
+      .invite-bind-tip { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+      .invite-bind-row { display: flex; gap: 8px; }
+      .invite-bind-input {
+        flex: 1;
+        min-width: 0;
+        height: 40px;
+        padding: 0 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border-strong, rgba(128,128,128,0.35));
+        background: var(--surface-2);
+        color: var(--text);
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .invite-bind-btn {
+        flex: none;
+        padding: 0 18px;
+        height: 40px;
+        border-radius: 10px;
+        border: none;
+        background: var(--accent);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .invite-bind-btn:disabled { opacity: 0.5; }
   `,
   template: `<div class="container mine-wrap">
     <div class="me-hero">
@@ -578,6 +655,28 @@ export default {
       </div>
       <div class="sign-week" id="signWeek"></div>
       <div class="medals" id="medals"></div>
+    </div>
+
+    <!-- 邀请好友 -->
+    <div class="m-card" id="inviteCard" hidden>
+      <div class="m-card-title">🎁 邀请好友 · 赚光尘</div>
+      <div class="invite-rules">
+        好友用你的邀请码注册，他立得 <b>20</b> 光尘；<br />
+        好友发布第一幅作品，你立得 <b>100</b> 光尘！
+      </div>
+      <div class="invite-code-row">
+        <span class="invite-code" id="inviteCode">·······</span>
+        <button class="invite-copy" id="inviteCopy" type="button">复制邀请链接</button>
+      </div>
+      <div class="invite-stat" id="inviteStat"></div>
+      <div class="invite-bind" id="inviteBindBox" hidden>
+        <div class="invite-bind-tip">有人邀请你来小镇？填上他的邀请码（只能绑定一次，不可更改）</div>
+        <div class="invite-bind-row">
+          <input class="invite-bind-input" id="inviteBindInput" maxlength="7"
+                 type="text" autocomplete="off" placeholder="7 位邀请码">
+          <button class="invite-bind-btn" id="inviteBindBtn" type="button">绑定</button>
+        </div>
+      </div>
     </div>
 
     <!-- 创作数据 -->
@@ -1742,6 +1841,101 @@ export default {
 
     /* ---------- 送出的光尘数量 ---------- */
     $('lnkLiked').textContent = window.dust ? window.dust.giftedCount() : 0
+
+    /* ---------- 邀请好友 ---------- */
+    let inviteData = null
+    function paintInvite(d) {
+      $('inviteCode').textContent = d.code || '·······'
+      const s = d.stat || {}
+      $('inviteStat').innerHTML =
+        '已邀请 <b>' + (s.count || 0) + '</b> 位好友 · ' +
+        '<b>' + (s.rewarded || 0) + '</b> 位已发布作品 · ' +
+        '累计赚到 <b>' + (s.earned || 0) + '</b> 光尘'
+      // 已绑定过邀请人：补绑框永久消失（绑定不可更改）
+      $('inviteBindBox').hidden = !!d.invitedBy
+    }
+    async function loadInvite() {
+      const card = $('inviteCard')
+      if (!card) return
+      let t = ''
+      try { t = localStorage.getItem('lw-token') || '' } catch (e) {}
+      // 未登录、或处于作品/送出过滤子页时都不显示
+      if (!t || MODE !== 'home') { card.hidden = true; return }
+      card.hidden = false
+      try {
+        const r = await fetch('/api/invite', {
+          headers: { Authorization: 'Bearer ' + t },
+          cache: 'no-store',
+        })
+        if (r.status === 401) { card.hidden = true; return }
+        const d = await r.json().catch(() => null)
+        if (!d || !d.ok) return
+        inviteData = d
+        paintInvite(d)
+      } catch (e) {}
+    }
+    $('inviteCopy').addEventListener('click', async () => {
+      if (!inviteData || !inviteData.code) return
+      // 复制的是带码的邀请链接，好友点开直接进注册页且码已填好
+      const link = location.origin + '/login?invite=' + inviteData.code
+      let ok = false
+      try {
+        await navigator.clipboard.writeText(link)
+        ok = true
+      } catch (e) {
+        const ta = document.createElement('textarea')
+        ta.value = link
+        ta.style.position = 'fixed'
+        ta.style.opacity = '0'
+        document.body.appendChild(ta)
+        ta.select()
+        try { ok = document.execCommand('copy') } catch (e2) {}
+        document.body.removeChild(ta)
+      }
+      if (window.sfx) window.sfx('tap')
+      toast(ok ? '邀请链接已复制，快发给好友吧 🎉' : '复制失败，邀请码：' + inviteData.code)
+    })
+    const inviteBindInput = $('inviteBindInput')
+    inviteBindInput.addEventListener('input', () => {
+      inviteBindInput.value = inviteBindInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7)
+    })
+    $('inviteBindBtn').addEventListener('click', async () => {
+      const code = inviteBindInput.value.trim()
+      if (code.length !== 7) return toast('邀请码是 7 位字符')
+      const btn = $('inviteBindBtn')
+      let t = ''
+      try { t = localStorage.getItem('lw-token') || '' } catch (e) {}
+      btn.disabled = true
+      btn.textContent = '绑定中…'
+      try {
+        const r = await fetch('/api/invite', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + t },
+          body: JSON.stringify({ action: 'bind', code }),
+        })
+        const d = await r.json().catch(() => ({}))
+        if (!r.ok) {
+          toast(d.error || '绑定失败，请稍后再试')
+          btn.disabled = false
+          btn.textContent = '绑定'
+          return
+        }
+        inviteData = d
+        paintInvite(d)
+        inviteBindInput.value = ''
+        if (window.sfx) window.sfx('ok')
+        toast('🎁 绑定成功，' + (d.reward || 0) + ' 光尘已到账')
+        if (window.dust) window.dust.refresh()
+        setTimeout(() => renderSign(), 600)
+      } catch (e) {
+        toast('网络异常，请稍后再试')
+        btn.disabled = false
+        btn.textContent = '绑定'
+      }
+    })
+    window.addEventListener('lw-auth-changed', loadInvite)
+    loadInvite()
+
     loadMailBadge()
     loadAchBadge()
     loadTaskBadge()
