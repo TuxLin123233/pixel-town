@@ -1,31 +1,46 @@
 // 像素小镇 · Vue 3 + Vue Router 单页应用（无构建，push 即部署）
-// 视图放在 /views/*.js，由 _genviews.py 从原单文件页面生成
-import paint from './views/paint.js'
-import gallery from './views/gallery.js'
-import settings from './views/settings.js'
-import changelog from './views/changelog.js'
-import admin from './views/admin.js'
-import modPanel from './views/mod.js'
-import terms from './views/terms.js'
-import copyright from './views/copyright.js'
-import faq from './views/faq.js'
-import mine from './views/mine.js'
-import login from './views/login.js'
-import mail from './views/mail.js'
-import achieve from './views/achieve.js'
-import avatar from './views/avatar.js'
-import intro from './views/intro.js'
-import tasks from './views/tasks.js'
-import rank from './views/rank.js'
-import user from './views/user.js'
-import chat from './views/chat.js'
-import town from './views/town.js'
-import townCard from './views/card.js'
-import townHotpot from './views/hotpot.js'
-import bag from './views/bag.js'
+// 视图放在 /views/*.js，路由懒加载，按需下载
 
 const { createApp } = window.Vue
 const { createRouter, createWebHistory } = window.VueRouter
+
+// 视图懒加载工厂：首次访问时才下载对应视图代码
+const views = {
+  paint: () => import('./views/paint.js'),
+  gallery: () => import('./views/gallery.js'),
+  settings: () => import('./views/settings.js'),
+  changelog: () => import('./views/changelog.js'),
+  admin: () => import('./views/admin.js'),
+  mod: () => import('./views/mod.js'),
+  terms: () => import('./views/terms.js'),
+  copyright: () => import('./views/copyright.js'),
+  faq: () => import('./views/faq.js'),
+  mine: () => import('./views/mine.js'),
+  login: () => import('./views/login.js'),
+  mail: () => import('./views/mail.js'),
+  achieve: () => import('./views/achieve.js'),
+  avatar: () => import('./views/avatar.js'),
+  intro: () => import('./views/intro.js'),
+  tasks: () => import('./views/tasks.js'),
+  rank: () => import('./views/rank.js'),
+  user: () => import('./views/user.js'),
+  chat: () => import('./views/chat.js'),
+  town: () => import('./views/town.js'),
+  card: () => import('./views/card.js'),
+  hotpot: () => import('./views/hotpot.js'),
+  bag: () => import('./views/bag.js'),
+}
+
+// 缓存已加载的视图模块
+const viewCache = {}
+
+// 异步加载视图并包装
+async function loadView(name) {
+  if (!viewCache[name]) {
+    viewCache[name] = await views[name]()
+  }
+  return withAutoCleanup(viewCache[name].default || viewCache[name])
+}
 
 // 视图卸载时自动清理它创建的定时器 / 全局监听 / body 滚动锁
 // （原多文件页面里有些 setInterval 没有存变量，切页后无法回收）
@@ -112,36 +127,36 @@ function resolveEntrance() {
 
 const routes = [
   { path: '/', redirect: resolveEntrance },
-  { path: '/paint', component: withAutoCleanup(paint) },
-  { path: '/gallery', component: withAutoCleanup(gallery) },
-  { path: '/mine', component: withAutoCleanup(mine) },
+  { path: '/paint', component: () => loadView('paint') },
+  { path: '/gallery', component: () => loadView('gallery') },
+  { path: '/mine', component: () => loadView('mine') },
   // 「我的」的两个过滤页：只显示自己的东西，不混进社区
-  { path: '/mine/works', component: withAutoCleanup(mine) },
-  { path: '/mine/gifted', component: withAutoCleanup(mine) },
+  { path: '/mine/works', component: () => loadView('mine') },
+  { path: '/mine/gifted', component: () => loadView('mine') },
   // 登录 / 注册（独立页面，不占底部导航位）
-  { path: '/login', component: withAutoCleanup(login) },
-  { path: '/mail', component: withAutoCleanup(mail) },
-  { path: '/achieve', component: withAutoCleanup(achieve) },
-  { path: '/tasks', component: withAutoCleanup(tasks) },
-  { path: '/rank', component: withAutoCleanup(rank) },
-  { path: '/u', component: withAutoCleanup(user) },
-  { path: '/chat', component: withAutoCleanup(chat) },
+  { path: '/login', component: () => loadView('login') },
+  { path: '/mail', component: () => loadView('mail') },
+  { path: '/achieve', component: () => loadView('achieve') },
+  { path: '/tasks', component: () => loadView('tasks') },
+  { path: '/rank', component: () => loadView('rank') },
+  { path: '/u', component: () => loadView('user') },
+  { path: '/chat', component: () => loadView('chat') },
   // 小镇地图 / 个人小屋（小屋是二级页，导航会自动收起来）
-  { path: '/town', component: withAutoCleanup(town) },
-  { path: '/town/home', component: withAutoCleanup(town) },
+  { path: '/town', component: () => loadView('town') },
+  { path: '/town/home', component: () => loadView('town') },
   // 家具商店：二级页，导航会自动收起来
-  { path: '/town/bag', component: withAutoCleanup(bag) },
-  { path: '/town/card', component: withAutoCleanup(townCard) },
-  { path: '/town/hotpot', component: withAutoCleanup(townHotpot) },
-  { path: '/avatar', component: withAutoCleanup(avatar) },
-  { path: '/intro', component: withAutoCleanup(intro) },
-  { path: '/settings', component: withAutoCleanup(settings) },
-  { path: '/changelog', component: withAutoCleanup(changelog) },
-  { path: '/admin', component: withAutoCleanup(admin) },
-  { path: '/mod', component: withAutoCleanup(modPanel) },
-  { path: '/terms', component: withAutoCleanup(terms) },
-  { path: '/copyright', component: withAutoCleanup(copyright) },
-  { path: '/faq', component: withAutoCleanup(faq) },
+  { path: '/town/bag', component: () => loadView('bag') },
+  { path: '/town/card', component: () => loadView('card') },
+  { path: '/town/hotpot', component: () => loadView('hotpot') },
+  { path: '/avatar', component: () => loadView('avatar') },
+  { path: '/intro', component: () => loadView('intro') },
+  { path: '/settings', component: () => loadView('settings') },
+  { path: '/changelog', component: () => loadView('changelog') },
+  { path: '/admin', component: () => loadView('admin') },
+  { path: '/mod', component: () => loadView('mod') },
+  { path: '/terms', component: () => loadView('terms') },
+  { path: '/copyright', component: () => loadView('copyright') },
+  { path: '/faq', component: () => loadView('faq') },
   { path: '/:pathMatch(.*)*', redirect: resolveEntrance },
 ]
 
