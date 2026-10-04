@@ -449,6 +449,22 @@ export default {
       }
       .cloudhu-btn:active { opacity: 0.85; transform: scale(0.98); }
 
+      .portal-btn {
+        display: block;
+        text-align: center;
+        margin: 8px 0 4px;
+        padding: 12px 16px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        border: 1px solid transparent;
+        box-shadow: 0 4px 14px var(--shadow1);
+      }
+      .portal-btn:active { opacity: 0.85; transform: scale(0.98); }
+
       /* 头部：头像 + 用户名，整体水平居中 */
       .me-hero {
         display: flex;
@@ -630,6 +646,10 @@ export default {
 
     <a href="https://yhfx.jwznb.com/share?key=KkJt79XhQzW4&ts=1791048271" target="_blank" rel="noopener" class="cloudhu-btn">
       🏠 加入云湖【像素小镇 · 治愈小窝】交流群
+    </a>
+
+    <a href="https://convey-9jw5oj73x0i.qoder.zone" target="_blank" rel="noopener" class="portal-btn">
+      🚀 像素小镇传送门
     </a>
 
     <!-- 我的作品：页内完整列表，只显示自己的 -->
