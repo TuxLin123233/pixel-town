@@ -422,36 +422,6 @@ export default {
             <div v-else class="trend-note">本周还没有人参赛，来当第一个？</div>
           </div>
 
-          <!-- 作品榜 -->
-          <div class="stat-card">
-            <div class="stat-title">🎨 最受欢迎作品</div>
-            <div class="rank-list">
-              <div v-for="(work, i) in stats.topWorks" :key="work.time" class="rank-item">
-                <div class="rank-no" :class="i === 0 ? '' : i === 1 ? 'silver' : i === 2 ? 'bronze' : 'normal'">{{ i + 1 }}</div>
-                <div class="rank-info">
-                  <div class="rank-name">{{ work.name || '未命名' }}</div>
-                  <div class="rank-meta">by {{ work.author }}</div>
-                </div>
-                <div class="rank-value">{{ work.likes }} ❤️</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 创作者榜 -->
-          <div class="stat-card">
-            <div class="stat-title">✨ 活跃创作者</div>
-            <div class="rank-list">
-              <div v-for="(user, i) in stats.topCreators" :key="user.author" class="rank-item">
-                <div class="rank-no" :class="i === 0 ? '' : i === 1 ? 'silver' : i === 2 ? 'bronze' : 'normal'">{{ i + 1 }}</div>
-                <div class="rank-info">
-                  <div class="rank-name">{{ user.author }}</div>
-                  <div class="rank-meta">{{ user.works }} 部作品</div>
-                </div>
-                <div class="rank-value">{{ user.likes }} ❤️</div>
-              </div>
-            </div>
-          </div>
-
           <!-- 创作方式分布 -->
           <div class="stat-card">
             <div class="stat-title">🖌️ 大家都怎么画</div>
@@ -544,8 +514,6 @@ export default {
         trendMax: 1,
         recent7: 0,
         prev7: 0,
-        topWorks: [],
-        topCreators: [],
         methodDistribution: [],
         sizeDistribution: [],
         topTags: [],

@@ -40,7 +40,10 @@ export async function onRequestGet(context) {
   const now = Date.now()
 
   try {
-    const { entries } = await readAllHistory(kv)
+    // 只统计登录用户的作品：登录系统上线前的老作品没有 ownerUser，
+    // 那些匿名涂鸦不纳入任何统计
+    const { entries: all } = await readAllHistory(kv)
+    const entries = all.filter((e) => e && e.ownerUser)
     const totalWorks = entries.length
     const totalLikes = entries.reduce((s, e) => s + (Number(e.likes) || 0), 0)
     const totalPixels = entries.reduce(
@@ -48,7 +51,7 @@ export async function onRequestGet(context) {
       0
     )
 
-    // 真实注册账号数：acc:<uid> 一个账号一个 key（不再拿署名凑数）
+    // 真实注册账号数：acc:<uid> 一个账号一个 key
     const totalUsers = (await listAllKeys(kv, 'acc:')).length
 
     // 评论总数：评论按 cmt:<作品时间> 分 key 存，数 key 后把每条列表长度加起来
@@ -63,34 +66,9 @@ export async function onRequestGet(context) {
       } catch {}
     }
 
-    // —— 创作者：按账号 uid 聚合，改名也不拆开；老作品没有 uid 才退回署名 ——
-    const creators = {}
+    // —— 动过笔的创作者（统计范围已只含登录用户）——
     const uidSet = new Set()
-    entries.forEach((e) => {
-      if (!e) return
-      const uid = e.ownerUser ? String(e.ownerUser) : ''
-      const key = uid ? 'u:' + uid : 'n:' + String(e.author || '匿名').toLowerCase()
-      if (uid) uidSet.add(uid)
-      if (!creators[key]) {
-        creators[key] = { author: e.ownerName || e.author || '匿名', works: 0, likes: 0 }
-      }
-      creators[key].works++
-      creators[key].likes += Number(e.likes) || 0
-    })
-    const topCreators = Object.values(creators)
-      .sort((a, b) => b.likes - a.likes || b.works - a.works)
-      .slice(0, 10)
-
-    const topWorks = entries
-      .slice()
-      .sort((a, b) => (Number(b.likes) || 0) - (Number(a.likes) || 0))
-      .slice(0, 10)
-      .map((e) => ({
-        time: e.time,
-        name: e.workName || e.name || '未命名',
-        author: e.ownerName || e.author || '匿名',
-        likes: Number(e.likes) || 0,
-      }))
+    entries.forEach((e) => uidSet.add(String(e.ownerUser)))
 
     // —— 画布尺寸分布 ——
     const sizeCounts = { '16×16': 0, '32×32': 0, '64×64': 0 }
@@ -213,9 +191,6 @@ export async function onRequestGet(context) {
         trendMax,
         recent7,
         prev7,
-        // 榜单
-        topWorks,
-        topCreators,
         // 分布
         methodDistribution,
         sizeDistribution,
