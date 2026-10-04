@@ -7,7 +7,7 @@
 //     表现为「改了但没变化」。代码正确性比离线速度重要。
 //   - 图标、图片：缓存优先（体积大、变动少）
 
-const VERSION = 'lw-v1.24.6'
+const VERSION = 'lw-v1.25.0'
 const SHELL_CACHE = 'lw-shell-' + VERSION
 
 const SHELL = [
@@ -23,7 +23,6 @@ const SHELL = [
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/views/paint.js',
-  '/views/room.js',
   '/views/gallery.js',
   '/views/settings.js',
   '/views/changelog.js',
@@ -41,6 +40,12 @@ const SHELL = [
   '/views/avatar.js',
   '/views/achieve.js',
   '/views/mail.js',
+  '/views/stats.js',
+  '/views/card.js',
+  '/views/hotpot.js',
+  '/views/mod.js',
+  '/views/copyright.js',
+  '/views/login.js',
   '/lw-avatar.js',
   '/lw-spray.js',
   '/lw-gravity.js',
