@@ -433,6 +433,22 @@ export default {
       /* 4 列时格子更窄，字号跟着收一档，避免「每日任务」这类四字标签换行 */
       .m-link span:not(.ml-ico):not(.ml-num) { font-size: 11px; white-space: nowrap; }
 
+      .cloudhu-btn {
+        display: block;
+        text-align: center;
+        margin: 14px 0 4px;
+        padding: 12px 16px;
+        border-radius: 14px;
+        background: var(--accent);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        border: 1px solid transparent;
+        box-shadow: 0 4px 14px var(--shadow1);
+      }
+      .cloudhu-btn:active { opacity: 0.85; transform: scale(0.98); }
+
       /* 头部：头像 + 用户名，整体水平居中 */
       .me-hero {
         display: flex;
@@ -611,6 +627,10 @@ export default {
         </a>
       </div>
     </div>
+
+    <a href="https://yhfx.jwznb.com/share?key=KkJt79XhQzW4&ts=1791048271" target="_blank" rel="noopener" class="cloudhu-btn">
+      🏠 加入云湖【像素小镇 · 治愈小窝】交流群
+    </a>
 
     <!-- 我的作品：页内完整列表，只显示自己的 -->
     <div class="m-card" id="mineCard">
