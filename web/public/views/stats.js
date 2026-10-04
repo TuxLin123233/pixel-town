@@ -3,8 +3,48 @@ export default {
   name: 'stats',
   title: '数据统计',
   css: `
-    .container { width: 100%; max-width: 560px; margin: 0 auto; }
-    .stats-wrap { width: 100%; }
+      [hidden] { display: none !important; }
+
+      :root {
+        --bg: #faf5ef;
+        --surface: #ffffff;
+        --surface-2: #efe9e0;
+        --surface-3: #f0ece4;
+        --text: #3b342c;
+        --text-muted: #6b5f50;
+        --text-faint: #b0a697;
+        --border: #efe7da;
+        --border-strong: #e0d3c0;
+        --shadow: rgba(80, 60, 40, 0.08);
+        --accent: #5b8def;
+      }
+      [data-mood="dark"] {
+        --bg: #181512;
+        --surface: #262220;
+        --surface-2: #332e29;
+        --surface-3: #322c25;
+        --text: #ece5da;
+        --text-muted: #b8ac9b;
+        --text-faint: #7d7266;
+        --border: #3a342f;
+        --border-strong: #4a433c;
+        --shadow: rgba(0, 0, 0, 0.4);
+        --accent: #6f9fff;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 24px 16px 116px;
+        transition: background 0.25s ease, color 0.25s ease;
+      }
+
+      .container { width: 100%; max-width: 560px; margin: 0 auto; }
+      .stats-wrap { width: 100%; }
 
     .stat-card {
       background: var(--surface);
