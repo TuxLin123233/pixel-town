@@ -13,11 +13,25 @@
 
 const KEY = (uid) => 'dust:' + uid
 const MAX_GIFTED = 500
+const LEDGER_MAX = 100
 
 // 每日签到 5 个；连续里程碑额外奖励，数额等于里程碑天数
 export const DUST_PER_SIGNIN = 5
 export const DUST_COST = 1
 const MILESTONES = [3, 7, 15, 30, 60, 100, 200, 365]
+
+/**
+ * 往账本流水里追加一条。delta 正进负出，reason 是短中文说明。
+ * 所有改余额的代码都应当在 writeBook 前调它，保证账目可查。
+ */
+export function addLedger(book, delta, reason) {
+  const n = Math.floor(Number(delta) || 0)
+  if (!n) return book
+  const ledg = Array.isArray(book.ledger) ? book.ledger.slice() : []
+  ledg.push({ t: Date.now(), d: n, r: String(reason || '光尘变动').slice(0, 12) })
+  book.ledger = ledg.slice(-LEDGER_MAX)
+  return book
+}
 
 /** 以 UTC+8 划定「今天」，与前端展示口径一致 */
 export function dayStamp(ms = Date.now()) {
@@ -28,7 +42,7 @@ function emptyBook() {
   /* gifted 是「送过光尘的作品」（按作品时间戳记），
      homes 是「送过光尘的小屋」（按屋主 uid 记）。
      两套分开记：同一个人可能既送过你的画，也想给你的屋子送一份。 */
-  return { bal: 0, streak: 0, total: 0, last: 0, gifted: [], homes: [], got: 0 }
+  return { bal: 0, streak: 0, total: 0, last: 0, gifted: [], homes: [], got: 0, ledger: [] }
 }
 
 function sanitize(raw) {
@@ -44,6 +58,13 @@ function sanitize(raw) {
     b.got = Math.max(0, Math.floor(Number(o.got) || 0))
     b.gifted = Array.isArray(o.gifted) ? o.gifted.map(String).slice(-MAX_GIFTED) : []
     b.homes = Array.isArray(o.homes) ? o.homes.map(String).slice(-MAX_GIFTED) : []
+    // 流水只信任结构正确的条目
+    if (Array.isArray(o.ledger)) {
+      b.ledger = o.ledger
+        .filter((x) => x && Number.isFinite(Number(x.t)) && Number(x.d) !== 0 && x.r)
+        .map((x) => ({ t: Number(x.t), d: Math.floor(Number(x.d)), r: String(x.r).slice(0, 12) }))
+        .slice(-LEDGER_MAX)
+    }
     return b
   } catch (e) {
     return b
@@ -87,6 +108,7 @@ export async function signIn(kv, uid) {
   book.streak = streak
   book.total += 1
   book.last = today
+  addLedger(book, gain, bonus ? '连续报到奖励' : '每日报到')
   const saved = await writeBook(kv, uid, book)
   return { ok: true, already: false, book: saved, bonus, gain, streak }
 }
@@ -112,13 +134,14 @@ export async function giveHome(kv, uid, hostUid) {
 
   book.bal -= DUST_COST
   book.homes = (book.homes || []).concat([to]).slice(-MAX_GIFTED)
+  addLedger(book, -DUST_COST, '送光尘·小屋')
   const saved = await writeBook(kv, uid, book)
 
-  const got = await creditDust(kv, to, DUST_COST)
+  const got = await creditDust(kv, to, DUST_COST, '收到光尘·小屋')
   return { ok: true, book: saved, credited: got ? DUST_COST : 0 }
 }
 
-export async function creditDust(kv, uid, amount) {
+export async function creditDust(kv, uid, amount, reason = '光尘收入') {
   const n = Math.floor(Number(amount) || 0)
   if (!uid || n === 0) return null
   const book = await readBook(kv, uid)
@@ -128,6 +151,7 @@ export async function creditDust(kv, uid, amount) {
   } else {
     book.bal = Math.max(0, book.bal + n)
   }
+  addLedger(book, n, reason)
   return writeBook(kv, uid, book)
 }
 
@@ -146,13 +170,14 @@ export async function giveDust(kv, uid, time, recipientUid) {
 
   book.bal -= DUST_COST
   book.gifted.push(key)
+  addLedger(book, -DUST_COST, '送光尘·作品')
   const saved = await writeBook(kv, uid, book)
 
   // 转给作品作者。自己给自己的作品送不算，否则可以凭空刷光尘。
   let credited = 0
   const to = String(recipientUid || '')
   if (to && to !== uid) {
-    const got = await creditDust(kv, to, DUST_COST)
+    const got = await creditDust(kv, to, DUST_COST, '收到光尘·作品')
     if (got) credited = DUST_COST
   }
 
@@ -169,5 +194,7 @@ export function publicView(book) {
     gifted: book.gifted,
     homes: book.homes || [],
     giftedCount: book.gifted.length,
+    // 流水倒序给前端：最新的在最上面
+    ledger: (book.ledger || []).slice(-50).reverse(),
   }
 }

@@ -193,7 +193,7 @@ export async function onRequestPost(context) {
   }
 
   // 先记账再加领取记录：即使第二步失败，钱也到了，不会白做一次任务
-  const after = await creditDust(kv, who.uid, task.dust)
+  const after = await creditDust(kv, who.uid, task.dust, '每日任务')
   claimed.push(id)
   await kv.put(CLAIM_KEY(who.uid, period), JSON.stringify(claimed))
 

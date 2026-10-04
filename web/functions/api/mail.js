@@ -5,7 +5,7 @@ import { checkOrigin } from './_origin.js'
 //   POST {action:'claim', id}  领取附件（光尘直接进账本）
 import { readActiveUser, pickToken, BANNED_ERROR } from './_auth.js'
 import { readBox, claim, clearBox, stats, ensureOffers, ensureAdminMails, ATTACH_DUST } from './_mail.js'
-import { readBook, writeBook, publicView } from './_dust.js'
+import { readBook, writeBook, publicView, addLedger } from './_dust.js'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -89,6 +89,7 @@ export async function onRequestPost(context) {
   let book = await readBook(kv, who.uid)
   if (r.mail.attachType === ATTACH_DUST || r.dust > 0) {
     book.bal += r.dust
+    addLedger(book, r.dust, '信件附件')
     book = await writeBook(kv, who.uid, book)
   }
 

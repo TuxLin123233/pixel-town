@@ -6,7 +6,7 @@ import { checkOrigin } from './_origin.js'
 //   POST {action:'save', pixels, mode}  保存自绘头像（每次都扣费：像素画 20 / 喷漆 30）
 //   POST {action:'reset'}               恢复默认头像（不退还已花的光尘）
 import { readActiveUser, BANNED_ERROR } from './_auth.js'
-import { readBook, writeBook, publicView } from './_dust.js'
+import { readBook, writeBook, publicView, addLedger } from './_dust.js'
 import {
   readAvatar,
   writeAvatar,
@@ -159,7 +159,8 @@ export async function onRequestPost(context) {
       400
     )
   }
-  const charged = await writeBook(kv, who.uid, { ...book, bal: book.bal - cost })
+  addLedger(book, -cost, mode === 'spray' ? '头像喷漆' : '头像作画')
+  const charged = await writeBook(kv, who.uid, book)
 
   const rec = await writeAvatar(kv, who.uid, px, true, mode)
   return json({

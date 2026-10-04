@@ -36,7 +36,7 @@ import {
   BIRTHDAY_COOLDOWN,
 } from './_auth.js'
 import { clientIp, checkLimit, bumpFail, clearFail, tooMany } from './_ratelimit.js'
-import { readBook, writeBook, publicView } from './_dust.js'
+import { readBook, writeBook, publicView, addLedger } from './_dust.js'
 import { ensureOffers } from './_mail.js'
 import { validateCode, bindByCode } from './_invite.js'
 
@@ -239,7 +239,8 @@ export async function onRequestPost(context) {
         400
       )
     }
-    const charged = await writeBook(kv, who.uid, { ...book, bal: book.bal - BIO_COST })
+    addLedger(book, -BIO_COST, '修改简介')
+    const charged = await writeBook(kv, who.uid, book)
     user.bio = bio
     await writeUser(kv, user)
 

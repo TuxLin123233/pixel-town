@@ -332,7 +332,7 @@ export async function onRequestPost(context) {
       // 先加额度再加钱：并发发布时最坏结果是这一笔多加 1 个，
       // 不会变成「记了额度但没发钱」或反之
       await kv.put(key, String(used + dust))
-      await creditDust(kv, entry.ownerUser, dust)
+      await creditDust(kv, entry.ownerUser, dust, '发布作品')
       dustTotal = used + dust
     } else {
       dustCapped = true

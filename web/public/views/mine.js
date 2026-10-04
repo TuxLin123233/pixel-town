@@ -717,6 +717,16 @@ export default {
     <div class="m-card" id="linkCard">
       <div class="m-card-title">🔗 常去的地方</div>
       <div class="m-links">
+        <router-link class="m-link" to="/notifications">
+          <span class="ml-ico">🔔</span>
+          <span class="ml-num" id="lnkNotify"></span>
+          <span>通知</span>
+        </router-link>
+        <router-link class="m-link" to="/mine/fav">
+          <span class="ml-ico">☆</span>
+          <span class="ml-num" id="lnkFav"></span>
+          <span>收藏</span>
+        </router-link>
         <router-link class="m-link" to="/mine/works">
           <span class="ml-ico">🖼️</span>
           <span class="ml-num" id="lnkWorks">0</span>
@@ -726,6 +736,11 @@ export default {
           <span class="ml-ico">✨</span>
           <span class="ml-num" id="lnkLiked"></span>
           <span>送出的</span>
+        </router-link>
+        <router-link class="m-link" to="/dustlog">
+          <span class="ml-ico">📒</span>
+          <span class="ml-num"></span>
+          <span>光尘明细</span>
         </router-link>
         <router-link class="m-link" to="/mail">
           <span class="ml-ico">✉️</span>
@@ -860,14 +875,17 @@ export default {
     /* ---------- 过滤页模式 ----------
        /mine          完整面板（签到 + 数据 + 快捷入口 + 作品预览）
        /mine/works    只显示「我的作品」的过滤页
-       /mine/gifted   只显示「我送出的光尘」的过滤页 */
+       /mine/gifted   只显示「我送出的光尘」的过滤页
+       /mine/fav      只显示「我的收藏」的过滤页 */
     const path = location.pathname.replace(/\/+$/, '')
     const MODE = path.endsWith('/works')
       ? 'works'
       : path.endsWith('/gifted')
         ? 'gifted'
-        : 'home'
-    const CARDS = ['signCard', 'statCard', 'linkCard', 'mineCard', 'likedCard']
+        : path.endsWith('/fav')
+          ? 'fav'
+          : 'home'
+    const CARDS = ['signCard', 'statCard', 'linkCard', 'mineCard', 'likedCard', 'favCard']
     function applyMode() {
       const back = $('mineBack')
       if (MODE === 'home') {
@@ -886,10 +904,11 @@ export default {
       }
       // 过滤页：只留对应的一块，并显示返回入口
       if (back) back.hidden = false
+      const modeCard = MODE === 'works' ? 'mineCard' : MODE === 'fav' ? 'favCard' : 'likedCard'
       CARDS.forEach((id) => {
         const el = $(id)
         if (!el) return
-        el.hidden = id !== (MODE === 'works' ? 'mineCard' : 'likedCard')
+        el.hidden = id !== modeCard
       })
       // 过滤页需要这一块，主页不需要
       if (MODE === 'gifted' && !document.getElementById('likedCard')) {
@@ -903,14 +922,28 @@ export default {
             '    </div>'
         }
       }
+      if (MODE === 'fav' && !document.getElementById('favCard')) {
+        const slot = $('likedSlot')
+        if (slot) {
+          slot.innerHTML =
+            '<div class="m-card" id="favCard">\n' +
+            '      <div class="m-card-title">☆ 我的收藏<span class="m-tip" id="favTip"></span></div>\n' +
+            '      <div class="mine-grid" id="favGrid"></div>\n' +
+            '      <div id="favEmpty"></div>\n' +
+            '    </div>'
+        }
+      }
       // 过滤页的标题挂在各自卡片上（头部已改为头像+账号名，不再有页面级标题）
-      const cardTitle = MODE === 'works' ? '我的作品' : '送出的光尘'
-      const cardSub =
-        MODE === 'works' ? '这里只显示你自己发布的作品' : '你送过光尘的作品都在这里'
-      const tip = $(MODE === 'works' ? 'mineTip' : 'likedTip')
-      if (tip) tip.textContent = cardSub
-      const name = $(MODE === 'works' ? 'mineTitle2' : 'likedTitle')
-      if (name) name.textContent = cardTitle
+      const titleMap = {
+        works: ['我的作品', '这里只显示你自己发布的作品', 'mineTip'],
+        gifted: ['送出的光尘', '你送过光尘的作品都在这里', 'likedTip'],
+        fav: ['我的收藏', '在社区作品页点 ☆ 就能收藏', 'favTip'],
+      }
+      const tm = titleMap[MODE]
+      if (tm) {
+        const tip = $(tm[2])
+        if (tip) tip.textContent = tm[1]
+      }
     }
     let toastTimer = null
     function toast(msg) {
@@ -1853,6 +1886,100 @@ export default {
           : '<div class="me-empty">还没给别人的画送过光尘</div>'
     }
 
+    /* ---------- 我的收藏：页内列表 ---------- */
+    async function loadFavs() {
+      const card = $('favCard')
+      const grid = $('favGrid')
+      if (!card || !grid) return
+      card.hidden = false
+      let t = ''
+      try { t = localStorage.getItem('lw-token') || '' } catch (e) {}
+      grid.innerHTML = ''
+      if (!t) {
+        $('favEmpty').innerHTML = '收藏需要登录。<br /><a href="/login">去登录 / 注册</a>'
+        return
+      }
+      let times = []
+      try {
+        const r = await fetch('/api/fav', { headers: { Authorization: 'Bearer ' + t }, cache: 'no-store' })
+        if (!r.ok) throw new Error('fav')
+        const d = await r.json()
+        times = Array.isArray(d.times) ? d.times.map(Number).filter((x) => x > 0) : []
+      } catch (e) {
+        $('favEmpty').innerHTML = '<div class="me-empty">网络开小差了，稍后再试</div>'
+        return
+      }
+      const tip = $('favTip')
+      if (tip) tip.textContent = times.length ? times.length + ' 件' : ''
+      if (!times.length) {
+        $('favEmpty').innerHTML =
+          '还没有收藏。<br />去社区打开喜欢的作品，点 <b>☆</b> 收藏它'
+        return
+      }
+      const got = []
+      for (const tm of times) {
+        try {
+          const r = await fetch('/api/get?single=1&locate=' + tm, { cache: 'no-store' })
+          if (!r.ok) continue
+          const d = await r.json()
+          const w = d.work || d.entry || (Array.isArray(d.history) ? d.history[0] : null)
+          if (w && w.pixels) got.push(w)
+        } catch (e) {}
+      }
+      got.forEach((w) => grid.appendChild(buildWorkItem(w, false)))
+      const miss = times.length - got.length
+      $('favEmpty').innerHTML = got.length
+        ? miss
+          ? '<div class="me-empty">有 ' + miss + ' 件没能取到（作品可能已被作者删除）</div>'
+          : ''
+        : '<div class="me-empty">收藏的 ' + times.length + ' 件作品这会儿都取不到<br />（作品可能已被作者删除）</div>'
+    }
+
+    /* ---------- 通知红点 + 收藏数（快捷入口角标） ---------- */
+    function loadNotifyBadge() {
+      const el = $('lnkNotify')
+      if (!el) return
+      let t = ''
+      try { t = localStorage.getItem('lw-token') || '' } catch (e) {}
+      if (!t) { el.textContent = ''; return }
+      const paint = (d) => {
+        const n = d && d.ok ? Number(d.unread) || 0 : 0
+        el.textContent = n ? String(n) : ''
+        try {
+          if (window.LWFx) {
+            const link = el.closest ? el.closest('.m-link') : null
+            if (link) window.LWFx.unread(link, !!n)
+          }
+        } catch (e) {}
+      }
+      fetch('/api/notify', { headers: { Authorization: 'Bearer ' + t }, cache: 'no-store' })
+        .then((r) => (r.status === 401 ? null : r.json()))
+        .then(paint)
+        .catch(() => {})
+    }
+    async function loadFavBadge() {
+      const el = $('lnkFav')
+      if (!el) return
+      let t = ''
+      try { t = localStorage.getItem('lw-token') || '' } catch (e) {}
+      if (!t) { el.textContent = ''; return }
+      try {
+        const r = await fetch('/api/fav', { headers: { Authorization: 'Bearer ' + t }, cache: 'no-store' })
+        if (!r.ok) return
+        const d = await r.json()
+        el.textContent = d.total ? String(d.total) : ''
+      } catch (e) {}
+    }
+    // 在通知页点过「全部已读」后撤掉红点
+    window.addEventListener('lw-notify-read', () => {
+      const el = $('lnkNotify')
+      if (el) el.textContent = ''
+      try {
+        const link = el && el.closest ? el.closest('.m-link') : null
+        if (link && window.LWFx) window.LWFx.unread(link, false)
+      } catch (e) {}
+    })
+
     /* 这里原来有一段「滚到下面那张我的画卡片」的逻辑，
        绑在 id=lnkWorksBtn 上 —— 但页面上**根本没有这个 id**，
        「我的作品」是个 <router-link to="/mine/works">，自带跳转。
@@ -1968,6 +2095,8 @@ export default {
     loadAchBadge()
     loadTaskBadge()
     loadChatBadge()
+    loadNotifyBadge()
+    loadFavBadge()
 
     applyMode()
     renderHeroName()
@@ -1989,5 +2118,6 @@ export default {
     }
     // 直接进 /mine/gifted 时也要加载列表，不依赖点入口
     if (MODE === 'gifted') loadLiked()
+    if (MODE === 'fav') loadFavs()
   },
 }

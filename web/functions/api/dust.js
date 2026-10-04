@@ -10,6 +10,7 @@ import { readActiveUser, pickToken, BANNED_ERROR } from './_auth.js'
 import { maybeBirthdayGift } from './_birthday.js'
 import { readBook, signIn, giveDust, publicView, DUST_PER_SIGNIN, DUST_COST } from './_dust.js'
 import { incrementLikes, readAllHistory } from './_history.js'
+import { pushNotify } from './_notify.js'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -88,21 +89,22 @@ export async function onRequestPost(context) {
     // 查出作品作者，好把这份光尘转给他
     const time = Number(body && body.time)
     let recipient = ''
+    let targetWork = null
     if (Number.isFinite(time) && time > 0) {
       const { entries } = await readAllHistory(env.LIGHTFIELD_KV)
-      const target = entries.find((e) => e && e.time === time)
-      if (target) {
+      targetWork = entries.find((e) => e && e.time === time) || null
+      if (targetWork) {
         // 像素相机转图的作品不参与光尘赠送。
         // 相机作品是「导入」不是「一笔一笔画」，让它参与赠送等于开了一条
         // 刷光尘的路：传张图 posted 出来，靠别人送就能稳定拿光尘。
         // 想要光尘请手绘，手绘作品才是社区要鼓励的东西。
-        if (target.fromImage) {
+        if (targetWork.fromImage) {
           return json({
             error: '像素相机转出来的作品不支持送光尘，请给手绘作品点赞',
             reason: 'fromImage',
           }, 400)
         }
-        if (target.ownerUser) recipient = String(target.ownerUser)
+        if (targetWork.ownerUser) recipient = String(targetWork.ownerUser)
       }
     }
 
@@ -136,6 +138,16 @@ export async function onRequestPost(context) {
     }
     // 扣分成功才加赞；作品若已不存在，账本已扣但不加分
     const liked = await incrementLikes(env.LIGHTFIELD_KV, body.time)
+    // 光尘真的转到作者账上了，再给他一条通知（自己给自己送在上面已拦）
+    if (r.credited > 0 && recipient) {
+      const wn = targetWork ? String(targetWork.workName || targetWork.name || '未命名').slice(0, 20) : '你的作品'
+      await pushNotify(env.LIGHTFIELD_KV, recipient, {
+        type: 'like',
+        from: who.uid,
+        work: time,
+        text: (who.user.username || '有人') + ' 给你的作品《' + wn + '》送了 1 个光尘 ✨',
+      })
+    }
     return json({
       ok: true,
       found: liked.found,

@@ -2,7 +2,7 @@
 //
 // 这里没有定时任务，也不需要 —— 客户端每次打开网站都会拉一次账本，
 // 趁着那次请求顺手判断就行（见 api/dust.js 的 onRequestGet）。
-import { readBook, writeBook } from './_dust.js'
+import { readBook, writeBook, addLedger } from './_dust.js'
 import { deliver } from './_mail.js'
 import { writeUser, BIRTHDAY_GIFT, isBirthdayToday } from './_auth.js'
 
@@ -26,7 +26,8 @@ export async function maybeBirthdayGift(kv, user, now) {
 
   // 光尘直接进账本，不用再去信箱点一次「领取」
   const book = await readBook(kv, uid)
-  await writeBook(kv, uid, { ...book, bal: (Number(book.bal) || 0) + BIRTHDAY_GIFT })
+  addLedger(book, BIRTHDAY_GIFT, '生日礼物')
+  await writeBook(kv, uid, book)
 
   // 贺信是纯通知（不带附件），否则就成了发两次
   await deliver(kv, uid, {

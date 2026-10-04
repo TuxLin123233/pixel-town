@@ -132,7 +132,7 @@ export async function onRequestPost(context) {
       : await readUserByName(env.LIGHTFIELD_KV, (body && body.name) || '')
     if (!target) return json({ error: '没有这个用户' }, 404)
 
-    const r = await creditDust(env.LIGHTFIELD_KV, target.uid, amount)
+    const r = await creditDust(env.LIGHTFIELD_KV, target.uid, amount, '管理员发放')
     if (!r) return json({ error: '光尘调整失败' }, 500)
     const book = await readBook(env.LIGHTFIELD_KV, target.uid)
     return json({

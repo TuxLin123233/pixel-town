@@ -164,7 +164,7 @@ export async function onRequestPost(context) {
 
   // 自己也拿一点
   try {
-    await creditDust(kv, me.uid, COOK_REWARD)
+    await creditDust(kv, me.uid, COOK_REWARD, '宴会做菜')
   } catch (e) {}
 
   today[to] = { name, dish, perfect, at: now, dust: bonus }

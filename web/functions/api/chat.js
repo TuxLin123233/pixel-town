@@ -22,7 +22,7 @@ import { hitTrade, checkText } from './_illegal.js'
 //   work    分享一幅自己的作品（只存引用，不复制像素）
 //   rps     猜拳，可以押光尘
 import { readActiveUser, readUser, isBanned, BANNED_ERROR } from './_auth.js'
-import { readBook, writeBook } from './_dust.js'
+import { readBook, writeBook, addLedger } from './_dust.js'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -379,13 +379,13 @@ export async function onRequestPost(context) {
       }
       /* 先扣后加。万一加的那步失败，也只是这次没送成，
          绝不会出现「对方没收到、自己也没扣」之外的情况 —— 不会凭空造币。 */
-      await writeBook(kv, who.uid, { ...myBook, bal: bal - amt })
+      addLedger(myBook, -amt, '私聊送礼')
+      await writeBook(kv, who.uid, myBook)
       const hisBook = await readBook(kv, to)
-      await writeBook(kv, to, {
-        ...hisBook,
-        bal: (Number(hisBook.bal) || 0) + amt,
-        got: (Number(hisBook.got) || 0) + amt,
-      })
+      hisBook.bal = (Number(hisBook.bal) || 0) + amt
+      hisBook.got = (Number(hisBook.got) || 0) + amt
+      addLedger(hisBook, amt, '收到私聊礼物')
+      await writeBook(kv, to, hisBook)
       item.dust = amt
       const note = String((body && body.text) || '').replace(/\s+/g, ' ').trim().slice(0, MAX_LEN)
       const badNote = checkText(note, { hitWords })
@@ -492,12 +492,12 @@ export async function onRequestPost(context) {
       // 输的人有多少付多少，不让他欠账（余额可能在这期间花掉了）
       moved = Math.min(wager, Number(lb.bal) || 0)
       if (moved > 0) {
-        await writeBook(kv, loser, { ...lb, bal: (Number(lb.bal) || 0) - moved })
-        await writeBook(kv, winner, {
-          ...wb,
-          bal: (Number(wb.bal) || 0) + moved,
-          got: (Number(wb.got) || 0) + moved,
-        })
+        addLedger(lb, -moved, '猜拳输了')
+        await writeBook(kv, loser, lb)
+        wb.bal = (Number(wb.bal) || 0) + moved
+        wb.got = (Number(wb.got) || 0) + moved
+        addLedger(wb, moved, '猜拳赢了')
+        await writeBook(kv, winner, wb)
       }
     }
     r.moved = moved

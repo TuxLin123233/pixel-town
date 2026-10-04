@@ -12,6 +12,7 @@ import { readActiveUser, readUser, BANNED_ERROR } from './_auth.js'
 import { hitWords } from './_lexicon.js'
 import { hitTrade, checkText } from './_illegal.js'
 import { recentHistory, readAllHistory } from './_history.js'
+import { pushNotify } from './_notify.js'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -152,11 +153,11 @@ export async function onRequestPost(context) {
       .slice(0, MAX_LEN)
     if (!text) return json({ error: '说点什么再发吧' }, 400)
 
-    // 作品必须还在
+    // 作品必须还在；顺带取出作品条目，通知里要带作品名
     const owner = await workOwner(kv, work)
     const { entries } = await readAllHistory(kv)
-    const exists = entries.some((e) => e && Number(e.time) === work)
-    if (!exists) return json({ error: '这幅作品已经不在了' }, 404)
+    const workEntry = entries.find((e) => e && Number(e.time) === work) || null
+    if (!workEntry) return json({ error: '这幅作品已经不在了' }, 404)
 
     // 敏感词：命中就拒，并告诉你是哪个词
     const hit = checkText(text, { hitWords })
@@ -185,6 +186,17 @@ export async function onRequestPost(context) {
     list.push(item)
     await writeComments(kv, work, list)
     const [view] = await decorate(kv, [item], owner)
+    // 通知作品作者（作者自己评论自己的作品不通知）
+    if (owner && owner !== who.uid) {
+      const wn = String(workEntry.workName || workEntry.name || '未命名').slice(0, 20)
+      const snippet = text.length > 24 ? text.slice(0, 24) + '…' : text
+      await pushNotify(kv, owner, {
+        type: 'comment',
+        from: who.uid,
+        work,
+        text: (who.user.username || '有人') + ' 评论了你的作品《' + wn + '》：' + snippet,
+      })
+    }
     return json({ ok: true, item: view, total: list.length })
   }
 

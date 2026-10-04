@@ -8,7 +8,7 @@ import { hitTrade, checkText } from './_illegal.js'
 //   POST {action:'buy',  id}          买一件家具（花光尘，买过就不再收费）
 //   POST {action:'save', items}       保存屋里的布置
 import { readActiveUser, pickToken, BANNED_ERROR } from './_auth.js'
-import { readBook, writeBook, giveHome, DUST_COST, publicView } from './_dust.js'
+import { readBook, writeBook, giveHome, DUST_COST, publicView, addLedger } from './_dust.js'
 import {
   FURNITURE_BASE,
   THEMES,
@@ -198,7 +198,8 @@ export async function onRequestPost(context) {
     if ((Number(book.bal) || 0) < f.price) {
       return json({ error: '光尘不够，还差 ' + (f.price - (Number(book.bal) || 0)) + ' 个', need: f.price, book: null }, 400)
     }
-    const next = await writeBook(kv, who.uid, { ...book, bal: (Number(book.bal) || 0) - f.price })
+    addLedger(book, -f.price, '购买家具')
+    const next = await writeBook(kv, who.uid, book)
     house.owned.push(f.id)
     await writeHouse(kv, who.uid, house)
     return json({ ok: true, bought: f.id, owned: house.owned, book: { bal: next.bal, got: next.got } })
@@ -284,7 +285,8 @@ export async function onRequestPost(context) {
     if (bal < nx.price) {
       return json({ error: '扩建要 ' + nx.price + ' 个光尘，还差 ' + (nx.price - bal) + ' 个', need: nx.price }, 400)
     }
-    const after = await writeBook(kv, who.uid, { ...book, bal: bal - nx.price })
+    addLedger(book, -nx.price, '扩建院子')
+    const after = await writeBook(kv, who.uid, book)
     const from = house.size
     /* 房间一大，地板线就往下走（16 是第 5 行，24 是第 8 行）。
        家具要跟着往下挪同样的距离，否则原来站在地上的现在会浮在墙上。 */

@@ -8,7 +8,7 @@ import { checkOrigin } from './_origin.js'
 // 「成就说 20 幅、作品列表只有 18 幅」这种对不上的情况。
 import { readActiveUser, readUser, isBanned, BANNED_ERROR } from './_auth.js'
 import { readAllHistory } from './_history.js'
-import { readBook, writeBook, publicView } from './_dust.js'
+import { readBook, writeBook, publicView, addLedger } from './_dust.js'
 import { computeMetrics, diffUnlock, view, SIGN_MILESTONES } from './_achieve.js'
 
 const CORS_HEADERS = {
@@ -145,6 +145,7 @@ export async function onRequestPost(context) {
     for (const a of fresh) reward += Number(a.reward) || 0
     if (reward > 0) {
       book.bal = book0.bal + reward
+      addLedger(book, reward, '成就奖励')
       book = await writeBook(kv, who.uid, book)
     }
   }

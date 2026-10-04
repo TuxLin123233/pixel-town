@@ -99,7 +99,7 @@ export async function settle(kv, kind, period, table, ranked) {
       continue
     }
 
-    await creditDust(kv, uid, r.dust)
+    await creditDust(kv, uid, r.dust, kind === 'daily' ? '日榜奖励' : '周榜奖励')
     await kv.put(payKey(k, period, uid), String(r.dust))
 
     // 同时发一封信，进信箱后在站内也能看到

@@ -125,7 +125,7 @@ export async function bindByCode(kv, user, rawCode) {
   await writeUser(kv, user)
 
   try {
-    await creditDust(kv, user.uid, INVITEE_REWARD)
+    await creditDust(kv, user.uid, INVITEE_REWARD, '邀请见面礼')
   } catch (e) {}
 
   // 邀请人战绩：多了一位已绑定的好友
@@ -161,7 +161,7 @@ export async function rewardInviterFirstWork(kv, user) {
   if (inviter && !capped) {
     amount = INVITER_REWARD
     try {
-      await creditDust(kv, inviterUid, amount)
+      await creditDust(kv, inviterUid, amount, '好友首作奖')
       stat.rewarded += 1
       stat.earned += amount
       await writeStat(kv, inviterUid, stat)

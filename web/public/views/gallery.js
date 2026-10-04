@@ -1462,6 +1462,32 @@ export default {
       .preview-like .like-btn:active { transform: scale(0.94); }
       .preview-like .like-btn.liked { background: var(--like); border-color: var(--like); color: #fff; }
 
+      /* 收藏按钮：描边小胶囊，收藏后变蓝底白字，跟全站主色一致 */
+      .preview-like .fav-btn {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        height: 24px;
+        padding: 0 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1;
+        background: transparent;
+        border: 1px solid var(--border-strong);
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: transform 0.12s, background 0.15s, border-color 0.15s, color 0.15s;
+      }
+      .preview-like .fav-btn:hover { background: var(--surface-2); }
+      .preview-like .fav-btn:active { transform: scale(0.94); }
+      .preview-like .fav-btn.fav-on {
+        background: var(--accent, #5b8def);
+        border-color: var(--accent, #5b8def);
+        color: #fff;
+      }
+
       .preview-like .vote-btn { border: 1px solid rgba(91, 141, 239, 0.45); color: var(--accent); }
       .preview-like .vote-btn:hover { background: rgba(91, 141, 239, 0.1); }
       .preview-like .vote-btn:active { transform: scale(0.94); }
@@ -1832,6 +1858,7 @@ export default {
         </div>
         <div class="preview-like">
           <button class="like-btn" id="previewLike" type="button" title="送光尘给这幅画">✨ <span id="previewLikeCount">0</span></button>
+          <button class="fav-btn" id="previewFav" type="button" title="收藏这幅画">☆ 收藏</button>
           <button class="vote-btn" id="previewVoteBtn" type="button" hidden>🏆 投一票</button>
           <button class="share-btn" id="previewShare" type="button">🔗 复制链接</button>
           <button class="share-btn" id="previewCard" type="button">🃏 生成朋友圈卡片</button>
@@ -3620,6 +3647,45 @@ export default {
       let animTimer = null
       let animIdx = 0
 
+      /* ---------- 收藏（☆）----------
+         登录后拉一次自己的收藏时间戳集合缓存在内存，预览弹窗据此点亮星星；
+         切换收藏后强制重拉，保证「我的收藏」页与这里状态一致。 */
+      let favSet = null
+      let favLoading = null
+      function favToken() {
+        try { return localStorage.getItem('lw-token') || '' } catch (e) { return '' }
+      }
+      async function ensureFavs(force) {
+        if (!favToken()) { favSet = new Set(); return favSet }
+        if (favSet && !force) return favSet
+        if (favLoading && !force) return favLoading
+        favLoading = (async () => {
+          try {
+            const r = await fetch('/api/fav', {
+              headers: { Authorization: 'Bearer ' + favToken() },
+              cache: 'no-store',
+            })
+            if (r.ok) {
+              const d = await r.json()
+              favSet = new Set((d.times || []).map(Number))
+            } else if (r.status === 401) {
+              favSet = new Set()
+            }
+          } catch (e) {
+            if (!favSet) favSet = new Set()
+          }
+          return favSet
+        })()
+        return favLoading
+      }
+      function paintFavBtn() {
+        const btn = document.getElementById('previewFav')
+        if (!btn || !currentPreview) return
+        const on = !!(favSet && favSet.has(Number(currentPreview.time)))
+        btn.classList.toggle('fav-on', on)
+        btn.textContent = on ? '★ 已收藏' : '☆ 收藏'
+      }
+
       function drawAnimFrame(cv, frame) {
         const tc = cv.getContext('2d')
         tc.clearRect(0, 0, 16, 16)
@@ -3854,6 +3920,9 @@ export default {
         }
         updateLikedState(pvLike, rec.time)
         currentPreview = rec
+        // 收藏按钮：先用内存里的集合画一次，再悄悄拉最新状态校正
+        paintFavBtn()
+        ensureFavs().then(paintFavBtn)
         closePalette()
         /* 照片转来的作品颜色非常多，色板没意义，直接隐藏入口 */
         if (palBtn) {
@@ -4543,6 +4612,36 @@ export default {
           return
         }
         like(currentPreview, btn)
+      })
+
+      document.getElementById('previewFav').addEventListener('click', async () => {
+        if (!currentPreview) return
+        const btn = document.getElementById('previewFav')
+        const t = favToken()
+        if (!t) {
+          toast('登录后才能收藏作品')
+          if (window.sfx) window.sfx('no')
+          return
+        }
+        if (btn.disabled) return
+        btn.disabled = true
+        try {
+          const r = await fetch('/api/fav', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + t },
+            body: JSON.stringify({ time: currentPreview.time }),
+          })
+          if (r.status === 401) { toast('登录已过期，请重新登录'); return }
+          const d = await r.json().catch(() => null)
+          if (!r.ok || !d || !d.ok) { toast((d && d.error) || '操作失败，请稍后再试'); return }
+          await ensureFavs(true)
+          paintFavBtn()
+          if (window.sfx) window.sfx(d.fav ? 'ok' : 'select')
+        } catch (e) {
+          toast('网络开小差了，稍后再试')
+        } finally {
+          btn.disabled = false
+        }
       })
 
       document.getElementById('previewCard').addEventListener('click', () => {

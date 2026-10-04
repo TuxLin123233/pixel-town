@@ -274,6 +274,19 @@ export default {
       <section class="group">
         <div class="ver red">
           <div class="ver-body">
+            <div class="ver-title"><span class="ver-tag">v1.4.9</span> 通知、收藏、光尘明细 <span class="ver-date">2026-10</span></div>
+            <ul class="ver-list">
+              <li><span class="li-tag tag-new">新功能</span><b>通知中心</b>：谁给你的作品送了光尘、谁评论了你、谁关注了你，都汇总在「我的 → 🔔 通知」里，有新通知时入口会亮红点，点进去自动标为已读</li>
+              <li><span class="li-tag tag-new">新功能</span><b>作品收藏</b>：社区打开任意作品，按钮区多了 <b>☆ 收藏</b>，收藏后变成蓝色 ★ 已收藏；收藏的画在「我的 → 收藏」里一次看全，最多 200 件，作品被删掉会自动取不到</li>
+              <li><span class="li-tag tag-new">新功能</span><b>光尘明细</b>：「我的 → 📒 光尘明细」能查到最近 50 笔收支 —— 签到、发布奖励、送礼收礼、买家具、扩建、改头像、成就奖、邀请奖励、猜拳输赢…… 每一笔从哪来、花哪去都有记录</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="group">
+        <div class="ver red">
+          <div class="ver-body">
             <div class="ver-title"><span class="ver-tag">v1.7.6</span> 画板多了个「像素重力」 <span class="ver-date">2026-10</span></div>
             <ul class="ver-list">
               <li><span class="li-tag tag-new">新功能</span>画板开局多了第三个方向：<b>像素重力</b>。在画布上点一下或者拖着划，颗粒撒下去会自己往下掉，<b>落到下面有东西就斜着滑开</b>，所以堆出来是有坡度的沙堆，不是一根笔直的柱子。堆稳了按「🫂 抖一抖」，立着的部分会塌下来</li>

@@ -18,6 +18,8 @@ const views = {
   mine: () => import('./views/mine.js'),
   login: () => import('./views/login.js'),
   mail: () => import('./views/mail.js'),
+  notifications: () => import('./views/notifications.js'),
+  dustlog: () => import('./views/dustlog.js'),
   achieve: () => import('./views/achieve.js'),
   avatar: () => import('./views/avatar.js'),
   intro: () => import('./views/intro.js'),
@@ -144,9 +146,12 @@ const routes = [
   // 「我的」的两个过滤页：只显示自己的东西，不混进社区
   { path: '/mine/works', component: () => loadView('mine') },
   { path: '/mine/gifted', component: () => loadView('mine') },
+  { path: '/mine/fav', component: () => loadView('mine') },
   // 登录 / 注册（独立页面，不占底部导航位）
   { path: '/login', component: () => loadView('login') },
   { path: '/mail', component: () => loadView('mail') },
+  { path: '/notifications', component: () => loadView('notifications') },
+  { path: '/dustlog', component: () => loadView('dustlog') },
   { path: '/achieve', component: () => loadView('achieve') },
   { path: '/tasks', component: () => loadView('tasks') },
   { path: '/rank', component: () => loadView('rank') },

@@ -70,7 +70,7 @@ export async function onRequestPost(context) {
     // 奖励曲线：卡牌每通关一层 1 光尘，最多 5；大锅每道 1 颗星，最多 5
     const amount = Math.min(CLAIM_MAX, kind === 'card' ? Math.floor(score / 2) : score)
     let book = await readBook(env.LIGHTFIELD_KV, who.uid)
-    if (amount > 0) book = await creditDust(env.LIGHTFIELD_KV, who.uid, amount)
+    if (amount > 0) book = await creditDust(env.LIGHTFIELD_KV, who.uid, amount, '旧图廊游玩')
     return json({ ok: true, earned: amount, book: publicView(book) })
   }
 

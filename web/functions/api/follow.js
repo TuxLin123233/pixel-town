@@ -20,6 +20,7 @@ import {
   removeFollow,
   followStats,
 } from './_follow.js'
+import { pushNotify } from './_notify.js'
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -150,8 +151,19 @@ export async function onRequestPost(context) {
   if (!target || isBanned(target)) return json({ error: '没有这个用户' }, 404)
 
 
-  if (action === 'follow') await addFollow(env.LIGHTFIELD_KV, who.uid, uid)
-  else await removeFollow(env.LIGHTFIELD_KV, who.uid, uid)
+  if (action === 'follow') {
+    // 关注前看一眼对方是否已关注我：已关注的话这次是「回关」，通知文案不同
+    const hisOutBefore = await readFollowSet(env.LIGHTFIELD_KV, FOLLOW_OUT_KEY(uid))
+    const becomeFriend = hisOutBefore.indexOf(who.uid) >= 0
+    await addFollow(env.LIGHTFIELD_KV, who.uid, uid)
+    await pushNotify(env.LIGHTFIELD_KV, uid, {
+      type: 'follow',
+      from: who.uid,
+      text: becomeFriend
+        ? (who.user.username || '有人') + ' 也关注了你，你们成为好友啦 🤝'
+        : (who.user.username || '有人') + ' 关注了你',
+    })
+  } else await removeFollow(env.LIGHTFIELD_KV, who.uid, uid)
 
   const myOut = await readFollowSet(env.LIGHTFIELD_KV, FOLLOW_OUT_KEY(who.uid))
   const hisOut = await readFollowSet(env.LIGHTFIELD_KV, FOLLOW_OUT_KEY(uid))
