@@ -45,7 +45,7 @@ export default {
       .u-hint { font-size: 12px; color: var(--text-faint); }
 
       .u-hero {
-        display: flex; align-items: center; gap: 13px;
+        display: flex; align-items: center; gap: 13px; flex-wrap: wrap;
         background: var(--surface); border: 1px solid var(--border);
         border-radius: 16px; padding: 14px; margin-top: 10px;
       }
@@ -103,7 +103,7 @@ export default {
         background: var(--accent); color: #fff;
       }
       .u-follow.on { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border-strong); }
-      .u-acts { display: flex; align-items: center; gap: 8px; flex: none; }
+      .u-acts { display: flex; align-items: center; gap: 8px; flex: none; margin-left: auto; }
       .u-chat {
         border: 0; border-radius: 999px; padding: 7px 14px;
         font-size: 13px; font-weight: 700; font-family: inherit;
