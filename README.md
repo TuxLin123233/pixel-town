@@ -20,6 +20,36 @@
 
 ---
 
+## 宣传图
+
+### 手机长图
+
+<p align="center">
+  <img src="宣传图/宣传长图-手机.png" alt="像素小镇手机长图" width="360">
+</p>
+
+### 朋友圈九宫格
+
+<table align="center">
+  <tr>
+    <td><img src="宣传图/朋友圈-1.png" alt="3888种头像" width="240"></td>
+    <td><img src="宣传图/朋友圈-2.png" alt="654件家具" width="240"></td>
+    <td><img src="宣传图/朋友圈-3.png" alt="按钮与选择" width="240"></td>
+  </tr>
+  <tr>
+    <td><img src="宣传图/朋友圈-4.png" alt="一间自己的小屋" width="240"></td>
+    <td><img src="宣传图/朋友圈-5.png" alt="窗外的天气自己挑" width="240"></td>
+    <td><img src="宣传图/朋友圈-6.png" alt="所有绘画工具" width="240"></td>
+  </tr>
+  <tr>
+    <td><img src="宣传图/朋友圈-7.png" alt="五套配色" width="240"></td>
+    <td><img src="宣传图/朋友圈-8.png" alt="卡片设计" width="240"></td>
+    <td><img src="宣传图/朋友圈-9.png" alt="完全免费没有广告" width="240"></td>
+  </tr>
+</table>
+
+---
+
 ## 特性
 
 ### 云端画板

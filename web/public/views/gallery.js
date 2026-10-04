@@ -626,17 +626,18 @@ export default {
       .card-meta {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 8px;
+        gap: 6px;
         margin-top: 8px;
         font-size: 12px;
         color: var(--text-muted);
+        flex-wrap: wrap;
       }
 
       .card-name {
         font-weight: 600;
         word-break: break-all;
-        min-width: 0;
+        min-width: 60px;
+        flex: 1 1 auto;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -654,16 +655,17 @@ export default {
       .card-sub {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 8px;
+        gap: 6px;
         margin-top: 2px;
         font-size: 11px;
         color: var(--text-faint);
+        flex-wrap: wrap;
       }
 
       .card-author {
         font-size: 11px;
-        min-width: 0;
+        min-width: 40px;
+        flex: 1 1 auto;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -709,6 +711,7 @@ export default {
         display: inline-flex;
         align-items: center;
         gap: 4px;
+        margin-left: auto;
         border: 1px solid var(--like-border);
         background: var(--like-bg);
         color: var(--like);

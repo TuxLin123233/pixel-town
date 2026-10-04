@@ -22,9 +22,6 @@ import chat from './views/chat.js'
 import town from './views/town.js'
 import townCard from './views/card.js'
 import townHotpot from './views/hotpot.js'
-import run2 from './views/run.js'
-import world from './views/world.js'
-import guild from './views/guild.js'
 import bag from './views/bag.js'
 
 const { createApp } = window.Vue
@@ -136,9 +133,6 @@ const routes = [
   { path: '/town/bag', component: withAutoCleanup(bag) },
   { path: '/town/card', component: withAutoCleanup(townCard) },
   { path: '/town/hotpot', component: withAutoCleanup(townHotpot) },
-  { path: '/town/run', component: withAutoCleanup(run2) },
-  { path: '/town/world', component: withAutoCleanup(world) },
-  { path: '/town/guild', component: withAutoCleanup(guild) },
   { path: '/avatar', component: withAutoCleanup(avatar) },
   { path: '/intro', component: withAutoCleanup(intro) },
   { path: '/settings', component: withAutoCleanup(settings) },

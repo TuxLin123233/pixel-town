@@ -1650,86 +1650,6 @@
       ],
     },
 
-    /* 跑酷：小人在跑，腿在动 */
-    running: {
-      frames: [
-        [
-          '..............',
-          '..............',
-          '.......nn.....',
-          '......nnnn....',
-          '......nk n....',
-          '......nnnn....',
-          '.....bbbbb....',
-          '....bbbbbb....',
-          '...b.bbbb.b...',
-          '...b.bbbb.b...',
-          '.....bbbb.....',
-          '.....b..b.....',
-          '....bb...b....',
-          '...bb.....b...',
-          '..bb.......b..',
-        ],
-        [
-          '..............',
-          '..............',
-          '.......nn.....',
-          '......nnnn....',
-          '......nk n....',
-          '......nnnn....',
-          '.....bbbbb....',
-          '....bbbbbb....',
-          '...b.bbbb.b...',
-          '...b.bbbb.b...',
-          '.....bbbb.....',
-          '....b....b....',
-          '...bb.....b...',
-          '..bb......bb..',
-          '.bb........bb.',
-        ],
-      ],
-    },
-
-    /* 冒险世界：一个俯视的方块地形，云影在地面上移动 */
-    adventuring: {
-      frames: [
-        [
-          '..............',
-          '..JJJJ..JJJJ..',
-          '.JccccJJccccJ.',
-          '.JcJJccJJccJJ.',
-          'JJJJJJJJJJJJJJ',
-          'ccccJJJJJJcccc',
-          'cJJcJJJJJJcJJc',
-          'ccccJJJJJJcccc',
-          'ccccJJssJJcccc',
-          'ccccJJssJJcccc',
-          'JJJJJJJJJJJJJJ',
-          '.ssss..JJJJJJ.',
-          '.ssss..JJJJJJ.',
-          '.MMMM..MMMMMM.',
-          '.TTTT..TTTTTT.',
-        ],
-        [
-          '..............',
-          '..JJJJ..JJJJ..',
-          '.JccccJJccccJ.',
-          '.JcJJccJJccJJ.',
-          'JJJJJJJJJJJJJJ',
-          '.JJJJJJJJJJJJJ',
-          '.cJJcJJJJJJcJc',
-          '.JJJJJJJJJJJJJ',
-          '.JJJJJJssJJJJJ',
-          '.JJJJJJssJJJJJ',
-          'JJJJJJJJJJJJJJ',
-          '.ssss..JJJJJJ.',
-          '.MMMM..JJJJJJ.',
-          '.MMMM..MMMMMM.',
-          '.TTTT..TTTTTT.',
-        ],
-      ],
-    },
-
     /* ---------- 卡牌屋 / 大锅饭 用的角色和食物 ----------
        原来这 15 张是 DOTOWN 的外部素材。DOTOWN 的条款允许用在游戏里，
        但**禁止再配布素材本身** —— 而它们跟着公开仓库一起发布了，
@@ -1831,44 +1751,6 @@
       'kyyywwgggwwwwk','kwwwwwwwwwwwwk','kwwwwwwwwwwwwk','kwrrrwwyyywwwk',
       'kkkkkkkkkkkkkk','..............',
     ]] },
-
-    /* 冒险者工会：盾牌上的剑，光在闪 */
-    guild: {
-      frames: [
-        [
-          '..............',
-          '...ssssssss...',
-          '..sbbbbbbbbs..',
-          '..sbYYbbYYbs..',
-          '..sbYYbbYYbs..',
-          '..sbbbbbbbbs..',
-          '..sbbYYYYbbs..',
-          '...sbbYYbbs...',
-          '...sbbYYbbs...',
-          '....sbYYbs....',
-          '.....sYYs.....',
-          '......ss......',
-          '..............',
-          '..............',
-        ],
-        [
-          '..............',
-          '...ssssssss...',
-          '..sbbbbbbbbs..',
-          '..sbWWbbWWbs..',
-          '..sbWWbbWWbs..',
-          '..sbbbbbbbbs..',
-          '..sbbWWWWbbs..',
-          '...sbbWWbbs...',
-          '...sbbWWbbs...',
-          '....sbWWbs....',
-          '.....sWWs.....',
-          '......ss......',
-          '..............',
-          '..............',
-        ],
-      ],
-    },
 
   }
 

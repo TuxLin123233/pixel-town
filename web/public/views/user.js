@@ -57,7 +57,7 @@ export default {
       }
       .u-av canvas { width: 100%; height: 100%; image-rendering: pixelated; display: block; }
       .u-id { flex: 1; min-width: 0; }
-      .u-name { font-size: 17px; font-weight: 800; color: var(--text); }
+      .u-name { font-size: 17px; font-weight: 800; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
       .u-modline {
         font-size: 12px; color: var(--text-muted); margin-top: 5px;
       }

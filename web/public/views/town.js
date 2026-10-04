@@ -892,9 +892,6 @@ export default {
         entryCard('twGoBag', 'shop', '家具商店', '六百多件家具，光尘换') +
         entryCard('twGoCard', 'cardgame', '卡牌屋', '十层小塔，三选一扩牌') +
         entryCard('twGoHotpot', 'cooking', '大锅饭', '给镇上的邻居做道菜端过去') +
-        entryCard('twGoRun', 'running', '像素跑酷', '地形程序生成，每次都不一样') +
-        entryCard('twGoWorld', 'adventuring', '冒险世界', '一格一格走，挖矿盖房打怪') +
-        entryCard('twGoGuild', 'guild', '冒险者工会', '把打过的怪换成光尘') +
         '</div>'
 
       /* 收起 / 展开。只切 class，不重画整张地图 —— 重画会把已经画好的
@@ -931,12 +928,6 @@ export default {
       })
       const cardBtn = $('twGoCard')
       if (cardBtn) cardBtn.addEventListener('click', () => { if (window.sfx) window.sfx('tick'); const to = '/town/card'; if (window.__lwRouter) window.__lwRouter.push(to); else location.href = to })
-      const guildBtn = $('twGoGuild')
-      if (guildBtn) guildBtn.addEventListener('click', () => { if (window.sfx) window.sfx('tick'); const to = '/town/guild'; if (window.__lwRouter) window.__lwRouter.push(to); else location.href = to })
-      const worldBtn = $('twGoWorld')
-      if (worldBtn) worldBtn.addEventListener('click', () => { if (window.sfx) window.sfx('tick'); const to = '/town/world'; if (window.__lwRouter) window.__lwRouter.push(to); else location.href = to })
-      const runBtn = $('twGoRun')
-      if (runBtn) runBtn.addEventListener('click', () => { if (window.sfx) window.sfx('tick'); const to = '/town/run'; if (window.__lwRouter) window.__lwRouter.push(to); else location.href = to })
       const hotpotBtn = $('twGoHotpot')
       if (hotpotBtn) hotpotBtn.addEventListener('click', () => { if (window.sfx) window.sfx('tick'); const to = '/town/hotpot'; if (window.__lwRouter) window.__lwRouter.push(to); else location.href = to })
       const gb = $('twGoBag')
