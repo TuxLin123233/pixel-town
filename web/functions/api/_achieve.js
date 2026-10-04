@@ -192,8 +192,6 @@ export const PROGRESS = [
   { id: 'hr24', ico: '🌐', name: '全天候满勤', desc: '24 个时段全都发布过作品', cat: 'moment', type: 'progress', metric: 'hourCount', need: 24, reward: 80 },
 ]
 
-]
-
 /* 里程碑型：只判断条件，不看累计数 */
 export const BADGES = [
   { id: 'g_night', ico: '🌙', name: '深夜画室', desc: '在深夜发布过作品', cat: 'moment' },
