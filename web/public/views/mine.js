@@ -542,61 +542,86 @@ export default {
       }
       .me-hero-bio.empty { color: var(--text-faint); }
 
-      /* 邀请好友卡片 */
+      /* 邀请好友卡片：沿用全站米白 + 蓝的语言，不做跳色渐变 */
       .invite-rules {
+        background: var(--surface-2);
+        border-radius: 10px;
+        padding: 10px 13px;
         font-size: 12.5px;
         color: var(--text-muted);
-        line-height: 1.75;
-        margin-bottom: 12px;
+        line-height: 1.7;
+        margin-bottom: 14px;
       }
-      .invite-rules b { color: var(--accent); font-size: 15px; font-weight: 800; padding: 0 1px; }
-      .invite-code-row { display: flex; gap: 8px; align-items: stretch; }
+      .invite-rules b { color: var(--accent); font-weight: 800; }
+      .invite-code-label {
+        font-size: 11px;
+        color: var(--text-faint);
+        letter-spacing: 1.5px;
+        text-align: center;
+        margin-bottom: 7px;
+      }
       .invite-code {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 25px;
-        font-weight: 800;
-        letter-spacing: 4px;
-        color: #fff;
-        background: linear-gradient(135deg, #ff9a5b, #ff7043);
+        display: block;
+        background: var(--surface-2);
+        border: 1.5px dashed var(--border-strong);
         border-radius: 12px;
-        padding: 11px 8px;
+        padding: 15px 8px;
+        text-align: center;
+        font-size: 27px;
+        font-weight: 800;
+        letter-spacing: 6px;
+        color: var(--accent);
         font-variant-numeric: tabular-nums;
         user-select: all;
       }
       .invite-copy {
-        flex: none;
-        padding: 0 16px;
-        border-radius: 12px;
-        border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-        background: color-mix(in srgb, var(--accent) 12%, var(--surface));
-        color: var(--accent);
-        font-size: 13px;
+        width: 100%;
+        margin-top: 10px;
+        height: 44px;
+        border-radius: 999px;
+        border: none;
+        background: var(--accent);
+        color: #fff;
+        font-size: 14px;
         font-weight: 700;
         cursor: pointer;
+        transition: transform 0.12s ease;
       }
-      .invite-copy:active { transform: scale(0.95); }
+      .invite-copy:active { transform: scale(0.97); }
+      /* 战绩：三格小数据，和创作账本同一套观感 */
       .invite-stat {
-        margin-top: 10px;
-        font-size: 12px;
-        color: var(--text-muted);
+        display: flex;
+        margin-top: 14px;
+        background: var(--surface-2);
+        border-radius: 10px;
+        padding: 11px 0;
       }
-      .invite-stat b { color: var(--text); font-size: 13px; }
+      .invite-stat .is-cell { flex: 1; text-align: center; position: relative; }
+      .invite-stat .is-cell + .is-cell::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 22px;
+        background: var(--border-strong);
+      }
+      .invite-stat .is-num { font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.2; }
+      .invite-stat .is-lab { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
       .invite-bind {
-        margin-top: 12px;
-        padding-top: 12px;
+        margin-top: 14px;
+        padding-top: 14px;
         border-top: 1px dashed var(--border-strong, rgba(128,128,128,0.3));
       }
-      .invite-bind-tip { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+      .invite-bind-tip { font-size: 12px; color: var(--text-muted); margin-bottom: 9px; line-height: 1.6; }
       .invite-bind-row { display: flex; gap: 8px; }
       .invite-bind-input {
         flex: 1;
         min-width: 0;
-        height: 40px;
-        padding: 0 12px;
-        border-radius: 10px;
+        height: 42px;
+        padding: 0 13px;
+        border-radius: 999px;
         border: 1px solid var(--border-strong, rgba(128,128,128,0.35));
         background: var(--surface-2);
         color: var(--text);
@@ -607,9 +632,9 @@ export default {
       }
       .invite-bind-btn {
         flex: none;
-        padding: 0 18px;
-        height: 40px;
-        border-radius: 10px;
+        padding: 0 20px;
+        height: 42px;
+        border-radius: 999px;
         border: none;
         background: var(--accent);
         color: #fff;
@@ -617,6 +642,7 @@ export default {
         font-weight: 700;
         cursor: pointer;
       }
+      .invite-bind-btn:active { transform: scale(0.96); }
       .invite-bind-btn:disabled { opacity: 0.5; }
   `,
   template: `<div class="container mine-wrap">
@@ -661,13 +687,11 @@ export default {
     <div class="m-card" id="inviteCard" hidden>
       <div class="m-card-title">🎁 邀请好友 · 赚光尘</div>
       <div class="invite-rules">
-        好友用你的邀请码注册，他立得 <b>20</b> 光尘；<br />
-        好友发布第一幅作品，你立得 <b>100</b> 光尘！
+        好友用你的邀请码注册，他立得 <b>20</b> 光尘；好友发布第一幅作品，你立得 <b>100</b> 光尘。
       </div>
-      <div class="invite-code-row">
-        <span class="invite-code" id="inviteCode">·······</span>
-        <button class="invite-copy" id="inviteCopy" type="button">复制邀请链接</button>
-      </div>
+      <div class="invite-code-label">你的专属邀请码</div>
+      <span class="invite-code" id="inviteCode">·······</span>
+      <button class="invite-copy" id="inviteCopy" type="button">复制邀请链接</button>
       <div class="invite-stat" id="inviteStat"></div>
       <div class="invite-bind" id="inviteBindBox" hidden>
         <div class="invite-bind-tip">有人邀请你来小镇？填上他的邀请码（只能绑定一次，不可更改）</div>
@@ -1847,10 +1871,14 @@ export default {
     function paintInvite(d) {
       $('inviteCode').textContent = d.code || '·······'
       const s = d.stat || {}
-      $('inviteStat').innerHTML =
-        '已邀请 <b>' + (s.count || 0) + '</b> 位好友 · ' +
-        '<b>' + (s.rewarded || 0) + '</b> 位已发布作品 · ' +
-        '累计赚到 <b>' + (s.earned || 0) + '</b> 光尘'
+      const cells = [
+        { n: s.count || 0, lab: '邀请好友' },
+        { n: s.rewarded || 0, lab: '已发作品' },
+        { n: s.earned || 0, lab: '赚到光尘' },
+      ]
+      $('inviteStat').innerHTML = cells
+        .map((c) => '<div class="is-cell"><div class="is-num">' + c.n + '</div><div class="is-lab">' + c.lab + '</div></div>')
+        .join('')
       // 已绑定过邀请人：补绑框永久消失（绑定不可更改）
       $('inviteBindBox').hidden = !!d.invitedBy
     }
