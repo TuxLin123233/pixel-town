@@ -144,11 +144,43 @@ export default {
       color: var(--text-muted);
       font-size: 13px;
     }
+
+    /* 错误状态 */
+    .stat-error {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .stat-error-ico {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+    .stat-error-msg {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .stat-retry {
+      padding: 10px 24px;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .stat-retry:active { transform: scale(0.96); }
   `,
   template: `
     <div class="container">
       <div class="stats-wrap">
         <div v-if="loading" class="stat-loading">加载中...</div>
+        <div v-else-if="error" class="stat-error">
+          <div class="stat-error-ico">😕</div>
+          <div class="stat-error-msg">{{ error }}</div>
+          <button class="stat-retry" @click="loadData">重试</button>
+        </div>
         <template v-else>
           <!-- 总览 -->
           <div class="stat-card">
@@ -221,22 +253,36 @@ export default {
     </div>
   `,
   async mounted() {
-    this.loading = true
-    try {
-      const res = await fetch('/api/stats')
-      const data = await res.json()
-      if (data.ok) {
-        this.stats = data.stats
+    await this.loadData()
+  },
+  methods: {
+    async loadData() {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await fetch('/api/stats')
+        if (!res.ok) {
+          const text = await res.text().catch(() => '')
+          throw new Error(text || ('请求失败 (' + res.status + ')'))
+        }
+        const data = await res.json()
+        if (data.ok) {
+          this.stats = data.stats
+        } else {
+          throw new Error(data.error || '加载失败')
+        }
+      } catch (e) {
+        console.error('Failed to load stats:', e)
+        this.error = e.message || '网络错误，请稍后重试'
+      } finally {
+        this.loading = false
       }
-    } catch (e) {
-      console.error('Failed to load stats:', e)
-    } finally {
-      this.loading = false
     }
   },
   data() {
     return {
       loading: true,
+      error: null,
       stats: {
         totalUsers: 0,
         totalWorks: 0,

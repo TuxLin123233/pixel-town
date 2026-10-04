@@ -1,5 +1,3 @@
-import { checkOrigin } from './_origin.js'
-
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
