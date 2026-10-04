@@ -264,10 +264,10 @@ export default {
           <div class="stat-card">
             <div class="stat-title">✨ 活跃创作者</div>
             <div class="rank-list">
-              <div v-for="(user, i) in stats.topCreators" :key="user.uid" class="rank-item">
+              <div v-for="(user, i) in stats.topCreators" :key="user.author" class="rank-item">
                 <div class="rank-no" :class="i === 0 ? '' : i === 1 ? 'silver' : i === 2 ? 'bronze' : 'normal'">{{ i + 1 }}</div>
                 <div class="rank-info">
-                  <div class="rank-name">{{ user.username }}</div>
+                  <div class="rank-name">{{ user.author }}</div>
                   <div class="rank-meta">{{ user.works }} 部作品</div>
                 </div>
                 <div class="rank-value">{{ user.likes }} ❤️</div>

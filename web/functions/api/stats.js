@@ -1,3 +1,5 @@
+import { readAllHistory } from './_history.js'
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -21,53 +23,52 @@ export async function onRequestGet(context) {
   const kv = env.LIGHTFIELD_KV
 
   try {
-    // 获取所有作品历史
-    const historyRaw = await kv.get('lw-history')
-    const history = historyRaw ? JSON.parse(historyRaw) : { entries: [] }
-    const entries = history.entries || []
-
-    // 获取所有用户
-    const usersRaw = await kv.get('lw-users')
-    const users = usersRaw ? JSON.parse(usersRaw) : {}
+    // 从分块存储读取所有作品
+    const { entries } = await readAllHistory(kv)
 
     // 总览数据
-    const totalUsers = Object.keys(users).length
     const totalWorks = entries.length
     const totalLikes = entries.reduce((sum, e) => sum + (Number(e.likes) || 0), 0)
 
-    // 访问量（从 lw-visits 读取，如果没有就用作品数估算）
-    const visitsRaw = await kv.get('lw-visits')
-    const totalViews = visitsRaw ? Number(visitsRaw) || 0 : totalWorks * 10
+    // 从作品中提取唯一作者
+    const authorSet = new Set()
+    entries.forEach((e) => {
+      if (e && e.author) authorSet.add(String(e.author).toLowerCase())
+    })
+    const totalUsers = authorSet.size
+
+    // 访问量估算（作品数 × 10）
+    const totalViews = totalWorks * 10
 
     // 最受欢迎作品 Top 10
     const topWorks = entries
-      .filter((e) => e && e.ownerUser)
+      .filter((e) => e && e.author)
       .sort((a, b) => (Number(b.likes) || 0) - (Number(a.likes) || 0))
       .slice(0, 10)
       .map((e) => ({
         time: e.time,
         name: e.name || '未命名',
-        author: users[e.ownerUser]?.username || '未知',
+        author: e.author || '未知',
         likes: Number(e.likes) || 0,
       }))
 
     // 活跃创作者 Top 10（按作品数和点赞数综合排序）
     const creatorStats = {}
     entries.forEach((e) => {
-      if (!e || !e.ownerUser) return
-      if (!creatorStats[e.ownerUser]) {
-        creatorStats[e.ownerUser] = { uid: e.ownerUser, works: 0, likes: 0 }
+      if (!e || !e.author) return
+      const authorKey = String(e.author).toLowerCase()
+      if (!creatorStats[authorKey]) {
+        creatorStats[authorKey] = { author: e.author, works: 0, likes: 0 }
       }
-      creatorStats[e.ownerUser].works++
-      creatorStats[e.ownerUser].likes += Number(e.likes) || 0
+      creatorStats[authorKey].works++
+      creatorStats[authorKey].likes += Number(e.likes) || 0
     })
 
     const topCreators = Object.values(creatorStats)
       .sort((a, b) => b.likes - a.likes || b.works - a.works)
       .slice(0, 10)
       .map((c) => ({
-        uid: c.uid,
-        username: users[c.uid]?.username || '未知',
+        author: c.author,
         works: c.works,
         likes: c.likes,
       }))
