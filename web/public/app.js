@@ -48,7 +48,7 @@ async function loadView(name) {
 const restores = new WeakMap()
 
 function withAutoCleanup(comp) {
-  return {
+  const wrapped = {
     name: comp.name,
     css: comp.css,
     title: comp.title,
@@ -103,6 +103,15 @@ function withAutoCleanup(comp) {
       if (comp.beforeUnmount) comp.beforeUnmount.call(this)
     },
   }
+  // 转发其他 Vue 组件选项（data、methods、computed、watch 等）
+  if (comp.data) wrapped.data = comp.data
+  if (comp.methods) wrapped.methods = comp.methods
+  if (comp.computed) wrapped.computed = comp.computed
+  if (comp.watch) wrapped.watch = comp.watch
+  if (comp.components) wrapped.components = comp.components
+  if (comp.props) wrapped.props = comp.props
+  if (comp.emits) wrapped.emits = comp.emits
+  return wrapped
 }
 
 /* 首页入口：
