@@ -43,24 +43,6 @@ export async function onRequestOptions() {
   return new Response(null, { status: 204, headers: CORS_HEADERS })
 }
 
-/* 读冒险世界那份存档（/api/towngame 写进去的 lw-town-save）。
-   成就里的「冒险世界」那一组指标就靠它。
-   读不到就当没有，不影响别的成就。 */
-async function readTown(kv, uid) {
-  if (!kv || !uid) return null
-  try {
-    const raw = await kv.get('townsave:' + uid)
-    if (!raw) return null
-    const o = JSON.parse(raw)
-    // 存档可能被包了一层（towngame 那边存的是 { world: ... } 或者直接是存档体）
-    if (o && o.world) return o
-    if (o && o.run) return { world: o }
-    return o || null
-  } catch (e) {
-    return null
-  }
-}
-
 export async function onRequestGet(context) {
   const { request, env } = context
   if (!env.LIGHTFIELD_KV) return json({ error: 'LIGHTFIELD_KV is not configured' }, 500)
@@ -81,7 +63,7 @@ export async function onRequestGet(context) {
     const book = await readBook(kv, wantUid)
     const { entries } = await readAllHistory(kv)
     const theirs = entries.filter((e) => e && e.ownerUser === wantUid)
-    const metrics = computeMetrics(theirs, book, u, await readTown(kv, wantUid))
+    const metrics = computeMetrics(theirs, book, u)
     // 只给展示用的字段：不给 book（余额/签到是私事），也不触发发奖
     const v = view(unlocked)
     return json({
@@ -104,7 +86,7 @@ export async function onRequestGet(context) {
   const book = await readBook(kv, who.uid)
   const { entries } = await readAllHistory(kv)
   const mine = entries.filter((e) => e && e.ownerUser === who.uid)
-  const metrics = computeMetrics(mine, book, who.user, await readTown(kv, who.uid))
+  const metrics = computeMetrics(mine, book, who.user)
 
   return json({ ok: true, ...view(unlocked), metrics, book: publicView(book) })
 }
@@ -139,7 +121,7 @@ export async function onRequestPost(context) {
     const { entries } = await readAllHistory(kv)
     const mine = entries.filter((e) => e && e.ownerUser === who.uid)
     const book = await readBook(kv, who.uid)
-    const metrics = computeMetrics(mine, book, who.user, await readTown(kv, who.uid))
+    const metrics = computeMetrics(mine, book, who.user)
     const { fresh } = diffUnlock(metrics, { ...unlocked })
     return json({ ok: true, ...view({ ...unlocked }), fresh, metrics })
   }
@@ -150,7 +132,7 @@ export async function onRequestPost(context) {
   const book0 = await readBook(kv, who.uid)
   const { entries } = await readAllHistory(kv)
   const mine = entries.filter((e) => e && e.ownerUser === who.uid)
-  const metrics = computeMetrics(mine, book0, who.user, await readTown(kv, who.uid))
+  const metrics = computeMetrics(mine, book0, who.user)
 
   const { unlocked, fresh } = diffUnlock(metrics, before)
   await writeUnlocked(kv, who.uid, unlocked)

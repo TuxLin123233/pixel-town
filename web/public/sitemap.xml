@@ -30,21 +30,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://light-field.pages.dev/town/world</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://light-field.pages.dev/town/run</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://light-field.pages.dev/town/guild</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://light-field.pages.dev/town/card</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
