@@ -211,6 +211,103 @@ export default {
       cursor: pointer;
     }
     .stat-retry:active { transform: scale(0.96); }
+
+    /* 冷知識格 */
+    .fact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .fact-item {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .fact-num {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.2;
+    }
+    .fact-num small { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+    .fact-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* 主题比赛 */
+    .contest-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .contest-theme { font-size: 16px; font-weight: 800; color: var(--accent); }
+    .contest-week { font-size: 11px; color: var(--text-faint); }
+    .contest-prompt { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+    .contest-sum { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+    .contest-sum b { color: var(--text); font-size: 15px; margin-right: 3px; }
+
+    /* 趋势柱图 */
+    .trend-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 96px;
+      padding-top: 8px;
+    }
+    .trend-col {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 4px;
+      height: 100%;
+    }
+    .trend-bar {
+      width: 100%;
+      max-width: 18px;
+      background: linear-gradient(180deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 55%, white) 100%);
+      border-radius: 4px 4px 0 0;
+      min-height: 2px;
+      transition: height 0.6s ease;
+    }
+    .trend-bar.is-today { background: linear-gradient(180deg, #ff8a5b 0%, #ffb27a 100%); }
+    .trend-x {
+      width: 100%;
+      text-align: center;
+      font-size: 8px;
+      color: var(--text-faint);
+      transform: scale(0.9);
+      white-space: nowrap;
+    }
+    .trend-note { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+
+    /* 标签云 */
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-strong);
+      font-size: 12px;
+      color: var(--text);
+    }
+    .tag-chip .tag-n {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .tag-chip.hot { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
   `,
   template: `
     <div class="container">
@@ -239,10 +336,90 @@ export default {
                 <div class="overview-label">点赞</div>
               </div>
               <div class="overview-item">
-                <div class="overview-num">{{ stats.totalViews }}</div>
-                <div class="overview-label">访问</div>
+                <div class="overview-num">{{ stats.totalComments }}</div>
+                <div class="overview-label">评论</div>
               </div>
             </div>
+          </div>
+
+          <!-- 小镇冷知识 -->
+          <div class="stat-card">
+            <div class="stat-title">🏷️ 小镇冷知识</div>
+            <div class="fact-grid">
+              <div class="fact-item">
+                <div class="fact-num">{{ stats.totalPixels.toLocaleString() }} <small>格</small></div>
+                <div class="fact-label">大家一共涂了多少像素</div>
+              </div>
+              <div class="fact-item">
+                <div class="fact-num">{{ stats.townDays }} <small>天</small></div>
+                <div class="fact-label">从第一幅作品到现在</div>
+              </div>
+              <div class="fact-item">
+                <div class="fact-num">{{ stats.creatorCount }} <small>位</small></div>
+                <div class="fact-label">真正动过笔的创作者</div>
+              </div>
+              <div class="fact-item">
+                <div class="fact-num">{{ stats.avgLikes }} <small>个</small></div>
+                <div class="fact-label">平均每幅作品收获的赞</div>
+              </div>
+              <div class="fact-item">
+                <div class="fact-num">{{ stats.animWorks }} <small>幅</small></div>
+                <div class="fact-label">会动的帧动画</div>
+              </div>
+              <div class="fact-item">
+                <div class="fact-num">{{ stats.cameraWorks }} <small>幅</small></div>
+                <div class="fact-label">照片转像素画</div>
+              </div>
+              <div class="fact-item">
+                <div class="fact-num">{{ stats.zeroLikeWorks }} <small>幅</small></div>
+                <div class="fact-label">还在等第一个赞</div>
+              </div>
+              <div class="fact-item">
+                <div class="fact-num">{{ stats.busiestTime }}</div>
+                <div class="fact-label">最高产的创作时段</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 近 14 天创作趋势 -->
+          <div class="stat-card">
+            <div class="stat-title">📈 近 14 天创作热度</div>
+            <div class="trend-bars">
+              <div v-for="(d, i) in stats.trend" :key="i" class="trend-col" :title="d.label + '：' + d.count + ' 幅'">
+                <div
+                  class="trend-bar"
+                  :class="{ 'is-today': i === stats.trend.length - 1 }"
+                  :style="{ height: Math.round((d.count / stats.trendMax) * 72) + 'px' }"
+                ></div>
+                <div class="trend-x">{{ d.label }}</div>
+              </div>
+            </div>
+            <div class="trend-note">最近 7 天 {{ stats.recent7 }} 幅，上一个 7 天 {{ stats.prev7 }} 幅 —— 今天那根是橙色</div>
+          </div>
+
+          <!-- 本周主题比赛 -->
+          <div class="stat-card">
+            <div class="stat-title">🏆 本周主题赛</div>
+            <div class="contest-head">
+              <span class="contest-theme">{{ stats.contest.theme }}</span>
+              <span class="contest-week">{{ stats.contest.week }}</span>
+            </div>
+            <div class="contest-prompt">{{ stats.contest.prompt }}</div>
+            <div class="contest-sum">
+              <span><b>{{ stats.contest.joined }}</b>幅参赛</span>
+              <span><b>{{ stats.contest.votes }}</b>票投出</span>
+            </div>
+            <div v-if="stats.contest.top.length" class="rank-list">
+              <div v-for="(w, i) in stats.contest.top" :key="w.time" class="rank-item">
+                <div class="rank-no" :class="i === 0 ? '' : i === 1 ? 'silver' : i === 2 ? 'bronze' : 'normal'">{{ i + 1 }}</div>
+                <div class="rank-info">
+                  <div class="rank-name">{{ w.name }}</div>
+                  <div class="rank-meta">by {{ w.author }}</div>
+                </div>
+                <div class="rank-value">{{ w.votes }} 🗳️</div>
+              </div>
+            </div>
+            <div v-else class="trend-note">本周还没有人参赛，来当第一个？</div>
           </div>
 
           <!-- 作品榜 -->
@@ -275,6 +452,20 @@ export default {
             </div>
           </div>
 
+          <!-- 创作方式分布 -->
+          <div class="stat-card">
+            <div class="stat-title">🖌️ 大家都怎么画</div>
+            <div class="chart-bars">
+              <div v-for="item in stats.methodDistribution" :key="item.key" class="chart-row">
+                <div class="chart-label">{{ item.label }}</div>
+                <div class="chart-bar-wrap">
+                  <div class="chart-bar" :style="{ width: item.percent + '%' }"></div>
+                  <div class="chart-value">{{ item.count }} ({{ item.percent }}%)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- 画布尺寸分布 -->
           <div class="stat-card">
             <div class="stat-title">📐 画布尺寸分布</div>
@@ -286,6 +477,19 @@ export default {
                   <div class="chart-value">{{ item.count }} ({{ item.percent }}%)</div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- 热门标签 -->
+          <div v-if="stats.topTags.length" class="stat-card">
+            <div class="stat-title">🔖 热门标签</div>
+            <div class="tag-cloud">
+              <span
+                v-for="(t, i) in stats.topTags"
+                :key="t.name"
+                class="tag-chip"
+                :class="{ hot: i < 6 }"
+              >#{{ t.name }} <span class="tag-n">{{ t.count }}</span></span>
             </div>
           </div>
         </template>
@@ -327,10 +531,25 @@ export default {
         totalUsers: 0,
         totalWorks: 0,
         totalLikes: 0,
-        totalViews: 0,
+        totalComments: 0,
+        totalPixels: 0,
+        creatorCount: 0,
+        animWorks: 0,
+        cameraWorks: 0,
+        zeroLikeWorks: 0,
+        townDays: 0,
+        avgLikes: 0,
+        busiestTime: '—',
+        trend: [],
+        trendMax: 1,
+        recent7: 0,
+        prev7: 0,
         topWorks: [],
         topCreators: [],
+        methodDistribution: [],
         sizeDistribution: [],
+        topTags: [],
+        contest: { week: '', theme: '', prompt: '', joined: 0, votes: 0, top: [] },
       },
     }
   },
