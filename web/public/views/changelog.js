@@ -274,6 +274,21 @@ export default {
       <section class="group">
         <div class="ver red">
           <div class="ver-body">
+            <div class="ver-title"><span class="ver-tag">v1.4.10</span> 画板换成 Pixel Studio 风格 <span class="ver-date">2026-10</span></div>
+            <ul class="ver-list">
+              <li><span class="li-tag tag-update">更新</span><b>画板界面改版</b>：顶部是两排 32 色常驻色板，中间画布，底部收成两行方块工具 —— 第一行画笔/橡皮/颜料桶/吸管/移动/拖锁/当前色，第二行撤销/清空/相机/镜像/下载/上传，参考了 Pixel Studio 的布局</li>
+              <li><span class="li-tag tag-update">更新</span><b>像素画、像素喷漆、像素重力三个方向共用同一套外壳</b>，进哪个方向都是顶色板 + 中方画布 + 底方块，只是工具项不同；喷漆的矩形/圆等按钮统一换成自绘像素线性图标，不再混用字符和 emoji</li>
+              <li><span class="li-tag tag-update">更新</span><b>工具图标换成简约线条 SVG</b>：所有画板工具（画笔/橡皮/桶/吸管/手/锁/撤销/清空/相机/镜像/下载/上传/直线/矩形/圆/抖一抖）统一用 currentColor 描边的 24×24 线性图标，浅深主题和选中态自动适配，视觉更现代</li>
+              <li><span class="li-tag tag-update">更新</span><b>工具按钮尺寸收紧</b>：从铺满整宽的大方块改成 40px 固定方形居中排列，画布尺寸键同步缩小，整体比例更协调、不撑屏</li>
+              <li><span class="li-tag tag-update">更新</span>配色不另起炉灶，<b>跟随全站浅色/深色主题</b>，选中态仍是小镇蓝；画布会按屏幕高度自动收一点，保证底部工具键一进画板就能完整看到，不被底部导航挡住</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="group">
+        <div class="ver red">
+          <div class="ver-body">
             <div class="ver-title"><span class="ver-tag">v1.4.9</span> 通知、收藏、光尘明细 <span class="ver-date">2026-10</span></div>
             <ul class="ver-list">
               <li><span class="li-tag tag-new">新功能</span><b>通知中心</b>：谁给你的作品送了光尘、谁评论了你、谁关注了你，都汇总在「我的 → 🔔 通知」里，有新通知时入口会亮红点，点进去自动标为已读</li>

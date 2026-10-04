@@ -2257,6 +2257,302 @@ color: var(--text-muted);
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
       }
+
+      /* ============================================================
+         Pixel Studio 风格画板外壳（参考 Pixel Studio 布局）
+         顶部色板坞 + 中部画布 + 底部方块工具坞，像素画/喷漆/重力
+         三个创作方向共用同一个外壳，只切换坞内的工具行。
+         规则全部挂在 .studio 作用域下做增量覆盖，旧规则保留不删，
+         JS 依赖的 ID/class 一个不少。
+         ============================================================ */
+      .studio {
+        position: relative;
+        width: 100%;
+        max-width: 520px;
+        margin-top: 4px;
+        /* 底部方块坞不能被固定的全局导航 #appNav 盖住 */
+        margin-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+        background: var(--surface);
+        border: 1px solid var(--border-strong, var(--border));
+        border-radius: 20px;
+        padding: 10px;
+        box-shadow: 0 10px 30px var(--shadow1);
+      }
+      [data-mood="dark"] .studio {
+        border-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.38);
+      }
+
+      /* ---------- 顶部色板坞：两排方形色块 ---------- */
+      .studio-pal {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 8px;
+      }
+      .studio-pal .preset-row {
+        grid-template-columns: repeat(16, 1fr);
+        gap: 4px;
+        margin: 0;
+      }
+      .studio-pal .swatch {
+        min-height: 0;
+        border-radius: 4px;
+        border-width: 1px;
+      }
+      .studio-pal .swatch.selected {
+        box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent);
+        transform: scale(1.12);
+      }
+      /* 喷漆/重力方向用各自工具条里的色板，像素画色板坞收起 */
+      body.spray-on #pixelDock,
+      body.gravity-on #pixelDock { display: none; }
+
+      /* ---------- 喷漆 / 重力条：与顶部色板坞同一套容器语言 ---------- */
+      .studio .spray-bar,
+      .studio .gravity-bar {
+        max-width: none;
+        margin: 0 0 2px;
+        gap: 8px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 8px;
+      }
+      .studio .spray-pal,
+      .studio .gravity-pal {
+        grid-template-columns: repeat(16, 1fr);
+        gap: 4px;
+      }
+      .studio .spray-sw,
+      .studio .gravity-sw { border-radius: 4px; border-width: 1px; }
+      .studio .spray-tool.wide { border-radius: 9px; }
+      /* 工具方块：喷漆 8 键、重力 3 键，统一固定 40px 居中 */
+      .studio .spray-tools {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+      }
+      .studio .gravity-tools {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+      }
+      .studio .spray-tools .gtool,
+      .studio .gravity-tools .gtool {
+        min-width: 0;
+        padding: 6px 2px 5px;
+        border-radius: 10px;
+      }
+      .studio .spray-tools .gtool-tx,
+      .studio .gravity-tools .gtool-tx {
+        font-size: 9px;
+        letter-spacing: -0.2px;
+      }
+      .studio .spray-tools .gtool-ico,
+      .studio .gravity-tools .gtool-ico { font-size: 16px; }
+      .studio .spray-sym-btn { border-radius: 8px; padding: 5px 8px; }
+
+      /* ---------- 外壳内画布：去掉自带卡片，底由外壳承 ---------- */
+      .studio .board-wrap {
+        max-width: none;
+        background: transparent;
+        box-shadow: none;
+        padding: 10px 2px 4px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+      }
+      [data-mood="dark"] .studio .board-wrap {
+        border: none;
+        box-shadow: none;
+      }
+      /* 画布按视口高度收口，保证「底部方块坞」首屏就能完整露出、
+         不被固定的全局导航 #appNav 挡住；宽屏下仍由宽度决定大小。
+         高度预算 = 顶部模式条 + 色板坞 + 尺寸行 + 两行方块 + 导航留白。 */
+      .studio .board-wrap #board,
+      .studio .board-wrap #sprayBoard,
+      .studio .board-wrap #gravityBoard {
+        width: auto;
+        margin: 0 auto;
+        max-width: 100%;
+        aspect-ratio: 1;
+        max-height: max(190px, calc(100dvh - 470px));
+      }
+      /* 喷漆/重力顶部条比色板坞高一截（操作行 + 滑杆），多让 60px */
+      body.spray-on .studio .board-wrap #sprayBoard,
+      body.gravity-on .studio .board-wrap #gravityBoard {
+        max-height: max(190px, calc(100dvh - 530px));
+      }
+
+      /* ---------- 底部方块工具坞 ----------
+         不再用 grid 1fr 把按钮拉满整宽（宽屏下按钮巨大、比例失衡），
+         改成固定尺寸 + 居中排列，所有方向一致，视觉更克制现代。 */
+      .studio-dock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border);
+      }
+      /* 简约线条 SVG 图标容器：统一 22px，随按钮 currentColor 描边 */
+      .pico {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        line-height: 0;
+      }
+      .pico svg { width: 100%; height: 100%; display: block; }
+
+      .studio .size-row,
+      .studio .zoom-row {
+        max-width: none;
+        margin: 0;
+        gap: 6px;
+        width: 100%;
+        justify-content: center;
+      }
+      .studio .size-label { font-size: 12px; flex: 0 0 auto; }
+      .studio .size-btn {
+        height: 30px;
+        border-radius: 8px;
+        border-width: 1px;
+        font-size: 12px;
+        flex: 0 1 84px;
+      }
+      .studio .zoom-row { justify-content: center; }
+
+      /* 绘图工具：固定 40px 方块，居中排列，不再随宽度膨胀 */
+      .studio .tools {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin: 0;
+        max-width: none;
+      }
+      .studio .tools .tool {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        border: 1px solid var(--border-strong, var(--border));
+        padding: 0;
+      }
+      .studio .tools .tool:hover { background: var(--surface-3); }
+      .studio .tools .tool.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+        box-shadow: none;
+      }
+      .studio .tools .tool:disabled { opacity: 0.45; }
+      /* 颜色键：保留小色块，方形 */
+      .studio #toolColor .tool-swatch {
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+      }
+
+      /* 操作行：同样固定方块 + 居中，上传键加宽带文字 */
+      .studio .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        max-width: none;
+      }
+      .studio .actions > button {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        box-shadow: none;
+        padding: 0;
+        border: 1px solid var(--border-strong, var(--border));
+      }
+      .studio .actions > button:hover { background: var(--surface-3); }
+      .studio .actions > button:disabled { opacity: 0.45; }
+      /* 原 #undoBtn/#clearBtn 写死了 flex:0 0 52px，这里用更高优先级收回成 40px */
+      .studio .actions #undoBtn,
+      .studio .actions #clearBtn { flex: 0 0 auto; width: 40px; }
+      .studio #uploadBtn {
+        width: auto;
+        padding: 0 16px;
+        gap: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--accent);
+        border-color: transparent;
+        color: #fff;
+      }
+      .studio #uploadBtn .pico { width: 18px; height: 18px; }
+      .studio #uploadBtn .abtn-tx {
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1;
+      }
+      /* 喷漆/重力只留下载+上传 */
+      body.spray-on .studio .actions > button:not(#savePngBtn):not(#uploadBtn),
+      body.gravity-on .studio .actions > button:not(#savePngBtn):not(#uploadBtn) {
+        display: none;
+      }
+
+      /* 喷漆 / 重力工具条的 gtool：统一成 40px 方块，纯图标 */
+      .studio .spray-tools .gtool,
+      .studio .gravity-tools .gtool {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        min-width: 0;
+        padding: 0;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+      }
+      .studio .gravity-tools { max-width: none; }
+
+      /* 选色弹层：浮在画布上方，不再把布局往下顶 */
+      .studio .pick-wrap {
+        position: absolute;
+        z-index: 50;
+        top: 84px;
+        left: 10px;
+        right: 10px;
+        margin: 0;
+        max-width: none;
+        border-radius: 14px;
+        padding: 14px;
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+      }
+      /* 喷漆/重力的顶部条更高（色板+操作行），弹层从操作行下方开始 */
+      body.spray-on .studio .pick-wrap,
+      body.gravity-on .studio .pick-wrap { top: 122px; }
+      [data-mood="dark"] .studio .pick-wrap {
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+      }
+      .studio .pick-wrap .cur { margin-top: 0; }
+
+      /* 外壳下面的发布表单行与外壳对齐到同一宽度 */
+      .studio ~ .more-btn,
+      .studio ~ .join-card,
+      .studio ~ .tag-row,
+      .studio ~ .name-row,
+      .studio ~ .recent-row,
+      .studio ~ .draft-row { max-width: 520px; }
 `,
   template: `<div class="consent-overlay" id="consentOverlay" hidden>
       <div class="consent-box" id="consentBox">
@@ -2400,13 +2696,13 @@ color: var(--text-muted);
       </select>
     </div>
 
-    <div class="board-wrap">
-      <canvas id="board" width="512" height="512"
-              title="也可以直接把照片拖到这里"></canvas>
-      <canvas id="sprayBoard" hidden
-              title="按住鼠标或手指拖着喷"></canvas>
-      <canvas id="gravityBoard" hidden
-              title="点一下撒一把，颗粒会自己落到下面"></canvas>
+    <!-- Pixel Studio 风格外壳：顶色板坞 + 画布 + 底部方块工具坞 -->
+    <div class="studio" id="studioFrame">
+
+    <!-- 顶部色板坞（像素画）：32 个预设色常驻两排，点按直接换色；
+         自定义色 / HSV 仍走 #pickWrap 弹出层。 -->
+    <div class="studio-pal" id="pixelDock">
+      <div class="preset-row" id="presetRow"></div>
     </div>
 
     <!-- 喷漆工具条：只在像素喷漆模式下出现 -->
@@ -2425,30 +2721,14 @@ color: var(--text-muted);
       <!-- 选工具：铅笔 / 直线 / 矩形 / 圆 / 橡皮 / 吸管。
            默认是铅笔，和以前一样 —— 不用挑就能画。 -->
       <div class="spray-tools" id="sprayTools">
-        <button class="gtool" type="button" data-tool="brush" aria-pressed="true" title="画笔">
-          <span class="gtool-ico">✏️</span><span class="gtool-tx">画笔</span>
-        </button>
-        <button class="gtool" type="button" data-tool="line" aria-pressed="false" title="直线：按住拖出一条线">
-          <span class="gtool-ico">📏</span><span class="gtool-tx">直线</span>
-        </button>
-        <button class="gtool" type="button" data-tool="rect" aria-pressed="false" title="矩形：按住拖出一个框">
-          <span class="gtool-ico">▭</span><span class="gtool-tx">矩形</span>
-        </button>
-        <button class="gtool" type="button" data-tool="circle" aria-pressed="false" title="圆：按住拖出一个圆">
-          <span class="gtool-ico">◯</span><span class="gtool-tx">圆</span>
-        </button>
-        <button class="gtool" type="button" data-tool="eraser" aria-pressed="false" title="橡皮：擦掉涂过的地方">
-          <span class="gtool-ico">🧽</span><span class="gtool-tx">橡皮</span>
-        </button>
-        <button class="gtool" type="button" data-tool="picker" aria-pressed="false" title="吸管：取画布上的颜色">
-          <span class="gtool-ico">💧</span><span class="gtool-tx">吸管</span>
-        </button>
-        <button class="gtool" type="button" id="sprayUndo" title="撤销">
-          <span class="gtool-ico">↩️</span><span class="gtool-tx">撤销</span>
-        </button>
-        <button class="gtool" type="button" id="sprayClear" title="清空">
-          <span class="gtool-ico">🗑️</span><span class="gtool-tx">清空</span>
-        </button>
+        <button class="gtool" type="button" data-tool="brush" aria-pressed="true" title="画笔"><i class="pico" data-svg="brush"></i></button>
+        <button class="gtool" type="button" data-tool="line" aria-pressed="false" title="直线：按住拖出一条线"><i class="pico" data-svg="line"></i></button>
+        <button class="gtool" type="button" data-tool="rect" aria-pressed="false" title="矩形：按住拖出一个框"><i class="pico" data-svg="rect"></i></button>
+        <button class="gtool" type="button" data-tool="circle" aria-pressed="false" title="圆：按住拖出一个圆"><i class="pico" data-svg="circle"></i></button>
+        <button class="gtool" type="button" data-tool="eraser" aria-pressed="false" title="橡皮：擦掉涂过的地方"><i class="pico" data-svg="eraser"></i></button>
+        <button class="gtool" type="button" data-tool="picker" aria-pressed="false" title="吸管：取画布上的颜色"><i class="pico" data-svg="picker"></i></button>
+        <button class="gtool" type="button" id="sprayUndo" title="撤销"><i class="pico" data-svg="undo"></i></button>
+        <button class="gtool" type="button" id="sprayClear" title="清空"><i class="pico" data-svg="trash"></i></button>
       </div>
       <!-- 对称：不开 / 左右 / 上下 / 四角。 -->
       <div class="spray-size" id="spraySym">
@@ -2478,15 +2758,9 @@ color: var(--text-muted);
         </span>
       </div>
       <div class="gravity-tools">
-        <button class="gtool" type="button" id="gravityUndo" title="撤销">
-          <span class="gtool-ico">↩️</span><span class="gtool-tx">撤销</span>
-        </button>
-        <button class="gtool" type="button" id="gravityShake" title="抖一抖：把卡住、立着的沙摇塌">
-          <span class="gtool-ico">🫂</span><span class="gtool-tx">抖一抖</span>
-        </button>
-        <button class="gtool" type="button" id="gravityClear" title="清空">
-          <span class="gtool-ico">🗑️</span><span class="gtool-tx">清空</span>
-        </button>
+        <button class="gtool" type="button" id="gravityUndo" title="撤销"><i class="pico" data-svg="undo"></i></button>
+        <button class="gtool" type="button" id="gravityShake" title="抖一抖：把卡住、立着的沙摇塌"><i class="pico" data-svg="shake"></i></button>
+        <button class="gtool" type="button" id="gravityClear" title="清空"><i class="pico" data-svg="trash"></i></button>
       </div>
       <div class="spray-size">
         <span class="spray-size-label">一把</span>
@@ -2494,6 +2768,18 @@ color: var(--text-muted);
         <span class="spray-size-num" id="gravityBrushNum">2</span>
       </div>
     </div>
+
+    <div class="board-wrap">
+      <canvas id="board" width="512" height="512"
+              title="也可以直接把照片拖到这里"></canvas>
+      <canvas id="sprayBoard" hidden
+              title="按住鼠标或手指拖着喷"></canvas>
+      <canvas id="gravityBoard" hidden
+              title="点一下撒一把，颗粒会自己落到下面"></canvas>
+    </div>
+
+    <!-- 底部方块工具坞：画布尺寸 / 绘图工具 / 操作按钮都收在这里 -->
+    <div class="studio-dock">
 
     <div class="size-row">
       <span class="size-label">画布</span>
@@ -2518,17 +2804,17 @@ color: var(--text-muted);
     <button class="mini-show" id="miniShow" type="button" title="显示小地图" aria-label="显示小地图" hidden>🗺</button>
 
     <div class="tools">
-      <button id="toolBrush" class="tool active" type="button" data-tool="brush" title="画笔（B）">✏️</button>
-      <button id="toolEraser" class="tool" type="button" data-tool="eraser" title="橡皮擦（E）">🧽</button>
-      <button id="toolFill" class="tool" type="button" data-tool="fill" title="颜料桶（F）">🪣</button>
-      <button id="toolPick" class="tool" type="button" data-tool="picker" title="取色器（I）：点一下画布吸取该格颜色">💉</button>
-      <button id="toolPan" class="tool" type="button" data-tool="pan" title="移动画布（H）：只拖动不落笔，任何尺寸都能用">✋</button>
-      <button id="toolLock" class="tool" type="button" title="拖动锁：开启后不管用哪个工具，拖动都是移动画布而不落笔">✥</button>
+      <button id="toolBrush" class="tool active" type="button" data-tool="brush" title="画笔（B）"><i class="pico" data-svg="brush"></i></button>
+      <button id="toolEraser" class="tool" type="button" data-tool="eraser" title="橡皮擦（E）"><i class="pico" data-svg="eraser"></i></button>
+      <button id="toolFill" class="tool" type="button" data-tool="fill" title="颜料桶（F）"><i class="pico" data-svg="fill"></i></button>
+      <button id="toolPick" class="tool" type="button" data-tool="picker" title="取色器（I）：点一下画布吸取该格颜色"><i class="pico" data-svg="picker"></i></button>
+      <button id="toolPan" class="tool" type="button" data-tool="pan" title="移动画布（H）：只拖动不落笔，任何尺寸都能用"><i class="pico" data-svg="pan"></i></button>
+      <button id="toolLock" class="tool" type="button" title="拖动锁：开启后不管用哪个工具，拖动都是移动画布而不落笔"><i class="pico" data-svg="lock"></i></button>
       <button id="toolColor" class="tool" type="button" title="颜色（C）"><span class="tool-swatch" id="toolSwatch"></span></button>
     </div>
 
     <div class="pick-wrap" id="pickWrap" hidden>
-      <div class="preset-row" id="presetRow"></div>
+      <!-- 预设色板已上移到顶部 #pixelDock，这里只留当前色值与 HSV 自定义 -->
       <div class="cur">
         <span class="cur-swatch" id="curSwatch"></span>
         <span class="cur-label">当前色值</span>
@@ -2551,6 +2837,52 @@ color: var(--text-muted);
         </div>
       </div>
     </div>
+
+    <!-- 操作行：从作品名下方移到工具坞第二行，和绘图工具同一外壳。
+         所有 ID 与顺序保持不变，applyLayout / 模式隐藏规则照旧生效。 -->
+    <div class="actions">
+      <button id="undoBtn" type="button" title="撤销（Z）" disabled><i class="pico" data-svg="undo"></i></button>
+      <button id="clearBtn" type="button" title="清空"><i class="pico" data-svg="trash"></i></button>
+      <button id="imgBtn" type="button" title="把照片变成像素画" class="abtn">
+        <i class="pico" data-svg="camera"></i>
+      </button>
+      <button id="mirrorBtn" type="button" title="左右镜像绘制（M）" aria-pressed="false" class="abtn">
+        <i class="pico" data-svg="mirror"></i>
+      </button>
+      <input id="imgInput" type="file" accept="image/*" hidden>
+
+    <div class="imgmode-overlay" id="imgModeOverlay" hidden>
+      <div class="imgmode-box">
+        <div class="imgmode-title">照片转成像素画后，颜色想怎么处理？</div>
+        <!--
+          版权提示不能省。
+          「把照片转成像素画」不改变原照片的著作权归属 ——
+          处理别人拍的照片再发布，和直接盗图在法律上是同一件事。
+          这里明说一句，既是提醒用户，也是平台已尽合理注意义务的证明。
+        -->
+        <div class="imgmode-warn">
+          ⚠️ 请只处理<b>你自己拍的照片</b>或<b>已获得授权的图片</b>。<br>
+          把他人作品转成像素画后发布，<b>仍然属于侵权</b>。
+        </div>
+        <button class="imgmode-opt" type="button" data-imgmode="palette">
+          <span class="imgmode-name">只用画板的 32 种颜色</span>
+          <span class="imgmode-desc">颜色更统一，看起来像老游戏画面</span>
+        </button>
+        <button class="imgmode-opt" type="button" data-imgmode="plain">
+          <span class="imgmode-name">保留照片原来的颜色</span>
+          <span class="imgmode-desc">颜色更丰富，画面更细腻</span>
+        </button>
+        <button class="imgmode-cancel" id="imgModeCancel" type="button">取消</button>
+      </div>
+    </div>
+      <button id="savePngBtn" type="button" title="导出 PNG" class="abtn">
+        <i class="pico" data-svg="download"></i>
+      </button>
+      <button id="uploadBtn" type="button"><i class="pico" data-svg="upload"></i><span class="abtn-tx">上传</span></button>
+    </div>
+
+    </div><!-- /.studio-dock -->
+    </div><!-- /#studioFrame -->
 
     <router-link id="moreBtn" class="more-btn" to="/gallery" hidden>去社区看更多作品 →</router-link>
 
@@ -2583,47 +2915,6 @@ color: var(--text-muted);
     <div class="name-row">
       <input id="titleInput" type="text" placeholder="作品名" maxlength="20">
       <span class="author-tag" id="authorTag" title="作者名取自你的账号">未登录</span>
-    </div>
-
-    <div class="actions">
-      <button id="undoBtn" type="button" title="撤销（Z）" disabled>↩️</button>
-      <button id="clearBtn" type="button" title="清空">🗑️</button>
-      <button id="imgBtn" type="button" title="把照片变成像素画" class="abtn">
-        <span class="abtn-ico">📷</span><span class="abtn-tx">像素相机</span>
-      </button>
-      <button id="mirrorBtn" type="button" title="左右镜像绘制（M）" aria-pressed="false" class="abtn">
-        <span class="abtn-ico">🦋</span><span class="abtn-tx">镜像</span>
-      </button>
-      <input id="imgInput" type="file" accept="image/*" hidden>
-
-    <div class="imgmode-overlay" id="imgModeOverlay" hidden>
-      <div class="imgmode-box">
-        <div class="imgmode-title">照片转成像素画后，颜色想怎么处理？</div>
-        <!--
-          版权提示不能省。
-          「把照片转成像素画」不改变原照片的著作权归属 ——
-          处理别人的照片再发布，和直接盗图在法律上是同一件事。
-          这里明说一句，既是提醒用户，也是平台已尽合理注意义务的证明。
-        -->
-        <div class="imgmode-warn">
-          ⚠️ 请只处理<b>你自己拍的照片</b>或<b>已获得授权的图片</b>。<br>
-          把他人作品转成像素画后发布，<b>仍然属于侵权</b>。
-        </div>
-        <button class="imgmode-opt" type="button" data-imgmode="palette">
-          <span class="imgmode-name">只用画板的 32 种颜色</span>
-          <span class="imgmode-desc">颜色更统一，看起来像老游戏画面</span>
-        </button>
-        <button class="imgmode-opt" type="button" data-imgmode="plain">
-          <span class="imgmode-name">保留照片原来的颜色</span>
-          <span class="imgmode-desc">颜色更丰富，画面更细腻</span>
-        </button>
-        <button class="imgmode-cancel" id="imgModeCancel" type="button">取消</button>
-      </div>
-    </div>
-      <button id="savePngBtn" type="button" title="导出 PNG" class="abtn">
-        <span class="abtn-ico">⬇️</span><span class="abtn-tx">下载</span>
-      </button>
-      <button id="uploadBtn" type="button">上传</button>
     </div>
 
     <div class="recent-row" id="recentRow" hidden>
@@ -2739,6 +3030,35 @@ color: var(--text-muted);
         picker: '取色器：点一下画布吸取那一格的颜色 · 快捷键 I',
         pan: '移动画布：按住拖动查看其它区域，不会落笔 · 快捷键 H',
       }
+
+      /* ---------- 画板工具坞的简约线条 SVG 图标 ----------
+         全部用 currentColor 做描边：浅色下是主题文字色、选中蓝底时自动变白，
+         深色模式跟着文字色走，无需任何硬编码颜色。viewBox 统一 24×24，
+         stroke-width 1.8，圆角端点 —— 一整套现代、克制的线性语言。 */
+      const SVG_ATTR = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"'
+      const PAINT_SVG = {
+        brush:   `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="M13 3 3 13l7 7 10-10-7-7Z"/><path d="m16 7 2 2"/><path d="M2 22s1.5-1 4-2.5S11 17 11 17"/></svg>`,
+        eraser:  `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="m7 21 14-14-4-4L3 17l4 4Z"/><path d="M5 19h16"/></svg>`,
+        fill:    `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="m5 11 7-7 7 7-7 7-7-7Z"/><path d="M4 11h16"/><path d="M16.5 15c1 0 1.8.8 1.8 1.8 0 1.2-1.8 2.7-1.8 2.7s-1.8-1.5-1.8-2.7c0-1 .8-1.8 1.8-1.8Z"/></svg>`,
+        picker:  `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="m14 2 8 8-3 3-8-8 3-3Z"/><path d="m11 5-8 8v4h4l8-8"/><path d="m7 17 4 4"/></svg>`,
+        pan:     `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="M8 11V6a1.5 1.5 0 0 1 3 0v5"/><path d="M11 11V5a1.5 1.5 0 0 1 3 0v6"/><path d="M14 11V7a1.5 1.5 0 0 1 3 0v7a5 5 0 0 1-5 5h-1a5 5 0 0 1-4-2L4 14a1.5 1.5 0 0 1 2.5-1.5L8 14"/></svg>`,
+        lock:    `<svg viewBox="0 0 24 24" ${SVG_ATTR}><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><circle cx="12" cy="16" r="1.2"/></svg>`,
+        undo:    `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="M9 14 4 9l5-5"/><path d="M4 9h11a6 6 0 0 1 0 12h-3"/></svg>`,
+        trash:   `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="M4 7h16"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"/><path d="M10 11v6M14 11v6"/></svg>`,
+        camera:  `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg>`,
+        mirror:  `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="M12 3v18"/><path d="M8 7l-4 5 4 5"/><path d="M16 7l4 5-4 5"/></svg>`,
+        download:`<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>`,
+        upload:  `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="M12 20V8"/><path d="m7 13 5-5 5 5"/><path d="M5 4h14"/></svg>`,
+        line:    `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="m5 19 14-14"/></svg>`,
+        rect:    `<svg viewBox="0 0 24 24" ${SVG_ATTR}><rect x="4" y="5" width="16" height="14" rx="1"/></svg>`,
+        circle:  `<svg viewBox="0 0 24 24" ${SVG_ATTR}><circle cx="12" cy="12" r="8"/></svg>`,
+        shake:   `<svg viewBox="0 0 24 24" ${SVG_ATTR}><path d="M3 8c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M3 14c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M3 20c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/></svg>`,
+      }
+      function paintSvg(name) { return PAINT_SVG[name] || '' }
+      // 把模板里的 <i class="pico" data-svg="..."> 占位符替换成真正的 SVG
+      document.querySelectorAll('[data-svg]').forEach((el) => {
+        el.innerHTML = paintSvg(el.getAttribute('data-svg'))
+      })
 
       /* ---------- 命题 ---------- */
       const PROMPT_CATEGORIES = [
@@ -5539,6 +5859,9 @@ color: var(--text-muted);
         if (gbar) gbar.hidden = !gravityOn
         document.body.classList.toggle('spray-on', sprayOn)
         document.body.classList.toggle('gravity-on', gravityOn)
+        // 进入方向的瞬间就把顶部条上的「当前色」小方块与高亮刷出来，
+        // 否则第一次手动换色前它一直是空白（喷漆/重力尤为明显）
+        syncAuxPalette()
       }
 
       function setSprayMode(on) {
