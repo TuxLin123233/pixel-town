@@ -2964,13 +2964,6 @@ export default {
             b.textContent = '👥 多人'
             meta.append(b)
           }
-          if (rec.fromImage) {
-            const b = document.createElement('span')
-            b.className = 'img-badge'
-            b.textContent = '🖼️ 来自图片'
-            b.title = '由照片转换生成'
-            meta.append(b)
-          }
           meta.append(makeLikeButton(rec))
           if (rec.contest) {
             const vb = makeVoteButton(rec)
@@ -3056,14 +3049,6 @@ export default {
           /* 登记到过滤器用的列表，并把「这是哪种画布」标在卡片上 */
           card.__rec = rec
           cards.push(card)
-          const mt = methodOf(rec)
-          if (mt) {
-            const mb = document.createElement('span')
-            mb.className = 'card-method'
-            const md = METHOD_DEFS.find((d) => d[0] === mt)
-            mb.textContent = md ? md[1] : mt
-            card.appendChild(mb)
-          }
           card.addEventListener('click', () => preview(rec))
           card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
