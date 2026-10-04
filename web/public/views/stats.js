@@ -3,7 +3,8 @@ export default {
   name: 'stats',
   title: '数据统计',
   css: `
-    .stats-wrap { width: 100%; max-width: 520px; }
+    .container { width: 100%; max-width: 560px; margin: 0 auto; }
+    .stats-wrap { width: 100%; }
 
     .stat-card {
       background: var(--surface);
@@ -145,7 +146,7 @@ export default {
     }
   `,
   template: `
-    <div class="page-wrap">
+    <div class="container">
       <div class="stats-wrap">
         <div v-if="loading" class="stat-loading">加载中...</div>
         <template v-else>

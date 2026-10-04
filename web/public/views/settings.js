@@ -1288,8 +1288,9 @@ export default {
       const NAV_ITEMS = [
         { path: '/paint', ico: '🎨', name: '画板' },
         { path: '/gallery', ico: '🌆', name: '社区' },
+        { path: '/town', ico: '🏘️', name: '小镇' },
+        { path: '/stats', ico: '📊', name: '数据' },
         { path: '/mine', ico: '🌱', name: '我的' },
-        { path: '/settings', ico: '⚙️', name: '设置' },
       ]
 
       function readLS(k, d) {
