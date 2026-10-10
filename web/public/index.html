@@ -56,6 +56,16 @@
         } catch (e) {}
       })()
     </script>
+    <!-- 首屏底色。
+         site.css 是外链，在它到位之前页面是**纯白**的 —— 手机上一次要白一秒多，
+         看着就像「卡住了」。原来样式内联在 HTML 里没这个问题，是拆出去的副作用。
+         这里只内联「底色」这一件事：取 site.css 里 :root / [data-mood="dark"]
+         的 --bg 渐变起始色，所以真正到位时只是渐变淡入，看不出跳变。
+         ⚠️ 改 site.css 里 --bg 的配色时，这两行也要跟着改。 -->
+    <style>
+      html { background: #fdf8f2; }
+      [data-mood="dark"] { background: #211c17; }
+    </style>
     <script>
       /* ---------- 首屏预载：把「这一页要用的模块图」提前 ----------
          SPA 的第一帧要等 app.js 跑完才 import 视图（./views/xxx.js），
