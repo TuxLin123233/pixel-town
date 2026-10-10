@@ -17,10 +17,16 @@ Vue 与 Vue Router 用的是官方**全局构建版**，直接放在 `public/` �
 
 ```
 public/
-  index.html        应用外壳：主题变量、全局样式、底部导航、#toast、挂载点 #app
-  404.html          与 index.html 相同，用于 /paint 这类无扩展名深链回退到 SPA
+  index.html        应用外壳：主题引导、关键内联样式、底部导航、#toast、挂载点 #app
+  404.html          与 index.html 完全相同，用于 /paint 这类无扩展名深链回退到 SPA
   app.js            路由表 + 外壳组件 + 视图卸载自动清理
   views/*.js        每个页面一个视图组件：{ name, title, css, template, mounted() }
+  views/<页面>/      该页拆出来的子模块：*-styles.js / *-template.js / *-constants.js
+  styles/*.css      从 index.html 挪出来的全站样式（site.css / detail.css）
+  lw-sfx.js         轻量音效（WebAudio 实时合成，原 index.html 内联脚本）
+  lw-dust.js        光尘账本（原 index.html 内联脚本）
+  lw-pxicon.js      自绘像素图标引擎；图标数据与 emoji 替换在 lw-pxicon/
+  lw-polish.js      视觉打磨层引擎；CSS 与空状态图标在 lw-polish/
   vue.global.prod.js / vue-router.global.prod.js   官方全局构建版
   omggif.js / qrcode.js                            原有第三方库（全局脚本）
 ```
@@ -33,6 +39,36 @@ public/
   在离开该路由时统一回收——原多文件页面里有 `setInterval` 没存变量、无法清除的问题。
 - 各视图最初由脚本从旧单文件页面转换而来；旧页面保留在 git 历史里，需要对照时用
   `git show <commit>:web/public/gallery.html` 查看。
+
+### 长文件拆分约定
+
+视图文件一度涨到 3000～4600 行。现在按「是什么」拆，不按行数切：
+
+| 子模块 | 放什么 |
+| --- | --- |
+| `*-styles.js` | 这个页面的 CSS，`export const xxxStyles = \`...\`` |
+| `*-template.js` | 这个页面的 HTML 模板，`export const xxxTemplate = \`...\`` |
+| `*-constants.js` | 纯字面量常量：调色板、标签映射、图标网格、分页大小…… |
+| 主文件 | `import` 上面三个 + `mounted()` 里的页面逻辑 |
+
+**别为拆而拆**：一个模块的正文不到 50 行就别单独建文件——一行 `import` 加八行头注释的开销
+已经超过收益，打开只看到一行代码反而更劝退。这种就直接写在主文件里：
+模板回到 `template:` 属性，常量写在 `import` 之后（纯字面量 + 全程只读的常量放模块级即可，
+它在 `mounted()` 之前求值，不存在 TDZ 问题）。
+
+两条硬要求：
+
+1. **搬代码不等于改代码。** 搬过去的内容必须与原来逐字节一致（CSS 例外：只允许动空白与注释，
+   改完用 CSSOM 规则指纹核对）。所以子模块里常见「缩进保持原样」。
+2. **新增的文件要加进 `sw.js` 的 `SHELL`。** 它们是被 `import` / `<link>` 拉进来的，
+   没进预缓存的话，断网时那一跳会回退到 `index.html`，浏览器把 HTML 当 JS/CSS 用，页面就残了。
+   `sw.js` 改动后记得一起把 `VERSION` 往上加一位。
+
+判断某个 `const` 能不能提出去，两条准则：**纯字面量**（表达式里除了字面量不出现任何标识符 ——
+不引用 DOM，也不调用 `Date.now()` 这类每次挂载都该重算的东西）、
+**全程只读**（会被 `push` / 赋值的是运行时状态，提到模块级会跨次挂载残留）。
+`mounted()` 里的函数暂时不搬：它们大多闭包在挂载状态上，搬出去要连状态一起重构，
+那属于改逻辑，不属于拆文件。
 
 ## 页面
 

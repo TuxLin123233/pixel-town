@@ -7,12 +7,17 @@
 //     表现为「改了但没变化」。代码正确性比离线速度重要。
 //   - 图标、图片：缓存优先（体积大、变动少）
 
-const VERSION = 'lw-v1.25.5'
+const VERSION = 'lw-v1.25.6'
 const SHELL_CACHE = 'lw-shell-' + VERSION
 
+/* 预缓存清单。
+   注意：视图拆出来的子模块、以及从 index.html 挪出去的样式/脚本都要列进来 ——
+   它们是 import / <link> 拉进来的，一旦没被缓存，断网时那次请求会回退到
+   index.html（SW 的 fallback），浏览器拿到一坨 HTML 当 JS/CSS 用，页面就残了。 */
 const SHELL = [
   '/',
   '/index.html',
+  '/404.html',
   '/app.js',
   '/manifest.webmanifest',
   '/vue.global.prod.js',
@@ -22,20 +27,39 @@ const SHELL = [
   '/favicon.ico',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
+  '/styles/site.css',
+  '/styles/detail.css',
+  '/lw-sfx.js',
+  '/lw-dust.js',
   '/views/paint.js',
+  '/views/paint/paint-styles.js',
+  '/views/paint/paint-template.js',
+  '/views/paint/paint-constants.js',
   '/views/gallery.js',
+  '/views/gallery/gallery-styles.js',
+  '/views/gallery/gallery-template.js',
+  '/views/gallery/gallery-constants.js',
   '/views/settings.js',
+  '/views/settings/settings-styles.js',
+  '/views/settings/settings-template.js',
+  '/views/settings/settings-constants.js',
   '/views/changelog.js',
   '/views/admin.js',
+  '/views/admin/admin-styles.js',
+  '/views/admin/admin-template.js',
   '/views/terms.js',
   '/views/faq.js',
   '/views/tasks.js',
   '/views/rank.js',
   '/views/user.js',
   '/views/chat.js',
+  '/views/chat/chat-styles.js',
   '/views/town.js',
+  '/views/town/town-styles.js',
   '/views/bag.js',
   '/views/mine.js',
+  '/views/mine/mine-styles.js',
+  '/views/mine/mine-template.js',
   '/views/intro.js',
   '/views/avatar.js',
   '/views/achieve.js',
@@ -54,6 +78,12 @@ const SHELL = [
   '/lw-thumb.js',
   '/lw-cache.js',
   '/lw-dialog.js',
+  '/lw-polish.js',
+  '/lw-polish/polish-styles.js',
+  '/lw-polish/polish-icons.js',
+  '/lw-pxicon.js',
+  '/lw-pxicon/icons.js',
+  '/lw-pxicon/emoji.js',
 ]
 
 self.addEventListener('install', (event) => {
