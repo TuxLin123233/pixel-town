@@ -34,16 +34,51 @@ const views = {
   stats: () => import('./views/stats.js'),
 }
 
-// 缓存已加载的视图模块
+// 缓存已加载的视图模块（存 Promise，这样预取和真正加载共用同一次请求）
 const viewCache = {}
 
 // 异步加载视图并包装
-async function loadView(name) {
-  if (!viewCache[name]) {
-    viewCache[name] = await views[name]()
+async function loadView(name, retried) {
+  try {
+    if (!viewCache[name]) viewCache[name] = views[name]()
+    const mod = await viewCache[name]
+    return withAutoCleanup(mod.default || mod)
+  } catch (e) {
+    /* 预取失败（网络抖了一下）不该把这一页永久钉死：清掉缓存重试一次。
+       只重试一次，避免一直失败时打转。 */
+    viewCache[name] = null
+    if (retried) throw e
+    return loadView(name, true)
   }
-  return withAutoCleanup(viewCache[name].default || viewCache[name])
 }
+
+/** 路径 → 视图名（和 index.html 里那段首屏预载用同一套推导规则） */
+function viewNameOf(path) {
+  const parts = String(path || '').split('?')[0].split('/').filter(Boolean)
+  let seg = parts[0] || ''
+  if (seg === 'u') seg = 'user'
+  if (seg === 'town' && parts[1] && parts[1] !== 'home') seg = parts[1]
+  return seg
+}
+
+/** 提前把视图的模块图拉起来（视图模块顶层只有 import 和一个组件对象，没有副作用） */
+function prefetchView(name) {
+  if (!name || viewCache[name] || !views[name]) return
+  const p = views[name]()
+  viewCache[name] = p
+  // 失败就放开，等真正跳转时再走一次 loadView
+  p.catch(() => { if (viewCache[name] === p) viewCache[name] = null })
+}
+
+/* 悬停 / 按下就开始预取目标视图：等真点进去时模块已经在模块表里，
+   切页几乎立刻出画面（不然每切一页都要等视图 + 它三个子模块两级 RTT）。 */
+function prefetchFromEvent(e) {
+  const a = e.target && e.target.closest ? e.target.closest('a[href^="/"]') : null
+  if (!a) return
+  prefetchView(viewNameOf(a.getAttribute('href')))
+}
+document.addEventListener('pointerover', prefetchFromEvent, { passive: true })
+document.addEventListener('touchstart', prefetchFromEvent, { passive: true })
 
 // 视图卸载时自动清理它创建的定时器 / 全局监听 / body 滚动锁
 // （原多文件页面里有些 setInterval 没有存变量，切页后无法回收）

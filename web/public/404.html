@@ -56,6 +56,38 @@
         } catch (e) {}
       })()
     </script>
+    <script>
+      /* ---------- 首屏预载：把「这一页要用的模块图」提前 ----------
+         SPA 的第一帧要等 app.js 跑完才 import 视图（./views/xxx.js），
+         视图自己还要 import 它的 styles/template/constants —— 这是两层串行的 RTT，
+         手机上一次就是几百毫秒（实测线上 /paint 因此多花约 0.8～0.9 秒）。
+
+         <link rel="modulepreload"> 会把模块**连同它的依赖**一起预取，
+         所以这里只需要按当前路径推一个视图名，不用维护子模块清单。
+         推不出来（路径不认识）就什么都不做：少一次优化而已，不会出错。 */
+      ;(function () {
+        try {
+          var p = location.pathname
+          if (p === '/' || p === '') {
+            /* 首页入口由设置决定：有没画完的草稿就直接回画板，否则看 lw-entrance。 */
+            var raw = localStorage.getItem('paintDraft')
+            var hasDraft = false
+            try { hasDraft = !!(raw && JSON.parse(raw).pixels.length) } catch (e) {}
+            p = hasDraft ? '/paint' : (localStorage.getItem('lw-entrance') || '/paint')
+          }
+          var parts = p.split('/').filter(Boolean)
+          var seg = parts[0] || 'paint'
+          if (seg === 'u') seg = 'user'
+          /* /town/home 归小镇页；/town/bag、/town/card、/town/hotpot 是各自独立的二级页 */
+          if (seg === 'town' && parts[1] && parts[1] !== 'home') seg = parts[1]
+          if (!/^[a-z][a-z0-9-]*$/.test(seg)) return
+          var l = document.createElement('link')
+          l.rel = 'modulepreload'
+          l.href = '/views/' + seg + '.js'
+          document.head.appendChild(l)
+        } catch (e) {}
+      })()
+    </script>
     <!-- 主站样式（原 index.html 的内联 <style>，已拆到 styles/site.css）。
          保持内联会带来首屏少一次请求，但 600 行塞在 HTML 里没人愿意读；
          这层不是「关键首屏样式」，拆出去不影响可读性与正确性。 -->
@@ -227,6 +259,13 @@
     <link rel="stylesheet" href="/styles/detail.css">
 
     <script src="/lw-sfx.js"></script>
+
+    <!-- 这两个模块图每个页面都要用，但浏览器要等父模块下完才知道它们存在，
+         于是白等一轮 RTT（实测 DCL 因此晚了约 400ms）。显式提前拉。 -->
+    <link rel="modulepreload" href="/lw-polish/polish-styles.js">
+    <link rel="modulepreload" href="/lw-polish/polish-icons.js">
+    <link rel="modulepreload" href="/lw-pxicon/icons.js">
+    <link rel="modulepreload" href="/lw-pxicon/emoji.js">
 
     <script src="/vue.global.prod.js"></script>
     <script src="/vue-router.global.prod.js"></script>
