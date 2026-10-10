@@ -1,9 +1,15 @@
 import http from 'http'
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
-const ROOT = '/home/tux/编程/光域/web/public'
-const PORT = 8791
+// 路径一律从脚本位置推导：仓库目录改过名（光域 → 像素小镇），
+// 以前写死的绝对路径会让这个 mock 服务器直接起不来。
+const HERE = path.dirname(fileURLToPath(import.meta.url))
+const WEB = path.resolve(HERE, '../..')
+const ROOT = path.join(WEB, 'public')
+const FUNCTIONS = path.join(WEB, 'functions/api')
+const PORT = Number(process.env.PORT || 8791)
 
 /* ---------- 造几幅示例作品（占位，真截图请用真实作品） ---------- */
 const PAL = { r: [229, 87, 75], R: [180, 52, 44], g: [93, 176, 92], G: [58, 128, 60],
@@ -46,9 +52,9 @@ const works = NAMES.map((n, i) => ({
 }))
 
 /* ---------- 小屋 ---------- */
-const { FURNITURE, SURFACES, PAL: TPAL, sanitizeItems } = await import('/home/tux/编程/光域/web/functions/api/_town.js')
-const { FURNITURE_BASE, THEMES, CAT_NAMES } = await import('/home/tux/编程/光域/web/functions/api/_townitems.js')
-const { emptyHouse, SIZES: RSIZES } = await import('/home/tux/编程/光域/web/functions/api/_town.js')
+const { FURNITURE, SURFACES, PAL: TPAL, sanitizeItems } = await import(path.join(FUNCTIONS, '_town.js'))
+const { FURNITURE_BASE, THEMES, CAT_NAMES } = await import(path.join(FUNCTIONS, '_townitems.js'))
+const { emptyHouse, SIZES: RSIZES } = await import(path.join(FUNCTIONS, '_town.js'))
 const LAYOUT = [
   { id: 'poster__gold', x: 1, y: 1 }, { id: 'clock__ink', x: 6, y: 1 }, { id: 'banner__sakura', x: 1, y: 5 },
   { id: 'bed2__sea', x: 1, y: 9 }, { id: 'nightstand__sea', x: 8, y: 9 }, { id: 'lamp__gold', x: 12, y: 9 },
@@ -73,7 +79,7 @@ const CATALOG = {
     { key: 'dusk', name: '黄昏', ico: '🌇' }, { key: 'night', name: '夜', ico: '🌙' },
   ],
 }
-const { defaultPixels } = await import('/home/tux/编程/光域/web/functions/api/_avatar.js')
+const { defaultPixels } = await import(path.join(FUNCTIONS, '_avatar.js'))
 
 /* ---------- 路由 ---------- */
 function api(u) {
@@ -115,7 +121,10 @@ function api(u) {
   if (p === '/api/dailytask') return { ok: true, claimable: 2, tasks: [] }
   if (p === '/api/chat') return { ok: true, me: 'u1', list: [], items: [] }
   if (p === '/api/auth') return { ok: true, uid: 'u1', username: '我' }
-  if (p === '/api/dust') return { ok: true, bal: 328, streak: 5, total: 328 }
+  /* 光尘账本：客户端读的是 d.book（lw-dust.js 里 applyBook(d.book)），
+     以前 mock 把 bal/streak 直接放在顶层，客户端拿不到 →
+     「我的」页会显示成「需要登录」。这里按真实接口的形状给。 */
+  if (p === '/api/dust') return { ok: true, book: { bal: 328, streak: 5, total: 48, signedToday: false, got: [], gifted: [], giftedCount: 0 } }
   return { ok: true }
 }
 
@@ -127,12 +136,21 @@ http.createServer((req, res) => {
   // 登录态注入页：设好 localStorage 再跳到目标
   if (u.pathname === '/__boot') {
     const to = u.searchParams.get('to') || '/paint'
+    /* 画板还要塞一份草稿：没有草稿时 /paint 会停在「开始创作」弹层上，
+       截出来是一层遮罩而不是编辑器。塞一张 16×16 的小图，画布上就有画了。 */
+    const draft = to.indexOf('/paint') === 0
+      ? `localStorage.setItem('paintDraft', ${JSON.stringify(JSON.stringify({ size: 16, pixels: art(SPRITES['爱心'], 16) }))});`
+      : ''
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
     res.end(`<!doctype html><meta charset="utf-8"><script>
 localStorage.setItem('lw-token','mock-token-for-screenshot');
 localStorage.setItem('lw-user','小林同学');   // 这个键存的就是用户名本身，不是 JSON
 // 画板的首次访问提示存在 cookie 里，不设的话会挡住整个页面
 document.cookie = 'paint_consent=1; path=/; max-age=86400';
+// 「装到桌面」横幅会压在底部导航上，宣传图里八张各挂一条太吵。
+// 这等价于用户自己点过那个 ×，是正常状态。
+localStorage.setItem('lw-pwa-hint-dismissed','1');
+${draft}
 location.replace(${JSON.stringify(to)});
 </script>`)
     return

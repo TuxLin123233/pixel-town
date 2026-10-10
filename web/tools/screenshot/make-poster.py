@@ -1,6 +1,20 @@
 # -*- coding: utf-8 -*-
+"""把 shoot.sh 截好的页面拼成宣传长图。
+
+用法（路径一律从脚本位置推导，仓库改过名也不受影响）：
+    bash web/tools/screenshot/shoot.sh          # 先截图 → ui-shots/
+    python3 web/tools/screenshot/make-poster.py             # 只拼手机长图（README 用的那张）
+    python3 web/tools/screenshot/make-poster.py desktop     # 只拼电脑版
+    python3 web/tools/screenshot/make-poster.py all         # 两张都拼
+"""
 from PIL import Image, ImageDraw, ImageFont
 import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))   # web/tools/screenshot → 仓库根
+SHOT = os.path.join(REPO, 'ui-shots')
+OUTDIR = os.path.join(REPO, '宣传图')
 
 FH = '/home/tux/.local/share/fonts/HarmonyOS_Sans_SC_%s.ttf'
 FE = '/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf'
@@ -8,7 +22,6 @@ def font(w, s): return ImageFont.truetype(FH % w, s)
 
 BG, CARD, DARK = (250, 248, 244), (255, 255, 255), (36, 31, 26)
 TEXT, MUTED, LINE, ACCENT = (59, 52, 44), (107, 95, 80), (233, 225, 213), (91, 141, 239)
-SHOT = '/home/tux/编程/光域/ui-shots'
 
 _ec = {}
 def emoji(ch, size):
@@ -41,6 +54,15 @@ PAGES = [
     ('changelog', '更新日志', '每次更新都有记录'),
 ]
 
+def need(spec):
+    """检查截图齐不齐，缺了就给出下一步该敲什么命令。"""
+    missing = [f'{k}-{spec}.png' for k, _, _ in PAGES
+               if not os.path.exists(os.path.join(SHOT, f'{k}-{spec}.png'))]
+    if missing:
+        print('缺少 %d 张%s截图：%s' % (len(missing), spec, '、'.join(missing[:4]) + ('…' if len(missing) > 4 else '')))
+        print('先跑：bash web/tools/screenshot/shoot.sh   （需要 mock 服务器：node web/tools/screenshot/server.mjs &）')
+        sys.exit(1)
+
 # ============ 手机版长图 ============
 def phone(scale_w=430):
     W, PAD = 1080, 64
@@ -68,7 +90,7 @@ def phone(scale_w=430):
         d.text((x - d.textlength(s, font=f) / 2, y), s, font=f, fill=fill)
     ctr(78, '像素小镇', font('Black', 106), (255, 255, 255))
     ctr(214, '一个在浏览器里画像素画的地方', font('Regular', 35), (197, 186, 167))
-    url = 'light-field.pages.dev'
+    url = 'art.xgcc.fun'
     tw = d.textlength(url, font=font('Medium', 31))
     d.rounded_rectangle([W/2-tw/2-32, 276, W/2+tw/2+32, 338], radius=31, fill=(52, 45, 38), outline=ACCENT, width=2)
     ctr(290, url, font('Medium', 31), (150, 185, 255))
@@ -90,8 +112,9 @@ def phone(scale_w=430):
     ctr(H - FOOT + 52, '完全免费 · 无广告 · 不要邮箱手机号', font('Bold', 43), (255, 255, 255))
     ctr(H - FOOT + 118, '手机、电脑都能用，浏览器打开就画', font('Regular', 31), (197, 186, 167))
     ctr(H - FOOT + 172, url, font('Medium', 35), (150, 185, 255))
-    img.save('宣传长图-手机.png')
-    print('  ✓ 宣传长图-手机.png  %d×%d' % img.size)
+    out = os.path.join(OUTDIR, '宣传长图-手机.png')
+    img.save(out)
+    print('  ✓ %s  %d×%d' % (out, img.size[0], img.size[1]))
 
 # ============ 电脑版长图 ============
 # 应用本身的 max-width 是 460px，所以「桌面版」实际上就是手机界面居中显示。
@@ -119,7 +142,7 @@ def desktop():
         d.text((W/2 - d.textlength(s, font=f) / 2, y), s, font=f, fill=fill)
     ctr(88, '像素小镇', font('Black', 124), (255, 255, 255))
     ctr(250, '一个在浏览器里画像素画的地方', font('Regular', 40), (197, 186, 167))
-    url = 'light-field.pages.dev'
+    url = 'art.xgcc.fun'
     tw = d.textlength(url, font=font('Medium', 36))
     d.rounded_rectangle([W/2-tw/2-38, 322, W/2+tw/2+38, 394], radius=36, fill=(52, 45, 38), outline=ACCENT, width=3)
     ctr(338, url, font('Medium', 36), (150, 185, 255))
@@ -138,8 +161,19 @@ def desktop():
     ctr(H - FOOT + 54, '完全免费 · 无广告 · 不要邮箱手机号', font('Bold', 46), (255, 255, 255))
     ctr(H - FOOT + 128, '手机优先设计，电脑上居中显示', font('Regular', 32), (197, 186, 167))
     ctr(H - FOOT + 184, url, font('Medium', 38), (150, 185, 255))
-    img.save('宣传长图-电脑.png')
-    print('  ✓ 宣传长图-电脑.png  %d×%d' % img.size)
+    out = os.path.join(OUTDIR, '宣传长图-电脑.png')
+    img.save(out)
+    print('  ✓ %s  %d×%d' % (out, img.size[0], img.size[1]))
 
-phone()
-desktop()
+if __name__ == '__main__':
+    os.makedirs(OUTDIR, exist_ok=True)
+    what = sys.argv[1] if len(sys.argv) > 1 else 'phone'
+    if what in ('phone', 'all'):
+        need('手机')
+        phone()
+    if what in ('desktop', 'all'):
+        need('桌面')
+        desktop()
+    if what not in ('phone', 'desktop', 'all'):
+        print('用法: python3 make-poster.py [phone|desktop|all]')
+        sys.exit(2)
