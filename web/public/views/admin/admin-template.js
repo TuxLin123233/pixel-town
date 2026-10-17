@@ -97,7 +97,7 @@ export const adminTemplate = `<div class="page-head">
         <div class="card-title">信箱发布（公告 / 奖励）</div>
         <div class="mail-form">
           <div class="mail-row">
-            <input id="mailIcon" type="text" value="📢" maxlength="4" style="flex:0 0 56px;text-align:center" aria-label="图标">
+  <input id="mailIcon" type="text" value="" maxlength="4" style="flex:0 0 56px;text-align:center" aria-label="图标">
             <input id="mailTitle" type="text" maxlength="40" placeholder="标题，例如：国庆活动开启" aria-label="标题">
           </div>
           <textarea id="mailBody" maxlength="300" rows="4" placeholder="正文，可以写多行" aria-label="正文"></textarea>

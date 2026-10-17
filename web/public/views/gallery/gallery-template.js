@@ -17,7 +17,7 @@ export const galleryTemplate = `<div class="container">
       <section class="finder" id="finder">
         <div class="search-row">
           <input class="search-input" id="searchInput" type="search" placeholder="搜作品名、作者或标签…" autocomplete="off">
-          <button class="search-clear" id="searchClear" type="button" hidden>✕</button>
+  <button class="search-clear" id="searchClear" type="button" hidden></button>
         </div>
         <div class="chip-row" id="chipRow" hidden></div>
         <div class="tag-cloud" id="tagCloud" hidden></div>
@@ -61,7 +61,7 @@ export const galleryTemplate = `<div class="container">
 
       <section class="daily" id="dailyPanel" hidden>
         <div class="daily-head">
-          <span class="daily-title">⚡ 今日一题</span>
+  <span class="daily-title"> 今日一题</span>
           <span class="daily-day" id="dailyDay"></span>
         </div>
         <div class="daily-theme">今日题目《<b id="dailyTheme"></b>》</div>
@@ -163,19 +163,19 @@ export const galleryTemplate = `<div class="container">
           <div class="preview-who">
             <span class="preview-av" id="previewAv"></span>
             <button class="preview-author-btn" id="previewAuthor" type="button"></button>
-            <button class="preview-report" id="previewReportUser" type="button" hidden>🚩 举报该用户</button>
+  <button class="preview-report" id="previewReportUser" type="button" hidden> 举报该用户</button>
           </div>
           <div class="preview-bio" id="previewBio" hidden></div>
           <span id="previewTime" class="preview-time"></span>
         </div>
         <div class="preview-like">
           <button class="like-btn" id="previewLike" type="button" title="送光尘给这幅画"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/> <path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/> </svg>  <span id="previewLikeCount">0</span></button>
-          <button class="fav-btn" id="previewFav" type="button" title="收藏这幅画">☆ 收藏</button>
+  <button class="fav-btn" id="previewFav" type="button" title="收藏这幅画"> 收藏</button>
           <button class="vote-btn" id="previewVoteBtn" type="button" hidden><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg>  投一票</button>
           <button class="share-btn" id="previewShare" type="button"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 6h7v2H4zm0 10h7v2H4zM2 8h2v8H2zm18-2h-7v2h7zm0 10h-7v2h7zm2-8h-2v8h2zM7 11h10v2H7z"/> </svg>  复制链接</button>
           <button class="share-btn" id="previewCard" type="button">🃏 生成朋友圈卡片</button>
           <button class="share-btn" id="previewPaletteBtn" type="button" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  用色</button>
-          <button class="report-hold" id="previewReport" type="button">🚩 长按举报</button>
+  <button class="report-hold" id="previewReport" type="button"> 长按举报</button>
         </div>
         <div class="cmt-box" id="cmtBox">
           <div class="cmt-head">
@@ -241,7 +241,7 @@ export const galleryTemplate = `<div class="container">
         </div>
         <img id="cardImg" alt="分享卡片">
         <div class="card-actions">
-          <a id="cardDownload" class="card-btn" href="#" download="guangyu-card.png">⬇️ 保存图片</a>
+  <a id="cardDownload" class="card-btn" href="#" download="guangyu-card.png"> 保存图片</a>
         </div>
         <div class="card-note">长按图片也能保存到相册，发到朋友圈秀一秀吧～</div>
       </div>

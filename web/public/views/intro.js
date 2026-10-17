@@ -235,7 +235,7 @@ export default {
        生日是不是「今天」、还能不能改，都由服务端算好给过来，
        前端不重复实现一遍历法，免得两边对不上。 */
     const GIFT = 100 // 与服务端 _auth.js 里的 BIRTHDAY_GIFT 保持一致
-    const GENDER_LABEL = { male: '🙋 男生', female: '🙋‍♀️ 女生', secret: '🕶️ 保密' }
+  const GENDER_LABEL = { male: ' 男生', female: '‍ 女生', secret: ' 保密' }
     const GENDER_KEYS = ['male', 'female', 'secret']
     let gender = ''
     let birthday = ''
@@ -306,7 +306,7 @@ export default {
         '<div class="in-tags">' +
         '<span class="in-tag">' + (gender ? GENDER_LABEL[gender] : '性别未填') + '</span>' +
         '<span class="in-tag' + (todayBd ? ' today' : '') + '">' +
-        (birthday ? '🎂 ' + bdText(birthday) + (todayBd ? '　今天！' : '') : '生日未填') +
+  (birthday ? ' ' + bdText(birthday) + (todayBd ? '　今天！' : '') : '生日未填') +
         '</span>' +
         (joinedAt ? '<span class="in-tag"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z"/> </svg>  入住 ' + daysSince(joinedAt) + ' 天</span>' : '') +
         '</div>' +
@@ -370,7 +370,7 @@ export default {
         '<div class="in-act">' +
         '<button class="in-btn ghost" type="button" id="inClear">清空</button>' +
         '<button class="in-btn" type="button" id="inSave"' + (dirty && enough ? '' : ' disabled') + '>' +
-        (dirty ? '保存（' + COST + ' ✨）' : '已保存') + '</button>' +
+  (dirty ? '保存（' + COST + '）' : '已保存') + '</button>' +
         '</div></div>' +
         '<p class="in-note">简介会显示在「我的」页面和你的作品作者信息里。<br />请勿填联系方式或引流内容，管理员可能会清空。</p>'
 
@@ -393,7 +393,7 @@ export default {
         const d2 = clean(bio) !== saved
         const btn = $('inSave')
         btn.disabled = !d2 || balance < COST
-        btn.textContent = d2 ? '保存（' + COST + ' ✨）' : '已保存'
+  btn.textContent = d2 ? '保存（' + COST + '）' : '已保存'
       })
     }
 
@@ -438,7 +438,7 @@ export default {
           if (window.dust && window.dust.take) window.dust.take(d.book)
         }
         if (window.sfx) window.sfx('ding')
-        toast(d.cost ? '简介已保存，花了 ' + d.cost + ' 个光尘 ✨' : '内容没变化，没扣光尘')
+  toast(d.cost ? '简介已保存，花了 ' + d.cost + ' 个光尘 ' : '内容没变化，没扣光尘')
         render()
         window.dispatchEvent(new CustomEvent('lw-bio-changed', { detail: { bio: saved } }))
       } catch (err) {
@@ -480,7 +480,7 @@ export default {
       birthday = d.birthday || ''
       bdLock = Number(d.birthdayLockLeft) || 0
       if (window.sfx) window.sfx('ding')
-      toast(birthday ? '生日记下了：' + bdText(birthday) + ' 🎂' : '生日已清空')
+  toast(birthday ? '生日记下了：' + bdText(birthday) + ' ' : '生日已清空')
       render()
     })
     // 生日输入框里按回车等于点「保存」

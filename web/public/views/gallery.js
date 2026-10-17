@@ -112,10 +112,10 @@ export default {
       }
 
       /* 投票按钮的文案统一走这里。
-         以前写的是 '🏆 ' + 票数，光看一个数字不像能点，
+  以前写的是 ' ' + 票数，光看一个数字不像能点，
          也不知道点完算不算投了（用户反馈「没有投一票按钮」）。 */
       function voteLabel(rec, voted) {
-        return (voted ? '🏆 已投票 · ' : '🏆 投一票 · ') + (Number(rec.contestVotes) || 0)
+  return (voted ? ' 已投票 · ' : ' 投一票 · ') + (Number(rec.contestVotes) || 0)
       }
       function makeVoteButton(rec) {
         const btn = document.createElement('button')
@@ -166,7 +166,7 @@ export default {
               pvBtn.classList.add('voted')
             }
             loadContest(true)
-            toast('投票成功，感谢支持 🏆')
+  toast('投票成功，感谢支持 ')
           } else {
             toast('投票失败：' + (data.error || res.status))
           }
@@ -204,7 +204,7 @@ export default {
         document.getElementById('contestMeta').textContent =
           '本期：' + fmt(d1) + ' - ' + fmt(d2) + ' · ' + c.entries + ' 幅参赛'
         const badge = document.getElementById('contestBadge')
-        badge.textContent = c.open ? '🚀 投票进行中' : '已结束'
+  badge.textContent = c.open ? ' 投票进行中' : '已结束'
         badge.style.background = c.open ? '#e5484d' : '#8a7f6f'
         document.getElementById('contestTip').textContent =
           '每人每周对每个作品可投一票，助它登上本周排行榜'
@@ -231,7 +231,7 @@ export default {
 
             const nm = document.createElement('div')
             nm.className = 'ct-name'
-            nm.textContent = (w.type === 'anim' ? '🎞️ ' : '') + (w.workName || w.name || '未命名')
+  nm.textContent = (w.type === 'anim' ? ' ' : '') + (w.workName || w.name || '未命名')
 
             /* 这里原来只有一行「🏆 N 票」的纯文字，根本没法投票 ——
                makeVoteButton / voteContest 早就写好了（作品卡片和预览弹窗都在用），
@@ -554,7 +554,7 @@ export default {
         // 右侧收到的光尘（有才画）
         if (likes) {
           ctx.font = '700 22px ' + FONT
-          const txt = '♥ ' + likes
+  const txt = ' ' + likes
           const tw = ctx.measureText(txt).width + 30
           const tx = W - PAD - tw
           roundRect(ctx, tx, META_Y - 28, tw, 36, 18)
@@ -656,7 +656,7 @@ export default {
         btn.className = 'like-btn'
         if (opts && opts.large) btn.style.cssText = 'font-size:14px;padding:6px 16px;'
         btn.innerHTML = ''
-        btn.appendChild(document.createTextNode('♥ '))
+  btn.appendChild(document.createTextNode(' '))
         const count = document.createElement('span')
         count.textContent = rec.likes || 0
         btn.appendChild(count)
@@ -671,13 +671,13 @@ export default {
           btn.classList.add('no-dust')
           btn.title = '像素相机转出来的作品不支持收光尘，请给手绘作品送光尘'
           const sp0 = btn.querySelector('span')
-          if (sp0) sp0.textContent = '🚫 ' + (rec.likes || 0)
+  if (sp0) sp0.textContent = ' ' + (rec.likes || 0)
         }
         updateLikedState(btn, rec.time)
         btn.addEventListener('click', (e) => {
           e.stopPropagation()
           if (btn.classList.contains('no-dust')) {
-            toast('这幅是用像素相机转出来的照片，不支持收光尘\n请给手绘作品送光尘 ✏️')
+  toast('这幅是用像素相机转出来的照片，不支持收光尘\n请给手绘作品送光尘 ')
             if (window.sfx) window.sfx('no')
             return
           }
@@ -691,7 +691,7 @@ export default {
         const t = String(time)
         document.querySelectorAll('[data-like-time="' + t + '"]').forEach((el) => {
           const n = el.querySelector('.f-like')
-          if (n) n.textContent = '♥ ' + likes
+  if (n) n.textContent = ' ' + likes
         })
         if (liked) likedMap.add(t)
         else likedMap.delete(t)
@@ -778,9 +778,9 @@ export default {
           syncLikeEverywhere(rec.time, rec.likes, true)
           window.dispatchEvent(new CustomEvent('lw-dust-changed'))
           if (d.credited) {
-            toast('送出了 ' + window.dust.cost + ' 个光尘 ✨ 对方也收到了，余额 ' + window.dust.balance())
+  toast('送出了 ' + window.dust.cost + ' 个光尘  对方也收到了，余额 ' + window.dust.balance())
           } else {
-            toast('送出了 ' + window.dust.cost + ' 个光尘 ✨ 余额 ' + window.dust.balance())
+  toast('送出了 ' + window.dust.cost + ' 个光尘  余额 ' + window.dust.balance())
           }
         } catch (err) {
           toast('赠送失败：网络错误')
@@ -877,7 +877,7 @@ export default {
           const meta = document.createElement('div')
           meta.className = 'discover-meta'
           meta.textContent =
-            (w.author || '匿名') + ' · ' + w.size + '×' + w.size + (w.likes ? ' · ♥ ' + w.likes : '')
+  (w.author || '匿名') + ' · ' + w.size + '×' + w.size + (w.likes ? ' ·  ' + w.likes : '')
           const ago = document.createElement('div')
           ago.className = 'discover-ago'
           ago.textContent = agoTextOf(w.time)
@@ -956,7 +956,7 @@ export default {
 
             const nm = document.createElement('div')
             nm.className = 'f-name'
-            nm.textContent = (w.type === 'anim' ? '🎞️ ' : '') + (w.workName || w.name || '未命名')
+  nm.textContent = (w.type === 'anim' ? ' ' : '') + (w.workName || w.name || '未命名')
 
             const metaRow = document.createElement('div')
             metaRow.className = 'f-meta'
@@ -971,7 +971,7 @@ export default {
             card.dataset.likeTime = String(w.time)
             const lk = document.createElement('span')
             lk.className = 'f-like'
-            lk.textContent = '♥ ' + (w.likes || 0)
+  lk.textContent = ' ' + (w.likes || 0)
 
             metaRow.append(au, fz, lk)
             card.append(rank, cnv, nm, metaRow)
@@ -1000,7 +1000,7 @@ export default {
 
       /* 已经渲染出来的卡片。过滤器在它们身上直接改 class，
          不重新请求，也不打断滚动位置。
-         ★ 声明必须放在 appendCards 之前 —— 放后面虽然「调用时机上」也安全，
+  声明必须放在 appendCards 之前 —— 放后面虽然「调用时机上」也安全，
          但那是靠运气，以后有人提前调一次 appendCards 就会踩 TDZ。 */
       let cards = []
 
@@ -1035,12 +1035,12 @@ export default {
           if (wt === 'anim') {
             const b = document.createElement('span')
             b.className = 'anim-badge'
-            b.textContent = '🎞️ 动画'
+  b.textContent = ' 动画'
             meta.append(b)
           } else if (wt === 'room') {
             const b = document.createElement('span')
             b.className = 'room-badge'
-            b.textContent = '👥 多人'
+  b.textContent = ' 多人'
             meta.append(b)
           }
           meta.append(makeLikeButton(rec))
@@ -1077,7 +1077,7 @@ export default {
           if (rec.isMod) {
             const mb = document.createElement('span')
             mb.className = 'mod-badge'
-            mb.textContent = '🛡️ 审核员'
+  mb.textContent = ' 审核员'
             mb.title = '社区审核员'
             sub.appendChild(mb)
           }
@@ -1115,7 +1115,7 @@ export default {
               const hb = document.createElement('button')
               hb.className = 'mod-hide'
               hb.type = 'button'
-              hb.textContent = '🛡️ 下架'
+  hb.textContent = ' 下架'
               hb.title = '暂时不显示这件作品，交给作者决定是否删除'
               hb.addEventListener('click', (e) => {
                 e.stopPropagation()
@@ -1182,7 +1182,7 @@ export default {
             img.addEventListener('click', () => preview(w))
             const lk = document.createElement('span')
             lk.className = 'card-like'
-            lk.textContent = '♥ ' + (w.likes || 0)
+  lk.textContent = ' ' + (w.likes || 0)
             lk.addEventListener('click', (e) => {
               e.stopPropagation()
               like(w, lk)
@@ -1428,7 +1428,7 @@ export default {
       }
 
       /* 初始化：所有 const 都声明完了，这里才能安全地画过滤器 UI。
-         ★ 之前把这行放在 resetGallery 前面，那时 filterToggle 这些
+  之前把这行放在 resetGallery 前面，那时 filterToggle 这些
          const 还在 TDZ 里，一进页面就整个白屏。 */
       renderFilter()
 
@@ -1443,7 +1443,7 @@ export default {
           const c = document.createElement('button')
           c.type = 'button'
           c.className = 'chip active'
-          c.textContent = label + ' ✕'
+  c.textContent = label + ' '
           c.addEventListener('click', () => {
             if (kind === 'q') {
               searchQ = ''
@@ -1723,7 +1723,7 @@ export default {
         if (!btn || !currentPreview) return
         const on = !!(favSet && favSet.has(Number(currentPreview.time)))
         btn.classList.toggle('fav-on', on)
-        btn.textContent = on ? '★ 已收藏' : '☆ 收藏'
+  btn.textContent = on ? ' 已收藏' : ' 收藏'
       }
 
       function drawAnimFrame(cv, frame) {
@@ -1911,7 +1911,7 @@ export default {
             drawAnimFrame(cv, frames[animIdx])
           }, delay * 10)
           document.getElementById('previewTitle').textContent =
-            '🎞️ 动画 · ' + (rec.workName || rec.name || '未命名')
+  ' 动画 · ' + (rec.workName || rec.name || '未命名')
         } else {
           cv.hidden = true
           img.hidden = false
@@ -1952,7 +1952,7 @@ export default {
           pvLike.classList.add('no-dust')
           pvLike.title = '像素相机转出来的作品不支持收光尘，请给手绘作品送光尘'
           const pvSp = pvLike.querySelector('span')
-          if (pvSp) pvSp.textContent = '🚫 ' + (rec.likes || 0)
+  if (pvSp) pvSp.textContent = ' ' + (rec.likes || 0)
         } else {
           pvLike.disabled = false
           pvLike.classList.remove('no-dust')
@@ -1976,7 +1976,7 @@ export default {
         if (rec && rec.time) loadComments(Number(rec.time), false)
         previewOverlay.hidden = false
         /* 放大过渡：浮层弹入。
-           ★ 只做浮层，不做「缩略图飞出去」那一半 ——
+  只做浮层，不做「缩略图飞出去」那一半 ——
            preview(rec) 里没有卡片元素，而作品列表的卡片也没挂
            data-time（只有 Top5 那块挂了 likeTime）。
            为了半个转场去改列表渲染不值得，浮层弹入已经够用了。 */
@@ -2645,7 +2645,7 @@ export default {
         const btn = document.getElementById('previewLike')
         // 相机作品：按钮是灰的，但点了要说明原因，不能让人以为坏了
         if (btn.classList.contains('no-dust')) {
-          toast('这幅是用像素相机转出来的照片，不支持收光尘\n请给手绘作品送光尘 ✏️')
+  toast('这幅是用像素相机转出来的照片，不支持收光尘\n请给手绘作品送光尘 ')
           if (window.sfx) window.sfx('no')
           return
         }
@@ -2701,10 +2701,10 @@ export default {
         const btn = document.getElementById('previewShare')
         const done = () => {
           if (window.sfx) window.sfx('select')
-          btn.textContent = '✓ 已复制'
+  btn.textContent = ' 已复制'
           btn.classList.add('copied')
           setTimeout(() => {
-            btn.textContent = '🔗 复制链接'
+  btn.textContent = ' 复制链接'
             btn.classList.remove('copied')
           }, 1800)
         }

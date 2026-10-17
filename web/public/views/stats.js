@@ -314,7 +314,7 @@ export default {
       <div class="stats-wrap">
         <div v-if="loading" class="stat-loading">加载中...</div>
         <div v-else-if="error" class="stat-error">
-          <div class="stat-error-ico">😕</div>
+  <div class="stat-error-ico"></div>
           <div class="stat-error-msg">{{ error }}</div>
           <button class="stat-retry" @click="loadData">重试</button>
         </div>
@@ -344,7 +344,7 @@ export default {
 
           <!-- 小镇冷知识 -->
           <div class="stat-card">
-            <div class="stat-title">🏷️ 小镇冷知识</div>
+  <div class="stat-title"> 小镇冷知识</div>
             <div class="fact-grid">
               <div class="fact-item">
                 <div class="fact-num">{{ stats.totalPixels.toLocaleString() }} <small>格</small></div>
@@ -383,7 +383,7 @@ export default {
 
           <!-- 近 14 天创作趋势 -->
           <div class="stat-card">
-            <div class="stat-title">📈 近 14 天创作热度</div>
+  <div class="stat-title"> 近 14 天创作热度</div>
             <div class="trend-bars">
               <div v-for="(d, i) in stats.trend" :key="i" class="trend-col" :title="d.label + '：' + d.count + ' 幅'">
                 <div
@@ -416,7 +416,7 @@ export default {
                   <div class="rank-name">{{ w.name }}</div>
                   <div class="rank-meta">by {{ w.author }}</div>
                 </div>
-                <div class="rank-value">{{ w.votes }} 🗳️</div>
+  <div class="rank-value">{{ w.votes }} </div>
               </div>
             </div>
             <div v-else class="trend-note">本周还没有人参赛，来当第一个？</div>

@@ -187,7 +187,7 @@ export default {
         row.className = 'tk-item' + (it.done ? ' done' : '') + (it.claimed ? ' claimed' : '')
         const ico = document.createElement('span')
         ico.className = 'tk-ico'
-        ico.textContent = it.claimed ? '✅' : it.done ? '🎁' : '📌'
+  ico.textContent = it.claimed ? '' : it.done ? '' : ''
         const main = document.createElement('span')
         main.className = 'tk-main'
         const txt = document.createElement('span')
@@ -286,7 +286,7 @@ export default {
           gotToday: d.gotToday,
           total: state ? state.total : 100,
         })
-        showMsg('✅ 领到了 ' + d.dust + ' 个光尘，已经进你的账本。')
+  showMsg(' 领到了 ' + d.dust + ' 个光尘，已经进你的账本。')
       } catch (e) {
         btn.disabled = false
         btn.classList.remove('busy')

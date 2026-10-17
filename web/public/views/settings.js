@@ -489,7 +489,7 @@ export default {
         guideClose.addEventListener('click', () => {
           markSeen()
           if (guideBox) guideBox.open = false
-          toast('祝你画得开心 🎨')
+  toast('祝你画得开心 ')
         })
 
       /* ---------- 底部导航透明度：实时预览 ---------- */

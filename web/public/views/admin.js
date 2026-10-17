@@ -387,7 +387,7 @@ export default {
             title.className = 'rp-title'
             // 举报用户和举报作品的标题含义不同，分开标出来免得看混
             if (r.target === 'user') {
-              tag.textContent = '👤 ' + (r.reason || '其他')
+  tag.textContent = ' ' + (r.reason || '其他')
               title.textContent = '用户 ' + (r.title || r.author || '未知')
             } else {
               title.textContent = r.title || '未命名作品'
@@ -802,7 +802,7 @@ export default {
               return
             }
             grantOut.textContent =
-              '✅ ' + d.user.username + '（' + d.user.uid + '）现在有 ' + d.book.bal + ' 个光尘' +
+  ' ' + d.user.username + '（' + d.user.uid + '）现在有 ' + d.book.bal + ' 个光尘' +
               (amt > 0 ? '，累计收到 ' + d.book.got + ' 个。' : '。')
             grantOut.className = ''
             if (window.sfx) window.sfx('ding')
@@ -833,7 +833,7 @@ export default {
           .map(
             (m) =>
               '<div class="adm-mail">' +
-              '<div class="adm-mail-ico">' + esc(m.icon || '📢') + '</div>' +
+  '<div class="adm-mail-ico">' + esc(m.icon || '') + '</div>' +
               '<div class="adm-mail-b">' +
               '<div class="adm-mail-t">' + esc(m.title) + '</div>' +
               '<div class="adm-mail-d">' + esc(formatTime(m.time)) +
@@ -908,7 +908,7 @@ export default {
           }
           const payload = {
             action: 'publish',
-            icon: (mailIcon.value || '📢').trim() || '📢',
+  icon: (mailIcon.value || '').trim() || '',
             title,
             body: (mailBody.value || '').trim(),
             dust: Math.max(0, Math.trunc(Number(mailDust.value) || 0)),
@@ -934,8 +934,8 @@ export default {
             if (mailOut) {
               mailOut.className = ''
               mailOut.textContent = d.targeted
-                ? '✅ 已投递给「' + d.to + '」，对方打开信箱即可看到'
-                : '✅ 广播已发布，所有人下次打开信箱时收到（之后注册的新号也会收到）'
+  ? ' 已投递给「' + d.to + '」，对方打开信箱即可看到'
+  : ' 广播已发布，所有人下次打开信箱时收到（之后注册的新号也会收到）'
             }
             if (window.sfx) window.sfx('ding')
             toast('发布成功')

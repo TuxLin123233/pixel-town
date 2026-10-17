@@ -107,7 +107,7 @@ export default {
       const p = (x) => String(x).padStart(2, '0')
       return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate())
     }
-    const ICO = { like: '✨', comment: '💬', follow: '👥' }
+  const ICO = { like: '', comment: '', follow: '' }
 
     function render(items) {
       const list = $('ntfList')
@@ -129,7 +129,7 @@ export default {
         return (
           '<' + tag + ' class="ntf-item' + (n.read ? '' : ' unread') + '"' +
           (href ? ' href="' + esc(href) + '"' : '') + '>' +
-          '<span class="ntf-ico">' + (ICO[n.type] || '🔔') + '</span>' +
+  '<span class="ntf-ico">' + (ICO[n.type] || '') + '</span>' +
           '<span class="ntf-main">' +
           '<span class="ntf-text">' + esc(n.text || '') + '</span>' +
           '<span class="ntf-time">' + ago(n.at) + '</span>' +

@@ -200,7 +200,7 @@ export default {
         row.setAttribute('data-uid', r.uid || '')
         const no = document.createElement('span')
         no.className = 'rk-no'
-        no.textContent = r.rank <= 3 ? ['🥇', '🥈', '🥉'][r.rank - 1] : String(r.rank)
+  no.textContent = r.rank <= 3 ? ['', '', ''][r.rank - 1] : String(r.rank)
         const av = document.createElement('span')
         av.className = 'rk-av'
         if (window.LWAvatar) {

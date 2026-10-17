@@ -369,7 +369,7 @@ export default {
 
       /* 性别和生日都是「填了才公开」，没填就整行不显示。
          生日只存月-日、不含年份，所以露出来也不涉及年龄。 */
-      const GENDER_LABEL = { male: '🙋 男生', female: '🙋‍♀️ 女生', secret: '🕶️ 保密' }
+  const GENDER_LABEL = { male: ' 男生', female: '‍ 女生', secret: ' 保密' }
       const tags = []
       if (profile.gender && GENDER_LABEL[profile.gender]) tags.push(GENDER_LABEL[profile.gender])
       // 只认服务端给的 MM-DD。格式不对就整条不显示，别画出「NaN 月 undefined 日」
@@ -377,8 +377,8 @@ export default {
       if (/^\d{2}-\d{2}$/.test(bd)) {
         tags.push(
           profile.todayBirthday
-            ? '🎂 今天生日！'
-            : '🎂 ' + Number(bd.slice(0, 2)) + ' 月 ' + Number(bd.slice(3, 5)) + ' 日'
+  ? ' 今天生日！'
+  : ' ' + Number(bd.slice(0, 2)) + ' 月 ' + Number(bd.slice(3, 5)) + ' 日'
         )
       }
       const tagHtml = tags.length
@@ -391,14 +391,14 @@ export default {
         '<div class="u-hero">' +
         '<div class="u-av" id="uAv">' + avBox + '</div>' +
         '<div class="u-id">' +
-        '<div class="u-name">' + esc(profile.username) + (profile.isMod ? ' <span class="mod-badge"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zM2 4h2v10H2zm18 0h2v10h-2zM4 14h2v2H4zm2 2h2v2H6zm4 4h4v2h-4zm10-6h-2v2h2zm-2 2h-2v2h2zm-2 2h-2v2h2zm-6 0H8v2h2z"/> </svg>  审核员</span>' : '') + (profile.todayBirthday ? ' 🎂' : '') + '</div>' +
+  '<div class="u-name">' + esc(profile.username) + (profile.isMod ? ' <span class="mod-badge"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zM2 4h2v10H2zm18 0h2v10h-2zM4 14h2v2H4zm2 2h2v2H6zm4 4h4v2h-4zm10-6h-2v2h2zm-2 2h-2v2h2zm-2 2h-2v2h2zm-6 0H8v2h2z"/> </svg> 审核员</span>' : '') + (profile.todayBirthday ? ' ' : '') + '</div>' +
         (profile.isMod
           ? '<div class="u-modline"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zM2 4h2v10H2zm18 0h2v10h-2zM4 14h2v2H4zm2 2h2v2H6zm4 4h4v2h-4zm10-6h-2v2h2zm-2 2h-2v2h2zm-2 2h-2v2h2zm-6 0H8v2h2z"/> </svg>  已审核下架 <b>' + (Number(profile.modHides) || 0) + '</b> 件</div>'
           : '') +
         (joined ? '<div class="u-joined">' + esc(joined) + '</div>' : '') +
         tagHtml +
         (profile.bio ? '<div class="u-bio">' + esc(profile.bio) + '</div>' : '') +
-        (f.friend ? '<div class="u-friend-tip">🤝 你们是好友</div>' : '') +
+  (f.friend ? '<div class="u-friend-tip"> 你们是好友</div>' : '') +
         '</div>' +
         (isMe || !t
           ? ''
@@ -413,7 +413,7 @@ export default {
                于是「小镇」这个玩法只有屋主自己进得去，别人看不到。 */
             '<button class="u-visit" id="uVisitBtn" type="button"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z"/> </svg>  逛他家</button>' +
             '<button class="u-follow' + (f.iFollow ? ' on' : '') + '" id="uFollowBtn" type="button">' +
-            (f.friend ? '🤝 好友' : f.iFollow ? '已申请' : '＋ 加好友') + '</button>' +
+  (f.friend ? ' 好友' : f.iFollow ? '已申请' : '＋ 加好友') + '</button>' +
             '</div>') +
         '</div>' +
         '<div class="u-nums">' +
@@ -450,7 +450,7 @@ export default {
                   '<button class="u-give' + (gave ? ' on' : '') + (noDust ? ' no-dust' : '') +
                   '" type="button" data-give="' + t + '"' +
                   (noDust ? ' title="像素相机转出来的作品不支持收光尘"' : '') + '>' +
-                  (noDust ? '🚫 ' : '✨ ') + (Number(w.likes) || 0) +
+  (noDust ? ' ' : ' ') + (Number(w.likes) || 0) +
                   '</button>' +
                   '</div>'
                 )
@@ -527,7 +527,7 @@ export default {
           ok = true
           const w = works.find((x) => (x.time || 0) === Number(t))
           if (w) w.likes = (Number(w.likes) || 0) + (Number(d.charged) || 0)
-          showMsg('送出了 ' + (d.charged || window.dust.cost) + ' 个光尘 ✨ 余额 ' + window.dust.balance())
+  showMsg('送出了 ' + (d.charged || window.dust.cost) + ' 个光尘  余额 ' + window.dust.balance())
         } catch (e) {
           showMsg('赠送失败：' + ((e && e.message) || '网络错误'), true)
         } finally {
@@ -536,10 +536,10 @@ export default {
             // 送过了：点亮按钮并显示这幅画累计收到多少
             btn.classList.add('on')
             const w = works.find((x) => (x.time || 0) === Number(t))
-            btn.textContent = '✨ ' + (w ? Number(w.likes) || 0 : 0)
+  btn.textContent = ' ' + (w ? Number(w.likes) || 0 : 0)
           } else {
             const w = works.find((x) => (x.time || 0) === Number(t))
-            btn.textContent = '✨ ' + (w ? Number(w.likes) || 0 : 0)
+  btn.textContent = ' ' + (w ? Number(w.likes) || 0 : 0)
           }
         }
       }
@@ -666,7 +666,7 @@ export default {
             if (window.sfx) window.sfx(on ? 'close' : 'follow')
             render()
             showMsg(
-              d.friend ? '你们已经是好友了 🤝 现在可以聊天了'
+  d.friend ? '你们已经是好友了  现在可以聊天了'
                 : on ? '已解除好友'
                 : '已发出好友申请，等对方通过'
             )

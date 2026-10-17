@@ -206,7 +206,7 @@ export default {
       </div>
 
       <div class="auth-done" id="authDone" hidden>
-        <div class="ad-ico">👋</div>
+  <div class="ad-ico"></div>
         <div class="ad-name" id="adName"></div>
         <div class="ad-sub" id="adSub"></div>
         <button class="auth-btn" id="authMine" type="button">去「我的」</button>
@@ -319,7 +319,7 @@ export default {
         if (window.sfx) window.sfx('ok')
         const note =
           isRegister && r.data.inviteReward > 0
-            ? '🎁 邀请奖励 ' + r.data.inviteReward + ' 光尘已到账，去发布第一幅作品吧'
+  ? ' 邀请奖励 ' + r.data.inviteReward + ' 光尘已到账，去发布第一幅作品吧'
             : ''
         showLoggedIn(r.data.username || username, note)
       } catch (e) {

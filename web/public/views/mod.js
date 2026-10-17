@@ -106,9 +106,9 @@ export default {
 
       if (!data || !data.isMod) {
         if (data && data.modBanned) {
-          gate('⏸️', '审核资格已暂停', (data.banReason || '未说明原因') + '<br>有疑问请联系作者。')
+  gate('⏸', '审核资格已暂停', (data.banReason || '未说明原因') + '<br>有疑问请联系作者。')
         } else {
-          gate('🛡️', '这里只有审核员能看', '你目前不是审核员。<br>审核员由作者在后台任命。')
+  gate('', '这里只有审核员能看', '你目前不是审核员。<br>审核员由作者在后台任命。')
         }
         return
       }
@@ -148,7 +148,7 @@ export default {
         body.appendChild(s1)
         const s2 = document.createElement('span')
         s2.className = h.auto ? 'why auto' : 'why'
-        s2.textContent = (h.auto ? '⚙️ 自动：' : '原因：') + (h.reason || '无')
+  s2.textContent = (h.auto ? ' 自动：' : '原因：') + (h.reason || '无')
         body.appendChild(s2)
         row.appendChild(body)
 

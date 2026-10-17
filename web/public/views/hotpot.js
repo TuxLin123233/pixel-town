@@ -104,7 +104,7 @@ export default {
     .hp-zone { position: absolute; top: 0; bottom: 0; width: 22%; left: 55%; background: rgba(255,255,255,.55); border-radius: 999px; }
     .hp-marker { position: absolute; top: -4px; bottom: -4px; width: 6px; background: #fff; border: 2px solid #3b342c; border-radius: 4px; }
     /* 四色拼盘：目标盘和当前盘必须一模一样大，否则看起来是错位的。
-       ★ button 默认是 content-box：写了 width:52px 再加 2px 边框，
+  button 默认是 content-box：写了 width:52px 再加 2px 边框，
        实际占 56px，撑出 52px 的网格列，两个盘子就对不齐了。
        加 box-sizing 让边框算进 52px 里。
        目标盘那边是 div，没有边框，所以两边都是 52×52。 */
@@ -157,7 +157,7 @@ export default {
   `,
   template: `
     <div class="hp-page">
-      <div class="hp-head"><a class="hp-back" href="/town">← 小镇</a><div class="hp-title">🍲 大锅饭</div></div>
+  <div class="hp-head"><a class="hp-back" href="/town">← 小镇</a><div class="hp-title"> 大锅饭</div></div>
       <div class="hp-sum" id="hpSum"></div>
       <div class="hp-arena" id="hpArena"></div>
       <div class="hp-log" id="hpLog"></div>
@@ -456,13 +456,13 @@ export default {
         line = '<div class="hp-log">镇上好像还没有别人盖房子 —— 先去小镇看看，或者等邻居搬来</div>'
       } else if (res.ok) {
         line =
-          '<div class="hp-log">🍲 端到「' + esc(res.name) + '」门口了<br>' +
+  '<div class="hp-log"> 端到「' + esc(res.name) + '」门口了<br>' +
           '他收到 <b>' + res.got.toThem + '</b> 个光尘，你也拿到 <b>' + res.got.toMe + '</b> 个</div>'
       } else {
         line = '<div class="hp-log">这道没能端出去：' + esc(res.error || '再试试') + '</div>'
       }
       $('hpArena').innerHTML =
-        '<b style="color:var(--text)">' + (ok ? '😋 ' + esc(who) + ' 很满意！' : '😅 ' + esc(who) + ' 说还行') + '</b>' +
+  '<b style="color:var(--text)">' + (ok ? ' ' + esc(who) + ' 很满意！' : ' ' + esc(who) + ' 说还行') + '</b>' +
         line +
         '<br><button class="hp-btn primary" id="hpNext" style="margin-top:8px">下一位</button>'
       $('hpNext').onclick = () => nextCustomer()
@@ -494,7 +494,7 @@ export default {
        拉到之前就开局的话，第一位客人会变成「路过的镇民」，看着像没生效；
        所以按钮初始是 disabled，这里拉完再打开。
 
-       ★ 这段原来被我插错了地方 ——
+  这段原来被我插错了地方 ——
        锚点 `$('hpSum').innerHTML = sumHtml()` 在这个文件里出现两次
        （一次在 finish() 里、一次在这里），replace(…, 1) 命中了第一次，
        于是 loadResidents() 被塞进了 finish()，挂载时根本不执行，

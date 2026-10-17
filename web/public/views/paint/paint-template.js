@@ -37,7 +37,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
               <span class="start-body"><b>像素画</b><i>逐格上色，可选题目与帧动画</i></span>
             </button>
             <button type="button" class="start-dir" data-dir="spray">
-              <span class="start-ico">💨</span>
+  <span class="start-ico"></span>
               <span class="start-body"><b>像素喷漆</b><i>按住拖着喷，64×64 出图</i></span>
             </button>
             <button type="button" class="start-dir" data-dir="gravity">
@@ -74,11 +74,11 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
               <span class="start-body"><b>自由模式</b><i>想画什么就画什么</i></span>
             </button>
             <button type="button" class="start-mode" data-mode="prompt" hidden>
-              <span class="start-ico">📝</span>
+  <span class="start-ico"></span>
               <span class="start-body"><b>题目模式</b><i>按主题出题，可换题</i></span>
             </button>
             <button type="button" class="start-mode" data-mode="anim" hidden>
-              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg> ️</span>
+  <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg> </span>
               <span class="start-body"><b>帧动画</b><i>逐帧作画导出 GIF</i></span>
             </button>
           </div>
@@ -91,7 +91,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
               <span class="start-body"><b>暂不参加</b><i>只自己画</i></span>
             </button>
             <button type="button" class="start-join" data-join="daily" hidden>
-              <span class="start-ico">⚡</span>
+  <span class="start-ico"></span>
               <span class="start-body"><b>每日挑战</b><i id="startDailyText">每天一个题目</i></span>
             </button>
             <button type="button" class="start-join" data-join="contest" hidden>
@@ -117,7 +117,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
           </div>
           <label class="start-toggle">
             <input type="checkbox" id="startSprayMirror">
-            <span class="start-body"><b>🦋 左右镜像</b><i>只喷一半，另一边自动对称（进画板后还能改成上下或四角）</i></span>
+  <span class="start-body"><b> 左右镜像</b><i>只喷一半，另一边自动对称（进画板后还能改成上下或四角）</i></span>
           </label>
         </div>
 
@@ -248,7 +248,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
       <button class="mini-size" id="miniSize" type="button" title="切换大小（小/中/大）" aria-label="切换小地图大小">⤢</button>
       <canvas id="miniCanvas" title="小地图：预览当前取景位置。按住边框可以拖动位置"></canvas>
     </div>
-    <button class="mini-show" id="miniShow" type="button" title="显示小地图" aria-label="显示小地图" hidden>🗺</button>
+  <button class="mini-show" id="miniShow" type="button" title="显示小地图" aria-label="显示小地图" hidden></button>
 
     <div class="tools">
       <button id="toolBrush" class="tool active" type="button" data-tool="brush" title="画笔（B）"><i class="pico" data-svg="brush"></i></button>
@@ -300,7 +300,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
       <div class="imgmode-box">
         <div class="imgmode-title">照片转成像素画后，颜色想怎么处理？</div>
         <div class="imgmode-warn">
-          ⚠️ 请只处理<b>你自己拍的照片</b>或<b>已获得授权的图片</b>。<br>
+  请只处理<b>你自己拍的照片</b>或<b>已获得授权的图片</b>。<br>
           把他人作品转成像素画后发布，<b>仍然属于侵权</b>。
         </div>
         <button class="imgmode-opt" type="button" data-imgmode="palette">
@@ -330,7 +330,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
 
       <label class="join-opt" id="dailyRow" hidden for="dailyCheck">
         <input type="radio" name="joinPick" id="dailyCheck" value="daily">
-        <span class="join-ico">⚡</span>
+  <span class="join-ico"></span>
         <span class="join-text">
           <span class="join-name" id="dailyLabel"></span>
           <span class="join-desc">每天一个题目，作品进当日榜</span>
@@ -368,7 +368,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
 
     <div class="anim-editor" id="animEditor" hidden>
       <div class="anim-head">
-        <span class="anim-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg> ️ 帧动画</span>
+  <span class="anim-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg> 帧动画</span>
         <div class="anim-count-group" id="animCountGroup">
           <button class="anim-count-btn active" data-count="4" type="button">4 帧</button>
           <button class="anim-count-btn" data-count="8" type="button">8 帧</button>

@@ -168,11 +168,11 @@ export default {
       })
     }
 
-    const matOf = (id) => mats.find((m) => m.id === id) || { id, name: id, ico: '❔' }
+  const matOf = (id) => mats.find((m) => m.id === id) || { id, name: id, ico: '' }
 
     /* ---------- 渲染 ---------- */
     function render() {
-      $('bgTitle').textContent = '🏠 家具商店'
+  $('bgTitle').textContent = ' 家具商店'
       const total = Object.values(bag).reduce((a, b) => a + (Number(b) || 0), 0)
       const madeN = recipes.filter((r) => r.owned).length
       $('bgSub').textContent = total + ' 个材料 · 已合成 ' + madeN + '/' + recipes.length
@@ -216,7 +216,7 @@ export default {
             '<div class="bg-rec">' +
             '<canvas class="bg-rec-cv" data-rec="' + esc(r.id) + '"></canvas>' +
             '<div class="bg-rec-mid">' +
-            '<div class="bg-rec-n">' + esc(r.name) + (r.owned ? ' ✓' : '') + '</div>' +
+  '<div class="bg-rec-n">' + esc(r.name) + (r.owned ? ' ' : '') + '</div>' +
             '<div class="bg-rec-need">' + need + '</div>' +
             '</div>' + btn + '</div>'
           )
@@ -229,7 +229,7 @@ export default {
         (mats.length ? '<div class="bg-mats">' + matHtml + '</div>' : '<div class="bg-empty">读取中…</div>') +
         '<div class="bg-gather">' +
         '<button class="bg-go" id="bgGo" type="button"' + (canGo ? '' : ' disabled') + '>' +
-        (canGo ? '🚶 去镇上转转' : '歇一会儿') + '</button>' +
+  (canGo ? ' 去镇上转转' : '歇一会儿') + '</button>' +
         '<span class="bg-cd">' + esc(cdText) + '</span>' +
         '</div></div>' +
 
@@ -343,7 +343,7 @@ export default {
       owned = r.body.owned || owned
       recipes = r.body.recipes || recipes
       if (window.sfx) window.sfx('save')
-      msg('「' + (r.body.name || id) + '」做好了，回小屋就能摆出来 ✨')
+  msg('「' + (r.body.name || id) + '」做好了，回小屋就能摆出来 ')
       render()
     }
 

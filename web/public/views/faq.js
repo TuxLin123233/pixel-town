@@ -101,7 +101,7 @@ export default {
       </div>
 
       <div class="q-card">
-        <div class="q-title"><span class="q-ico">❓</span><span>联机画板去哪了？</span></div>
+  <div class="q-title"><span class="q-ico"></span><span>联机画板去哪了？</span></div>
         <div class="q-body">
           <p>它曾经有，但已经被我下掉了，这里说明原因，免得有人找不到。</p>
           <p><b>技术上是做不到「真的同步」。</b>联机需要所有人看到同一张画布的同一瞬间，要求服务器读写强一致。Cloudflare 的 KV 是最终一致的——两个人同时落笔时，各自会读到旧快照再写回，互相覆盖。结果就是：房主看不到别人加入、笔迹不同步，明明两人在线却提示「至少需要 2 人才能开始」。这不是延迟，是会丢数据。</p>
@@ -109,7 +109,7 @@ export default {
           <p>如果你确实需要多人一起画，用带涂鸦功能的视频会议共享屏幕会稳定得多。感谢理解。</p>
         </div>
 
-        <div class="q-title"><span class="q-ico">❓</span><span>为什么不能做 128×128 画布？</span></div>
+  <div class="q-title"><span class="q-ico"></span><span>为什么不能做 128×128 画布？</span></div>
         <div class="q-body">
           <p>经常有人问这个，统一说明一下。技术上做得到，但代价很不划算，主要卡在两处：</p>
           <table class="num-table">
@@ -129,15 +129,15 @@ export default {
       </div>
 
       <div class="q-card">
-        <div class="q-title"><span class="q-ico">❓</span><span>大画布怎么拖着看其它区域？</span></div>
+  <div class="q-title"><span class="q-ico"></span><span>大画布怎么拖着看其它区域？</span></div>
         <div class="q-body">
-          <p>画板工具栏里有一个 <b>✋ 手型</b>（快捷键 <b>H</b>），选中后按住拖动可以平移画布，<b>任何尺寸都能用，不会落笔</b>。它和画笔是分开的工具，互不干扰。</p>
+  <p>画板工具栏里有一个 <b> 手型</b>（快捷键 <b>H</b>），选中后按住拖动可以平移画布，<b>任何尺寸都能用，不会落笔</b>。它和画笔是分开的工具，互不干扰。</p>
           <p>另外 32×32 和 64×64 直接用画笔拖动也会自动变成平移（按错了不会画出奇怪的线），16×16 默认用不到平移，需要时切手型即可。</p>
         </div>
       </div>
 
       <div class="q-card">
-        <div class="q-title"><span class="q-ico">❓</span><span>为什么设置里有一堆开关？</span></div>
+  <div class="q-title"><span class="q-ico"></span><span>为什么设置里有一堆开关？</span></div>
         <div class="q-body">
           <p>为了让只画画的人面对一个干净的画板，题目模式、帧动画、每日挑战、本周主题、图片转像素画这些<b>默认全部关闭</b>。用不到就一直关着，需要哪个去设置里打开即可。</p>
           <p>开关只影响你这台设备，不会影响别人看到的作品。</p>
@@ -145,7 +145,7 @@ export default {
       </div>
 
       <div class="q-card">
-        <div class="q-title"><span class="q-ico">❓</span><span>怎么删掉自己上传错的图？</span></div>
+  <div class="q-title"><span class="q-ico"></span><span>怎么删掉自己上传错的图？</span></div>
         <div class="q-body">
           <p>发布作品必须登录，作品会自动归属到你的账号。在「我的」页可以看到自己发布的全部作品，也能删除。</p>
           <p><b>换手机只要登录同一个账号</b>，光尘、成就、头像、作品全都会跟着走，不需要再保存任何码。</p>

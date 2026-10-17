@@ -648,7 +648,7 @@ export default {
           '</button>'
         : ''
 
- $('twTitle').textContent = '️ 像素小镇'
+ $('twTitle').textContent = ' 像素小镇'
       $('twSub').textContent = list.length
         ? list.length + ' 户人家' + (folded ? ' · 已收起 ' + more + ' 户' : '')
         : '还没有人盖房子'
@@ -949,7 +949,7 @@ export default {
             '<button class="tw-btn' + (liked ? ' on' : '') + '" type="button" id="twGift"' +
             (liked ? ' disabled' : '') + '>' +
             (liked
- ? '✅ 已经给这间屋子送过光尘了'
+ ? ' 已经给这间屋子送过光尘了'
  : ' 送 ' + giftCost + ' 个光尘给 ' + esc(woodName || '屋主')) +
             '</button></div>') +
         boardHtml() +

@@ -336,7 +336,7 @@ export default {
           (a.type === 'progress' && !a.got
             ? '<div class="ach-num">' + fmt(metricVal) + ' / ' + fmt(num) + '</div>'
             : '') +
-          (a.reward && !a.got ? '<div class="ach-reward">+' + a.reward + '✨</div>' : '') +
+  (a.reward && !a.got ? '<div class="ach-reward">+' + a.reward + '</div>' : '') +
           (a.got ? '<div class="ach-num">已达成</div>' : '') +
           '</div>'
         )
@@ -383,7 +383,7 @@ export default {
         '</div>' +
         '</div>' +
         '<div class="ach-wide">' +
-        '<span>💝 累计收到光尘</span><b>' + fmt(m.got) + '</b>' +
+  '<span> 累计收到光尘</span><b>' + fmt(m.got) + '</b>' +
         '</div>' +
         cats.map(groupHtml).join('')
     }
@@ -424,7 +424,7 @@ export default {
           // 新解锁的成就弹一次提示，并刷新光尘余额
           if (Array.isArray(d.fresh) && d.fresh.length) {
             if (window.sfx) window.sfx('achieve')
-            toast('新成就 ' + d.fresh.length + ' 个' + (d.reward ? '，获得 ' + d.reward + ' 个光尘 ✨' : '！'))
+  toast('新成就 ' + d.fresh.length + ' 个' + (d.reward ? '，获得 ' + d.reward + ' 个光尘 ' : '！'))
             /* 撒彩带庆祝。从屏幕中上方撒，撒完顺手把刚解锁那两个条目闪一下，
                让用户知道「是这几个亮了」。 */
             try {

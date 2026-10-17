@@ -237,7 +237,7 @@ export default {
           return (
             '<div class="mail-item' + (can ? ' claimable' : '') + '" data-id="' + esc(m.id) + '">' +
             '<div class="mail-row">' +
-            '<span class="mail-ico">' + esc(m.icon || '✉️') + '</span>' +
+  '<span class="mail-ico">' + esc(m.icon || '') + '</span>' +
             /* 正文和附件行必须放在 .mail-main 里面：
                以前它们是 .mail-row 的兄弟节点，位置只按 item 的 padding 算，
                比标题那一列往左突出来三十多像素，正文和标题对不齐。 */
@@ -352,7 +352,7 @@ export default {
         const d = await res.json().catch(() => ({}))
         if (d && d.ok) {
           if (window.sfx) window.sfx('coin')
-          toast('收到 ' + d.dust + ' 个光尘 ✨')
+  toast('收到 ' + d.dust + ' 个光尘 ')
           /* 账本变了：必须派发 lw-dust-changed 并带上服务端返回的新账本，
              全局账本和所有页面才会跟着更新。以前这里发的是 lw-mail-claimed，
              而账本模块只认 lw-dust-changed —— 这就是「领了光尘余额却不变」的根因。

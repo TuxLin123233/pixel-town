@@ -1307,11 +1307,11 @@ export default {
 
       function refreshHint() {
         let base = TOOL_HINTS[activeTool] || TOOL_HINTS.brush
-        if (mirrorOn) base += ' · 🦋 镜像中'
+  if (mirrorOn) base += ' ·  镜像中'
         if (activeTool === 'pan') base += ' · 只拖动画布，不会落笔'
-        else if (panLock) base += ' · ✥ 拖动锁已开：拖动只移动画布'
-        else if (size > 16) base += ' · 拖动涂色 · ✥ 切换成拖动画布 · ＋/－ 缩放'
-        else base += ' · 拖动涂色 · 点 ✥ 可改为拖动画布'
+  else if (panLock) base += ' ·  拖动锁已开：拖动只移动画布'
+  else if (size > 16) base += ' · 拖动涂色 ·  切换成拖动画布 · ＋/－ 缩放'
+  else base += ' · 拖动涂色 · 点  可改为拖动画布'
         hint.textContent = base
       }
 
@@ -1604,7 +1604,7 @@ export default {
            以前加了 `|| size > 16`：32×32 和 64×64 上拖动一律当平移，
            于是大尺寸根本没法拖动滑画，只能一格一格点（用户反馈的问题）。
            现在笔刷/橡皮在哪种尺寸下都能拖着画；
-           要移动画面用 ✥ 手型、✥ 拖动锁、空格或中键。 */
+  要移动画面用  手型、 拖动锁、空格或中键。 */
         const canPan = activeTool === 'pan' || panLock
         if (canPan) {
           painting = true
@@ -1810,7 +1810,7 @@ export default {
           })
           const d = await res.json().catch(() => ({}))
           if (res.ok) {
-            toast('已参加今天的每日挑战 🏅')
+  toast('已参加今天的每日挑战 ')
           } else if (res.status === 409) {
             toast('这件作品已经参加过挑战了')
           }

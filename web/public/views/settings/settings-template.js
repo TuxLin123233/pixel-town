@@ -10,7 +10,7 @@ export const settingsTemplate = `<div class="container">
       <details class="guide" id="guideBox">
         <summary>
           <span class="guide-hero">
-            <b>👋 第一次来？两分钟看完这个网站能做什么</b>
+  <b> 第一次来？两分钟看完这个网站能做什么</b>
             <i>像素小镇 · 和朋友一起在线画像素画</i>
           </span>
           <span class="guide-arrow">⌄</span>
@@ -52,14 +52,14 @@ export const settingsTemplate = `<div class="container">
   <path d="M21 7h2v5h-2zm-4-2h2v7h-2zm-4-2h2v8h-2zM9 3h2v8H9zM5 5h2v8H5zm14 0h2v2h-2zm-4-2h2v2h-2zm-4-2h2v2h-2zM7 3h2v2H7zm-4 8h2v2H3zm-2 2h2v2H1zm0 2h2v2H1zm2 2h2v2H3zm2 2h2v2H5zm2 2h12v2H7zm12-2h2v2h-2zm2-7h2v7h-2zM5 13h2v2H5zm2 2h2v2H7z"/>
 </svg></span>
               <b>手型平移</b>
-              <i>选 ✋ 只拖动画布不落笔；任何工具下点 ✥ 都能切成拖动模式。</i>
+  <i>选  只拖动画布不落笔；任何工具下点  都能切成拖动模式。</i>
             </div>
           </div>
           <div class="guide-tips">
             <b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/> <path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/> </svg>  三个上手小提示</b>
             <ul>
-              <li>画错了按 <kbd>↩️</kbd> 撤销；手机上也可以直接点工具栏的撤销。</li>
-              <li>点底部「社区」看看别人画了什么，喜欢的可以点♥；再点一次能取消。</li>
+  <li>画错了按 <kbd>↩</kbd> 撤销；手机上也可以直接点工具栏的撤销。</li>
+  <li>点底部「社区」看看别人画了什么，喜欢的可以点；再点一次能取消。</li>
               <li>不想被复杂界面打扰？到下面「画板布局」里把用不到的都关掉。</li>
             </ul>
           </div>
@@ -70,7 +70,7 @@ export const settingsTemplate = `<div class="container">
       <details class="guide" id="authorNote">
         <summary>
           <span class="guide-hero">
-            <b>💌 作者的话</b>
+  <b> 作者的话</b>
             <i>这个网站是谁做的，以及为什么需要你的支持</i>
           </span>
           <span class="guide-arrow">⌄</span>
@@ -304,7 +304,7 @@ export const settingsTemplate = `<div class="container">
           <span class="entry-arrow">›</span>
         </router-link>
         <router-link class="entry" to="/copyright">
-          <span class="entry-ico">©️</span>
+  <span class="entry-ico">©</span>
           <span class="entry-body">
             <span class="entry-label">版权声明与侵权投诉</span>
             <div class="entry-desc">权利人可以在这里提交通知 · 48 小时内处理</div>
@@ -312,7 +312,7 @@ export const settingsTemplate = `<div class="container">
           <span class="entry-arrow">›</span>
         </router-link>
         <router-link class="entry" to="/changelog">
-          <span class="entry-ico">📦</span>
+  <span class="entry-ico"></span>
           <span class="entry-body">
             <span class="entry-label">更新日志</span>
             <div class="entry-desc">看看像素小镇最近又更新了什么</div>
@@ -320,7 +320,7 @@ export const settingsTemplate = `<div class="container">
           <span class="entry-arrow">›</span>
         </router-link>
         <router-link class="entry" to="/faq">
-          <span class="entry-ico">❓</span>
+  <span class="entry-ico"></span>
           <span class="entry-body">
             <span class="entry-label">常见问题</span>
             <div class="entry-desc">为什么没有 128×128？以及其他说明</div>
@@ -344,7 +344,7 @@ export const settingsTemplate = `<div class="container">
           </router-link>
           <div class="entry-sep"></div>
           <router-link class="entry" to="/faq">
-            <span class="entry-ico">❓</span>
+  <span class="entry-ico"></span>
             <span class="entry-body">
               <span class="entry-label">问题反馈</span>
               <div class="entry-desc">常见问题解答 · 微信 Tux123233 · 邮箱 linsifan123233@petalmail.com</div>

@@ -257,11 +257,11 @@ router.afterEach((to) => {
    px 是自绘像素图标的名字 —— 站本身就是像素画站，导航用像素图标更合身，
    而且 emoji 在各平台长得不一样、还动不了。 */
 const NAV_ITEMS = [
-  { path: '/paint', ico: '🎨', px: 'palette', name: '画板' },
-  { path: '/gallery', ico: '🌆', px: 'frame', name: '社区' },
-  { path: '/town', ico: '🏘️', px: 'house', name: '小镇' },
-  { path: '/stats', ico: '📊', name: '数据' },
-  { path: '/mine', ico: '🌱', px: 'user', name: '我的' },
+  { path: '/paint', ico: '', px: 'palette', name: '画板' },
+  { path: '/gallery', ico: '', px: 'frame', name: '社区' },
+  { path: '/town', ico: '', px: 'house', name: '小镇' },
+  { path: '/stats', ico: '', name: '数据' },
+  { path: '/mine', ico: '', px: 'user', name: '我的' },
 ]
 function readLS(k, d) {
   try {
