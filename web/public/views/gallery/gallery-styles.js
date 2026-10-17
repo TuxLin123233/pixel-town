@@ -1695,4 +1695,39 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
       }
+
+      /* ============ 轻量化改版（去盒子） ============
+         今日一题 / 发现 / 本周大赛 / 佳作 四块原来是四张带底色的卡，
+         加上作品卡本身也带描边，一屏十几个边框。改成只用分隔线分组。 */
+      .daily, .discover, .contest, .featured {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .card {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      /* 标签 / 筛选片统一成细线 + 中性字色，选中才用强调色 */
+      .card-tag, .chip {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+      }
+      .chip.on, .chip.active { color: var(--accent); border-color: var(--accent); }
+      /* 搜索框去填充，只留一条底线 */
+      .search-input {
+        background: transparent; border: 0; border-radius: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      /* 三个行动按钮降为次级（实心主色按钮一屏最多一个） */
+      .daily-cta, .contest-cta, .discover-btn {
+        background: transparent; color: var(--accent);
+        border: 1px solid var(--border-strong); box-shadow: none;
+      }
 `

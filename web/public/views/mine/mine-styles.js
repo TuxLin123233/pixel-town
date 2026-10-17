@@ -550,4 +550,34 @@ export const mineStyles = `
       .me-hero-bio.empty { color: var(--text-faint); }
 
       /* 邀请好友卡片：沿用全站米白 + 蓝的语言，不做跳色渐变 */
-  `
+  
+      /* ============ 轻量化改版（去盒子） ============
+         原来每块内容都是一张带底色 + 描边 + 圆角的卡，一屏摞七八张，
+         边界线比内容还显眼。改成：卡片不再是「盒子」，只用一条分隔线分组。 */
+      .m-card {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 14px 0 4px;
+        border-bottom: 1px solid var(--border);
+      }
+      .m-card:last-child { border-bottom: 0; }
+      .m-card-title {
+        font-size: 12px; font-weight: 700; color: var(--text-muted);
+        letter-spacing: .02em; margin-bottom: 10px;
+      }
+      .stat { background: transparent; border: 0; border-radius: 0; padding: 4px 0; }
+      .stat-num { font-size: 22px; }
+      /* 两个大蓝条改成次级按钮（主色只留给「签到」一个主操作） */
+      .cloudhu-btn, .portal-btn {
+        background: transparent; color: var(--text-muted);
+        border: 1px solid var(--border); box-shadow: none; font-weight: 600;
+      }
+      .mine-item { border: 0; background: transparent; }
+
+      /* 光尘行、签到周格：去底色，只留描边 */
+      .dust-bar { background: transparent; border: 1px solid var(--border); }
+      .sign-day { background: transparent; border: 1px solid var(--border); }
+      .sign-day.on { background: var(--surface-2); border-color: var(--border-strong); }
+`
