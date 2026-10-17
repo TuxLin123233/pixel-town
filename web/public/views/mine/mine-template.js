@@ -11,6 +11,10 @@ export const mineTemplate = `<div class="container mine-wrap">
         <canvas id="meAvCanvas"></canvas>
  <span class="me-av-edit"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 16H6V18H8V20H10V22H2V14H4V16ZM12 20H10V18H12V20ZM14 18H12V16H14V18ZM10 16H8V14H10V16ZM16 16H14V14H16V16ZM6 14H4V12H6V14ZM12 14H10V12H12V14ZM18 14H16V12H18V14ZM8 12H6V10H8V12ZM14 12H12V10H14V12ZM20 12H18V10H20V12ZM10 10H8V8H10V10ZM18 10H16V8H18V10ZM22 10H20V8H22V10ZM12 8H10V6H12V8ZM16 8H14V6H16V8ZM20 8H18V6H20V8ZM14 6H12V4H14V6ZM18 6H16V4H18V6ZM16 4H14V2H16V4Z"/></svg> </span>
       </router-link>
+      <!-- 数据行（与头像同一行） -->
+      <div class="stat-grid" id="statGrid">
+        <div class="stat"><div class="stat-num">—</div><div class="stat-lab">加载中</div></div>
+      </div>
       <div class="me-hero-txt">
         <h1 class="me-hero-name" id="meName">未登录</h1>
         <div class="me-hero-bio" id="meBio">点此写简介</div>
@@ -49,9 +53,6 @@ export const mineTemplate = `<div class="container mine-wrap">
     <!-- 创作数据 -->
     <div class="m-card" id="statCard">
  <div class="m-card-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zM7 11h2v6H7zm4-4h2v10h-2zm4 6h2v4h-2z"/></svg> 创作账本</div>
-      <div class="stat-grid" id="statGrid">
-        <div class="stat"><div class="stat-num">—</div><div class="stat-lab">加载中</div></div>
-      </div>
       <div class="size-bars" id="sizeBars" hidden></div>
       <div class="best-work" id="bestWork" hidden></div>
     </div>
