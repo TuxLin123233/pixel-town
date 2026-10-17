@@ -256,12 +256,21 @@ router.afterEach((to) => {
 /* 底部导航。ico 里写 emoji 是给「像素图标没加载出来」时的兜底，
    px 是自绘像素图标的名字 —— 站本身就是像素画站，导航用像素图标更合身，
    而且 emoji 在各平台长得不一样、还动不了。 */
+/* 底部导航图标（Pixelarticons，单色 currentColor） */
+const NAV_SVG = {
+  brush: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>',
+  image: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/> <path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/> </svg>',
+  home: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z"/> </svg>',
+  chart: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zM7 11h2v6H7zm4-4h2v10h-2zm4 6h2v4h-2z"/> </svg>',
+  user: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M9 2h6v2H9zm0 8h6v2H9zm6-6h2v6h-2zM7 4h2v6H7zM4 18h2v4H4zm14 0h2v4h-2zM8 14h8v2H8zm-2 2h2v2H6zm10 0h2v2h-2z"/> </svg>',
+}
+
 const NAV_ITEMS = [
-  { path: '/paint', ico: '', px: 'palette', name: '画板' },
-  { path: '/gallery', ico: '', px: 'frame', name: '社区' },
-  { path: '/town', ico: '', px: 'house', name: '小镇' },
-  { path: '/stats', ico: '', name: '数据' },
-  { path: '/mine', ico: '', px: 'user', name: '我的' },
+  { path: '/paint', svg: NAV_SVG.brush, name: '画板' },
+  { path: '/gallery', svg: NAV_SVG.image, name: '社区' },
+  { path: '/town', svg: NAV_SVG.home, name: '小镇' },
+  { path: '/stats', svg: NAV_SVG.chart, name: '数据' },
+  { path: '/mine', svg: NAV_SVG.user, name: '我的' },
 ]
 function readLS(k, d) {
   try {
@@ -332,9 +341,8 @@ const App = {
     </div>
     <nav class="bottom-nav" id="appNav" v-show="showNav">
       <router-link v-for="it in navItems" :key="it.path" :to="it.path">
-        <span class="nav-icon" v-if="!it.px">{{ it.ico }}</span>
-        <i class="nav-icon nav-px" v-else :data-px="it.px" :data-px-size="pxIconSize"
-           data-px-on="nav" aria-hidden="true"></i>
+        <span class="nav-icon nav-px" v-html="it.svg" aria-hidden="true"
+              :style="{ width: pxIconSize + 'px', height: pxIconSize + 'px' }"></span>
         {{ it.name }}
       </router-link>
     </nav>

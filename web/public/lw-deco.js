@@ -111,21 +111,9 @@ html[data-theme='dark'] .lwdeco-grid {
 .lwdeco-lv-bar i {
   display: block; height: 100%; width: 0;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent, #5b8def), #96b9ff);
+  background: var(--accent, #5b8def);
   transition: width .7s cubic-bezier(.2,.9,.3,1);
   position: relative;
-}
-/* 流光：让进度条看着是「活的」 */
-.lwdeco-lv-bar i::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,.42) 50%, transparent 80%);
-  background-size: 40px 100%;
-  animation: lwd-stripe 1.5s linear infinite;
-}
-@keyframes lwd-stripe {
-  from { background-position: -40px 0 }
-  to   { background-position: 120px 0 }
 }
 
 /* ============ 4. 聊天「正在输入」 ============ */

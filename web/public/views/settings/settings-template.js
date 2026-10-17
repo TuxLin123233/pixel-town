@@ -383,6 +383,25 @@ export const settingsTemplate = `<div class="container">
       </section>
 
       <section class="group">
+        <div class="group-title">邀请好友</div>
+    <div class="credit-card" id="inviteCard" hidden>
+      <div class="invite-rules">
+        好友用你的邀请码注册，他立得 <b>20</b> 光尘；好友发布第一幅作品，你立得 <b>100</b> 光尘。
+      </div>
+      <div class="invite-code-label">你的专属邀请码</div>
+      <span class="invite-code" id="inviteCode">·······</span>
+      <button class="invite-copy" id="inviteCopy" type="button">复制邀请链接</button>
+      <div class="invite-stat" id="inviteStat"></div>
+      <div class="invite-bind" id="inviteBindBox" hidden>
+        <div class="invite-bind-tip">有人邀请你来小镇？填上他的邀请码（只能绑定一次，不可更改）</div>
+        <div class="invite-bind-row">
+          <input class="invite-bind-input" id="inviteBindInput" maxlength="7"
+                 type="text" autocomplete="off" placeholder="7 位邀请码">
+          <button class="invite-bind-btn" id="inviteBindBtn" type="button">绑定</button>
+        </div>
+      </section>
+
+      <section class="group">
         <div class="group-title">致谢</div>
         <div class="credit-card">
           <!-- 界面图标来自 Pixelarticons（MIT，第一条），画布里的像素图仍是站内自绘。

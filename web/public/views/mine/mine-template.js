@@ -43,23 +43,6 @@ export const mineTemplate = `<div class="container mine-wrap">
       <div class="medals" id="medals"></div>
     </div>
 
-    <!-- 邀请好友 -->
-    <div class="m-card" id="inviteCard" hidden>
- <div class="m-card-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4zM2 8h2v4H2zm2 4h16v2H4zm16-4h2v4h-2zM6 4h2v2H6zm2-2h3v2H8zm3 2h2v2h-2zm2-2h3v2h-3zm3 2h2v2h-2zM4 14h2v6H4zm2 6h12v2H6zm12-6h2v6h-2zm-7-6h2v4h-2zm0 6h2v6h-2z"/></svg> 邀请好友 · 赚光尘</div>
-      <div class="invite-rules">
-        好友用你的邀请码注册，他立得 <b>20</b> 光尘；好友发布第一幅作品，你立得 <b>100</b> 光尘。
-      </div>
-      <div class="invite-code-label">你的专属邀请码</div>
-      <span class="invite-code" id="inviteCode">·······</span>
-      <button class="invite-copy" id="inviteCopy" type="button">复制邀请链接</button>
-      <div class="invite-stat" id="inviteStat"></div>
-      <div class="invite-bind" id="inviteBindBox" hidden>
-        <div class="invite-bind-tip">有人邀请你来小镇？填上他的邀请码（只能绑定一次，不可更改）</div>
-        <div class="invite-bind-row">
-          <input class="invite-bind-input" id="inviteBindInput" maxlength="7"
-                 type="text" autocomplete="off" placeholder="7 位邀请码">
-          <button class="invite-bind-btn" id="inviteBindBtn" type="button">绑定</button>
-        </div>
       </div>
     </div>
 

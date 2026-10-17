@@ -9,6 +9,103 @@ export default {
   css: settingsStyles,
   template: settingsTemplate,
   mounted() {
+    /* ---------- 邀请好友 ---------- */
+    let inviteData = null
+    function paintInvite(d) {
+      document.getElementById('inviteCode').textContent = d.code || '·······'
+      const s = d.stat || {}
+      const cells = [
+        { n: s.count || 0, lab: '邀请好友' },
+        { n: s.rewarded || 0, lab: '已发作品' },
+        { n: s.earned || 0, lab: '赚到光尘' },
+      ]
+      document.getElementById('inviteStat').innerHTML = cells
+        .map((c) => '<div class="is-cell"><div class="is-num">' + c.n + '</div><div class="is-lab">' + c.lab + '</div></div>')
+        .join('')
+      // 已绑定过邀请人：补绑框永久消失（绑定不可更改）
+      document.getElementById('inviteBindBox').hidden = !!d.invitedBy
+    }
+    async function loadInvite() {
+      const card = document.getElementById('inviteCard')
+      if (!card) return
+      let t = ''
+      try { t = localStorage.getItem('lw-token') || '' } catch (e) {}
+      // 未登录、或处于作品/送出过滤子页时都不显示
+      if (!t) { card.hidden = true; return }
+      card.hidden = false
+      try {
+        const r = await fetch('/api/invite', {
+          headers: { Authorization: 'Bearer ' + t },
+          cache: 'no-store',
+        })
+        if (r.status === 401) { card.hidden = true; return }
+        const d = await r.json().catch(() => null)
+        if (!d || !d.ok) return
+        inviteData = d
+        paintInvite(d)
+      } catch (e) {}
+    }
+    document.getElementById('inviteCopy').addEventListener('click', async () => {
+      if (!inviteData || !inviteData.code) return
+      // 复制的是带码的邀请链接，好友点开直接进注册页且码已填好
+      const link = location.origin + '/login?invite=' + inviteData.code
+      let ok = false
+      try {
+        await navigator.clipboard.writeText(link)
+        ok = true
+      } catch (e) {
+        const ta = document.createElement('textarea')
+        ta.value = link
+        ta.style.position = 'fixed'
+        ta.style.opacity = '0'
+        document.body.appendChild(ta)
+        ta.select()
+        try { ok = document.execCommand('copy') } catch (e2) {}
+        document.body.removeChild(ta)
+      }
+      if (window.sfx) window.sfx('tap')
+ toast(ok ? '邀请链接已复制，快发给好友吧 ' : '复制失败，邀请码：' + inviteData.code)
+    })
+    const inviteBindInput = document.getElementById('inviteBindInput')
+    inviteBindInput.addEventListener('input', () => {
+      inviteBindInput.value = inviteBindInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7)
+    })
+    document.getElementById('inviteBindBtn').addEventListener('click', async () => {
+      const code = inviteBindInput.value.trim()
+      if (code.length !== 7) return toast('邀请码是 7 位字符')
+      const btn = document.getElementById('inviteBindBtn')
+      let t = ''
+      try { t = localStorage.getItem('lw-token') || '' } catch (e) {}
+      btn.disabled = true
+      btn.textContent = '绑定中…'
+      try {
+        const r = await fetch('/api/invite', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + t },
+          body: JSON.stringify({ action: 'bind', code }),
+        })
+        const d = await r.json().catch(() => ({}))
+        if (!r.ok) {
+          toast(d.error || '绑定失败，请稍后再试')
+          btn.disabled = false
+          btn.textContent = '绑定'
+          return
+        }
+        inviteData = d
+        paintInvite(d)
+        inviteBindInput.value = ''
+        if (window.sfx) window.sfx('ok')
+ toast(' 绑定成功，' + (d.reward || 0) + ' 光尘已到账')
+        if (window.dust) window.dust.refresh()
+      } catch (e) {
+        toast('网络异常，请稍后再试')
+        btn.disabled = false
+        btn.textContent = '绑定'
+      }
+    })
+    window.addEventListener('lw-auth-changed', loadInvite)
+    loadInvite()
+
       const darkSwitch = document.getElementById('darkSwitch')
       /* ---------- 导航项定义（与 app.js 的导航保持一致） ---------- */
       
