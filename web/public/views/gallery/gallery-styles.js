@@ -1827,4 +1827,68 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
       .preview-like .share-btn { border: 1px solid var(--border-strong); background: transparent; color: var(--text-muted); }
       .preview-like .like-btn { color: var(--like); border-color: var(--like-border); }
       .preview-like .like-btn.liked { background: var(--like); border-color: var(--like); color: #fff; }
+
+      /* ============ 社区：单列大图流（Feed） ============
+         沿用「一屏一张、图大、装饰少」这个通用交互模式，但不照搬任何 App 的外观：
+         作者行用站内头像 + 名字，点赞位是「送光尘」，颜色和图标全部走站内令牌。
+         卡片 DOM 顺序：图 → 标题/操作 → 作者 → 标签，
+         这里用 flex order 重排成：作者 → 图 → 操作 → 标签。 */
+      .gallery-grid {
+        display: block;
+        margin-top: 8px;
+      }
+      .card {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0 0 20px;
+        padding: 14px 16px 16px;
+        background: transparent;
+        border: 0;
+        border-top: 1px solid var(--border);
+        border-radius: 0;
+      }
+      .card:first-child { border-top: 0; }
+      /* 作者行（头像 + 作者 + 尺寸/时间） */
+      .card .card-sub {
+        order: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 10px;
+      }
+      .card .card-av { width: 26px; height: 26px; border-radius: 50%; }
+      .card .card-author { font-size: 13px; font-weight: 700; color: var(--text); }
+      .card .card-size,
+      .card .card-time { font-size: 11px; color: var(--text-faint); margin-left: 0; }
+      /* 作品图：整宽、正方形、像素清晰 */
+      .card .art {
+        order: 2;
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: contain;
+        image-rendering: pixelated;
+        background: #fff;
+        display: block;
+      }
+      /* 操作行：送光尘 / 标题 / 投票 */
+      .card .card-meta {
+        order: 3;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 9px 0 0;
+      }
+      .card .card-meta .card-name {
+        font-size: 13px;
+        font-weight: 700;
+        order: -1;
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .card .card-tags { order: 4; margin-top: 6px; }
+      .card .mod-hide { order: 5; align-self: flex-start; margin-top: 8px; }
 `
