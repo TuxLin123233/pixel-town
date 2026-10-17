@@ -689,4 +689,5 @@ export const mineStyles = `
       .mine-wrap .me-av canvas { border-radius: 50% !important; }
       .mine-wrap .me-hero-txt { text-align: left !important; }
 
+
 `

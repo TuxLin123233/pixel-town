@@ -24,6 +24,28 @@ export default {
   css: mineStyles,
   template: mineTemplate,
   mounted() {
+      /* 主页式排布：直接挪 DOM（CSS order 在这页没生效，靠这个保证顺序）
+         目标：头像/名字 → 数据行 → 签到 → 常去的地方 → 作品 */
+      try {
+        const wrap = document.querySelector('.mine-wrap')
+        const stat = document.getElementById('statCard')
+        const sign = document.getElementById('signCard')
+        const link = document.getElementById('linkCard')
+        const works = document.getElementById('mineCard')
+        if (wrap && stat && sign && stat.parentNode === wrap) {
+          wrap.insertBefore(stat, sign)
+        }
+        if (wrap && link && works && link.parentNode === wrap) {
+          wrap.insertBefore(link, works)
+        }
+        // 两个大按钮放到最底下（导航上面）
+        const liked = document.getElementById('likedSlot')
+        const tail = liked || works
+        ;['cloudhu-btn', 'portal-btn'].forEach((cls) => {
+          const el = wrap && wrap.querySelector('.' + cls)
+          if (el && tail && tail.parentNode === wrap) wrap.insertBefore(el, tail.nextSibling)
+        })
+      } catch (e) {}
 
     const $ = (id) => document.getElementById(id)
 
