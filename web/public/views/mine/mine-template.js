@@ -3,7 +3,8 @@
  *
  * 结构（自上而下）：
  *   顶栏（用户名 + 通知/设置）→ 头像 + 四项数据 → 简介
- *   → 两个描边按钮 → 高光圆入口 → 作品 / 收藏 / 送出 三个标签 → 3 列作品墙
+ *   → 两个描边按钮 → 高光圆入口 → 作品 / 点赞 / 收藏 三个标签
+ *   → 三份 3 列网格（#mineGrid / #likedGrid / #favGrid，点标签原地切换）
  *
  * 说明：views/mine.js 会按 id 取元素，模板里所有 id 必须保留。
  *       主页用不到的旧块（创作账本、等级条、签到周条等）留在隐藏容器里，
@@ -135,18 +136,21 @@ export const mineTemplate = `<div class="container mine-wrap">
     </div>
   </section>
 
-  <!-- ============ 6/7. 标签页 + 3 列作品墙 ============ -->
+  <!-- ============ 6/7. 标签页 + 三份网格 ============ -->
+  <!-- 三个标签是按钮不是链接：点它在**原地**换网格（作品 / 点赞 / 收藏），
+       不改 URL、不走路由。子路由 /mine/works、/mine/gifted、/mine/fav
+       仍然可以单独打开，那时这排标签由脚本隐藏。 -->
   <section class="ig-works">
-    <nav class="ig-tabs" aria-label="我的内容">
-      <router-link class="ig-tab on" to="/mine" title="作品" aria-label="作品">
+    <nav class="ig-tabs" id="mineTabs" role="tablist" aria-label="我的内容">
+      <button class="ig-tab on" id="mineTabWorks" type="button" role="tab" aria-selected="true" aria-controls="mineGrid" title="作品" aria-label="作品">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/><path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/></svg>
-      </router-link>
-      <router-link class="ig-tab" to="/mine/fav" title="收藏" aria-label="收藏">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M5 20H8V22H3V16H5V20ZM21 22H16V20H19V16H21V22ZM10 20H8V18H10V20ZM16 20H14V18H16V20ZM14 18H10V16H14V18ZM7 16H5V13H7V16ZM19 16H17V13H19V16ZM5 13H3V11H5V13ZM21 13H19V11H21V13ZM9 9H3V11H1V7H9V9ZM23 11H21V9H15V7H23V11ZM11 7H9V3H11V7ZM15 7H13V3H15V7ZM13 3H11V1H13V3Z"/></svg>
-      </router-link>
-      <router-link class="ig-tab" to="/mine/gifted" title="送出" aria-label="送出">
+      </button>
+      <button class="ig-tab" id="mineTabLiked" type="button" role="tab" aria-selected="false" aria-controls="likedGrid" title="点赞" aria-label="点赞">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/><path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/></svg>
-      </router-link>
+      </button>
+      <button class="ig-tab" id="mineTabFav" type="button" role="tab" aria-selected="false" aria-controls="favGrid" title="收藏" aria-label="收藏">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M5 20H8V22H3V16H5V20ZM21 22H16V20H19V16H21V22ZM10 20H8V18H10V20ZM16 20H14V18H16V20ZM14 18H10V16H14V18ZM7 16H5V13H7V16ZM19 16H17V13H19V16ZM5 13H3V11H5V13ZM21 13H19V11H21V13ZM9 9H3V11H1V7H9V9ZM23 11H21V9H15V7H23V11ZM11 7H9V3H11V7ZM15 7H13V3H15V7ZM13 3H11V1H13V3Z"/></svg>
+      </button>
     </nav>
 
     <!-- 过滤页用（/mine/works）；主页由脚本隐藏，只留 id -->
@@ -167,7 +171,8 @@ export const mineTemplate = `<div class="container mine-wrap">
     <div class="ig-empty" id="mineEmpty"></div>
   </section>
 
-  <!-- 送出的 / 收藏：主页为空时高度为 0；过滤页才显示列表 -->
+  <!-- 点赞（送出过光尘的）/ 收藏：主页点标签切换时才显示，
+       其余时候脚本给卡片加 hidden（高度为 0）；过滤页单独打开时也一样用这两块 -->
   <div id="likedSlot">
     <div class="m-card" id="likedCard">
       <div class="m-card-title">

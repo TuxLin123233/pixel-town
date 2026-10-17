@@ -2,7 +2,8 @@
  * Mine 视图的 CSS —— Instagram 风格的个人主页
  *
  * 版面：顶栏 → 头像 + 四项数据 → 简介 → 两个描边按钮
- *       → 高光圆横滑 → 作品 / 收藏 / 送出 标签 → 3 列作品墙
+ *       → 高光圆横滑 → 作品 / 点赞 / 收藏 三个标签
+ *       → 三份 3 列网格（点标签原地切换，见 mine.js 的 paintTab）
  *
  * 设计原则和全站一致：透明底、1px 分隔线、单一强调色 var(--accent)，
  * 图标一律 currentColor；不画卡片、不叠阴影。
@@ -348,6 +349,7 @@ export const mineStyles = `
         margin: 0 -16px;
         border-top: 1px solid var(--border);
       }
+      /* 三个标签是 <button>（原地切网格）：先把浏览器默认外观清干净 */
       .ig-tab {
         flex: 1 1 0;
         height: 48px;
@@ -355,16 +357,30 @@ export const mineStyles = `
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border: 0;
         border-bottom: 2px solid transparent;
+        background: transparent;
+        appearance: none;
+        -webkit-appearance: none;
         color: var(--text-faint);
+        font: inherit;
         text-decoration: none;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
       }
       .ig-tab svg { width: 22px; height: 22px; display: block; }
+      /* 当前项：2px 下划线 + 强调色 */
       .ig-tab.on {
-        color: var(--text);
-        border-bottom-color: var(--text);
+        color: var(--accent);
+        border-bottom-color: var(--accent);
       }
       .ig-tab:active { opacity: .65; }
+      .ig-tab:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: -4px;
+      }
 
       /* ============ 7. 作品墙：3 列方格，通栏，无文字 ============ */
       .mine-grid {

@@ -123,24 +123,78 @@ export default {
         : path.endsWith('/fav')
           ? 'fav'
           : 'home'
+
+    /* ---------- 主页三个标签：作品 / 点赞 / 收藏 ----------
+       三份网格一开始就都在 DOM 里（#mineGrid / #likedGrid / #favGrid），
+       点标签只切显隐：不改 URL、不 push 路由、不重建视图。
+       数据仍然走原来那两个加载函数（loadLiked / loadFavs），
+       点第一次时拉一次，之后来回切不再发请求。 */
+    const TABS = { works: 'mineTabWorks', liked: 'mineTabLiked', fav: 'mineTabFav' }
+    let mineTab = 'works'
+    let likedLoaded = false
+    let favLoaded = false
+
+    /* 只改标签的选中态，不动网格 */
+    function markTabs(tab) {
+      Object.keys(TABS).forEach((k) => {
+        const b = $(TABS[k])
+        if (!b) return
+        const on = k === tab
+        b.classList.toggle('on', on)
+        b.setAttribute('aria-selected', on ? 'true' : 'false')
+      })
+    }
+
+    /* 切到某个标签：显示它的网格、隐藏另外两个，需要时补拉一次列表 */
+    function paintTab(tab) {
+      mineTab = TABS[tab] ? tab : 'works'
+      markTabs(mineTab)
+      const show = (id, on) => {
+        const el = $(id)
+        if (el) el.hidden = !on
+      }
+      /* 作品：主页只要作品墙（#mineGrid / #mineEmpty）。
+         #mineCard 是那张带筛选和刷新的工具栏，只在 /mine/works 里出现。 */
+      show('mineGrid', mineTab === 'works')
+      show('mineEmpty', mineTab === 'works')
+      show('likedCard', mineTab === 'liked')
+      show('favCard', mineTab === 'fav')
+      /* 懒加载：第一次点开才请求，跟子页用的是同一个函数，没有第二套请求 */
+      if (mineTab === 'liked' && !likedLoaded) {
+        likedLoaded = true
+        loadLiked()
+      } else if (mineTab === 'fav' && !favLoaded) {
+        favLoaded = true
+        loadFavs()
+      }
+    }
+
         function applyMode() {
       const back = $('mineBack')
+      const nav = $('mineTabs')
       if (MODE === 'home') {
         if (back) back.hidden = true
-        /* ★ 主页不再显示「我的画」那一块（用户要求删掉，它在最底部，
-           每次进来都要滑很久才看到别的入口）。
-           注意是**隐藏**不是删掉元素 —— /mine/works 这个过滤页复用的
-           就是 #mineCard，删了那个页面会空白。
-           想看完整列表走「常去的地方」里「我的作品」那个入口。 */
+        if (nav) nav.hidden = false
         CARDS.forEach((id) => {
           const el = $(id)
           if (!el) return
+          /* 点赞 / 收藏两块由 paintTab 管显隐，这里不碰 */
+          if (id === 'likedCard' || id === 'favCard') return
+          /* 主页不显示「我的画」那张工具栏（最底部太长），
+             但作品墙 #mineGrid 照常在，由标签切换决定露不露 */
           el.hidden = id === 'mineCard'
         })
+        paintTab(mineTab)
         return
       }
-      // 过滤页：只留对应的一块，并显示返回入口
+      /* 过滤页（/mine/works、/mine/gifted、/mine/fav）仍然整页单独打开：
+         只留对应的一块，并显示返回入口。
+         标签只在主页有意义，过滤页把它藏起来，免得同一页出现两套「我在哪」 */
       if (back) back.hidden = false
+      if (nav) nav.hidden = true
+      markTabs(MODE === 'works' ? 'works' : MODE === 'fav' ? 'fav' : 'liked')
+      likedLoaded = MODE === 'gifted'
+      favLoaded = MODE === 'fav'
       const modeCard = MODE === 'works' ? 'mineCard' : MODE === 'fav' ? 'favCard' : 'likedCard'
       CARDS.forEach((id) => {
         const el = $(id)
@@ -1220,6 +1274,25 @@ export default {
 
     /* ---------- 送出的光尘数量 ---------- */
     $('lnkLiked').textContent = window.dust ? window.dust.giftedCount() : 0
+
+    /* 三个标签的点击：原地换网格，不碰 location / router。
+       （以前这三个是 <router-link>，点一下整页跳到 /mine/fav 之类的子页，
+        回来还得再点一次返回 —— 用户要的是在主页里切。） */
+    Object.keys(TABS).forEach((k) => {
+      const b = $(TABS[k])
+      if (!b) return
+      b.addEventListener('click', () => {
+        if (MODE !== 'home' || mineTab === k) return
+        if (window.sfx) window.sfx('tick')
+        paintTab(k)
+      })
+    })
+    /* 换账号 / 退出登录后，点赞和收藏的列表得重新拉一次，不能复用上一个人的 */
+    window.addEventListener('lw-auth-changed', () => {
+      likedLoaded = false
+      favLoaded = false
+      if (MODE === 'home') paintTab(mineTab)
+    })
 
     loadMailBadge()
     loadAchBadge()

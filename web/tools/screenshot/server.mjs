@@ -85,6 +85,17 @@ const { defaultPixels } = await import(path.join(FUNCTIONS, '_avatar.js'))
 function api(u) {
   const p = u.pathname
   if (p === '/api/get') {
+    /* 按时间取单件：「我的」页的点赞 / 收藏列表每件都走 single=1&locate=，
+       只返回 works[0] 的话三张图长得一模一样，看不出标签切的是不是不同的列表。
+       这里按时间戳真找一次，形状跟 functions/api/get.js 对齐。 */
+    const locate = Number(u.searchParams.get('locate'))
+    if (Number.isFinite(locate) && locate > 0) {
+      const i = works.findIndex((w) => w.time === locate)
+      const w = i >= 0 ? works[i] : null
+      return w
+        ? { ok: true, found: true, index: i, total: works.length, work: w }
+        : { ok: true, found: false, index: -1, total: works.length, work: null }
+    }
     const limit = Number(u.searchParams.get('limit')) || 60
     return { ok: true, history: works.slice(0, limit), total: works.length, random: false,
       pixels: works[0].pixels, workName: works[0].workName, author: works[0].author, size: works[0].size,
@@ -121,10 +132,17 @@ function api(u) {
   if (p === '/api/dailytask') return { ok: true, claimable: 2, tasks: [] }
   if (p === '/api/chat') return { ok: true, me: 'u1', list: [], items: [] }
   if (p === '/api/auth') return { ok: true, uid: 'u1', username: '我' }
+  /* 收藏夹：主页「收藏」标签和 /mine/fav 子页共用同一份数据 */
+  if (p === '/api/fav') {
+    const times = [works[2].time, works[4].time, works[5].time]
+    return { ok: true, times, total: times.length, max: 200 }
+  }
   /* 光尘账本：客户端读的是 d.book（lw-dust.js 里 applyBook(d.book)），
      以前 mock 把 bal/streak 直接放在顶层，客户端拿不到 →
-     「我的」页会显示成「需要登录」。这里按真实接口的形状给。 */
-  if (p === '/api/dust') return { ok: true, book: { bal: 328, streak: 5, total: 48, signedToday: false, got: [], gifted: [], giftedCount: 0 } }
+     「我的」页会显示成「需要登录」。这里按真实接口的形状给。
+     gifted 是送过光尘的作品（字符串时间戳），主页「点赞」标签读它。 */
+  if (p === '/api/dust') return { ok: true, book: { bal: 328, streak: 5, total: 48, signedToday: false,
+    got: 2, gifted: [String(works[1].time), String(works[3].time)], giftedCount: 2 } }
   return { ok: true }
 }
 
