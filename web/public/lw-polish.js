@@ -395,7 +395,8 @@ import { POLISH_ICONS as ICONS } from './lw-polish/polish-icons.js'
       reserveSpace()
       upgradeLoading()
       upgradeEmpty()
-      fadeImages()
+      /* 图片淡入已关闭：扫描是周期跑的，社区分批插入图片时
+         会把「已经画出来」的图再置成 opacity:0 淡回来，看着就是残影/闪一下。 */
       bindHold()
       onScroll()
     } catch (e) {}
