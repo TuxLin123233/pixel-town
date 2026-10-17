@@ -402,7 +402,8 @@ import { POLISH_ICONS as ICONS } from './lw-polish/polish-icons.js'
   }
   function start() {
     if (timer) return
-    timer = setInterval(scan, 600)
+    /* 原来是 600ms 一次（每次都要量布局，很费）；放慢到 1800ms，后台跳过 */
+    timer = setInterval(function () { if (!document.hidden) scan() }, 1800)
     scan()
   }
   if (document.readyState === 'loading') {

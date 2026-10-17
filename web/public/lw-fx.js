@@ -182,22 +182,8 @@ body.lwfx-fest-xmas .card-title { color: #2f7d54 !important }
     return el
   }
 
-  /* ================= 点击光晕 ================= */
-  document.addEventListener(
-    'pointerdown',
-    function (e) {
-      if (reduce) return
-      var el = document.createElement('div')
-      el.className = 'lwfx-halo'
-      el.style.left = e.clientX + 'px'
-      el.style.top = e.clientY + 'px'
-      layer().appendChild(el)
-      setTimeout(function () {
-        if (el.parentNode) el.parentNode.removeChild(el)
-      }, 660)
-    },
-    { passive: true, capture: true }
-  )
+  /* 点击光晕已去掉：每点一下都插一个带动画的元素，手机上很费。
+     想要反馈的话交给按钮自己的 :active 就够了。 */
 
   /* ================= 桌面柔光跟随 ================= */
   var glow = null

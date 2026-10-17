@@ -371,10 +371,13 @@ createApp(App).use(router).mount('#app')
    与其在每个组件的 updated 钩子里调一次，不如在这里统一：
    路由一变、DOM 一变就扫一遍，没画过的补上（LWIcon 自己用
    data-px-done 记着，重复扫不会重画）。 */
-function paintIcons() {
+function paintIcons(alsoEmoji) {
   if (!window.LWIcon) return
-  // 先把文本里的 emoji 换成像素图标的占位元素，再把占位元素画成 canvas
-  try { window.LWIcon.swapEmoji(document.body) } catch (e) {}
+  /* emoji 替换要遍历整页文本节点，很费；只在切页时做一次。
+     DOM 变动（列表刷新、卡片加载）只补画 data-px 图标 —— 那是一条 querySelectorAll。 */
+  if (alsoEmoji !== false) {
+    try { window.LWIcon.swapEmoji(document.body) } catch (e) {}
+  }
   window.LWIcon.apply(document)
 }
 paintIcons()
@@ -389,9 +392,9 @@ try {
     if (paintIcons._t) return
     paintIcons._t = setTimeout(function () {
       paintIcons._t = 0
-      paintIcons()
-    }, 80)
+      paintIcons(false)
+    }, 300)
   }).observe(document.body, { childList: true, subtree: true })
 } catch (e) {}
 
-window.lwPaintIcons = paintIcons
+window.lwPaintIcons = function () { paintIcons(true) }

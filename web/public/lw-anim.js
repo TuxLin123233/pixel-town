@@ -674,7 +674,8 @@ button, [role='button'], .lwa-tap {
   }
   function start() {
     if (timer) return
-    timer = setInterval(scan, 500)
+    /* 原来是 500ms 一次全页扫描；放慢到 1500ms，后台标签页直接跳过 */
+    timer = setInterval(function () { if (!document.hidden) scan() }, 1500)
     scan()
   }
   if (document.readyState === 'loading') {

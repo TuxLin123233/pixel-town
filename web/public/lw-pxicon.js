@@ -31,7 +31,9 @@ import { EMOJI_MAP, swapEmoji } from './lw-pxicon/emoji.js'
   function readLevel() {
     try {
       var v = localStorage.getItem(LEVEL_KEY)
-      return LEVELS.indexOf(v) >= 0 ? v : 'std'
+      /* 默认 low：图标不再常驻动画（每个图标一个 setInterval，很费电也很卡）。
+         想要动画可以去设置里切到 std / rich。 */
+      return LEVELS.indexOf(v) >= 0 ? v : 'low'
     } catch (e) {
       return 'std'
     }
