@@ -448,7 +448,7 @@ export const mineStyles = `
         font-weight: 700;
         text-decoration: none;
         border: 1px solid transparent;
-        box-shadow: 0 4px 14px var(--shadow1);
+        box-shadow: none;
       }
       .cloudhu-btn:active { opacity: 0.85; transform: scale(0.98); }
 
@@ -458,13 +458,13 @@ export const mineStyles = `
         margin: 8px 0 4px;
         padding: 12px 16px;
         border-radius: 14px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #667eea;
         color: #fff;
         font-size: 13px;
         font-weight: 700;
         text-decoration: none;
         border: 1px solid transparent;
-        box-shadow: 0 4px 14px var(--shadow1);
+        box-shadow: none;
       }
       .portal-btn:active { opacity: 0.85; transform: scale(0.98); }
 
@@ -492,7 +492,7 @@ export const mineStyles = `
         border: 2px solid var(--border);
         image-rendering: pixelated;
         background: var(--surface-2);
-        box-shadow: 0 3px 12px var(--shadow2, rgba(0, 0, 0, 0.08));
+        box-shadow: none;
       }
       .me-av-edit {
         position: absolute;
@@ -506,7 +506,7 @@ export const mineStyles = `
         line-height: 24px;
         text-align: center;
         border: 2.5px solid var(--surface);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+        box-shadow: none;
       }
       .me-hero-txt {
         min-width: 0;

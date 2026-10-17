@@ -112,7 +112,7 @@ export const settingsStyles = `
         border-radius: 16px;
         padding: 16px;
         margin-bottom: 16px;
-        box-shadow: 0 4px 14px var(--shadow);
+        box-shadow: none;
       }
 
       .group-title {
@@ -247,6 +247,11 @@ export const settingsStyles = `
         color: var(--text-muted);
         line-height: 1.7;
       }
+
+      /* 扁平像素图标（Pixelarticons，单色 currentColor） */
+      .g-ico { color: var(--text-muted); }
+      .g-ico svg,
+      .entry-ico svg { width: 20px; height: 20px; display: block; }
       .guide-tips {
         margin-top: 12px;
         background: var(--surface-2);
@@ -302,7 +307,7 @@ export const settingsStyles = `
         border: 1px solid var(--border);
         border-radius: 16px;
         padding: 4px 14px;
-        box-shadow: 0 2px 10px var(--shadow2, rgba(0, 0, 0, 0.06));
+        box-shadow: none;
         opacity: 1;
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
@@ -366,7 +371,7 @@ export const settingsStyles = `
         border: 1px solid var(--border);
         border-radius: 16px;
         padding: 4px 14px;
-        box-shadow: 0 2px 10px var(--shadow2, rgba(0, 0, 0, 0.06));
+        box-shadow: none;
         opacity: 1;
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
@@ -522,7 +527,7 @@ export const settingsStyles = `
         border-radius: 50%;
         background: var(--accent);
         border: 2px solid var(--surface);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+        box-shadow: none;
       }
       .slider::-moz-range-track {
         height: 8px;
@@ -536,7 +541,7 @@ export const settingsStyles = `
         border-radius: 50%;
         background: var(--accent);
         border: 2px solid var(--surface);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+        box-shadow: none;
       }
       .slider-presets { display: flex; flex-wrap: wrap; gap: 7px; }
       .slider-presets button {
@@ -574,7 +579,7 @@ export const settingsStyles = `
         /* 预览条复用真实导航的观感 */
         background: rgba(255, 253, 250, var(--nav-op, 0.66));
         border: 1px solid rgba(180, 168, 150, 0.3);
-        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+        box-shadow: none;
         -webkit-backdrop-filter: blur(calc(6px + var(--nav-op, 0.66) * 22px));
         backdrop-filter: blur(calc(6px + var(--nav-op, 0.66) * 22px));
       }
@@ -674,7 +679,7 @@ export const settingsStyles = `
         border-radius: 50%;
         background: #fff;
         transition: left 0.2s;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        box-shadow: none;
       }
 
       .switch:checked {
@@ -770,7 +775,7 @@ export const settingsStyles = `
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 999px;
-        box-shadow: 0 14px 40px var(--shadow-hover);
+        box-shadow: none;
       }
 
       .bottom-nav a {
@@ -805,12 +810,12 @@ export const settingsStyles = `
         -webkit-backdrop-filter: blur(calc(6px + var(--nav-op, 0.66) * 22px)) saturate(180%);
         backdrop-filter: blur(calc(6px + var(--nav-op, 0.66) * 22px)) saturate(180%);
         border-color: rgba(180, 168, 150, 0.30) !important;
-        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        box-shadow: none;
       }
       [data-mood="dark"] .bottom-nav {
         background: rgba(var(--nav-base, 42, 38, 33), var(--nav-op, 0.62)) !important;
         border-color: rgba(255, 255, 255, 0.10) !important;
-        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        box-shadow: none;
       }
       html.glass-off .bottom-nav,
       html.glass-off [data-mood="dark"] .bottom-nav {

@@ -255,7 +255,7 @@ export const chatStyles = `
         max-width: 100%; min-width: 0;
         overflow-wrap: anywhere; word-break: break-word; white-space: pre-wrap;
         background: var(--surface); border: 1px solid var(--border); color: var(--text);
-        box-shadow: 0 1px 2px rgba(80, 60, 40, 0.06);
+        box-shadow: none;
       }
       .ch-msg.mine .ch-bubble {
         background: var(--accent); color: #fff; border-color: var(--accent);
@@ -314,7 +314,7 @@ export const chatStyles = `
       .ch-emoji {
         position: absolute; left: 0; right: 0; bottom: calc(100% + 8px);
         background: var(--surface); border: 1px solid var(--border-strong);
-        border-radius: 14px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+        border-radius: 14px; box-shadow: none;
         padding: 8px; z-index: 30;
       }
       .ch-emoji[hidden] { display: none; }
@@ -347,7 +347,7 @@ export const chatStyles = `
         position: absolute; left: 0; right: 0; bottom: 46px;
         background: var(--surface); border: 1px solid var(--border-strong);
         border-radius: 14px; padding: 10px; z-index: 6;
-        box-shadow: 0 8px 26px rgba(0,0,0,.16);
+        box-shadow: none;
       }
       .ch-plus[hidden] { display: none; }
       .ch-plus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }

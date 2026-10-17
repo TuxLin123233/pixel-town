@@ -31,7 +31,7 @@ export const adminStyles = `      /* hidden 属性兜底：避免类选择器里
         border-radius: 18px;
         padding: 18px 20px;
         margin-bottom: 16px;
-        box-shadow: 0 2px 10px var(--shadow2, rgba(0, 0, 0, 0.06));
+        box-shadow: none;
       }
 
       .back {
@@ -509,7 +509,7 @@ export const adminStyles = `      /* hidden 属性兜底：避免类选择器里
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.25s ease, transform 0.25s ease;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        box-shadow: none;
         max-width: 86vw;
         text-align: center;
         z-index: 120;

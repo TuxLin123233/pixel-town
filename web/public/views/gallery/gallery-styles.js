@@ -130,7 +130,7 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         border-radius: 18px;
         padding: 16px;
         margin-bottom: 22px;
-        box-shadow: 0 4px 14px var(--shadow);
+        box-shadow: none;
       }
 
       .featured[hidden] { display: none; }
@@ -517,7 +517,7 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         border: 2px solid var(--border);
         background: var(--art-bg);
         display: block;
-        box-shadow: 0 3px 10px var(--shadow);
+        box-shadow: none;
         transition: transform 0.12s ease;
       }
 
@@ -565,7 +565,7 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         border: 1px solid transparent;
         border-radius: 16px;
         padding: 10px;
-        box-shadow: 0 4px 14px var(--shadow);
+        box-shadow: none;
         cursor: pointer;
         text-align: left;
         transition: transform 0.1s ease, box-shadow 0.2s ease;
@@ -573,7 +573,7 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         font: inherit;
       }
 
-      .card:hover { box-shadow: 0 8px 22px var(--shadow-hover); }
+      .card:hover { box-shadow: none; }
       .card:active { transform: scale(0.97); }
 
       /* 不同作品类型用不同描边颜色区分：参赛=蓝 · 动画=紫 · 多人=青 */
@@ -770,7 +770,7 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         padding: 14px 16px;
         background: var(--surface);
         border-radius: 14px;
-        box-shadow: 0 4px 14px var(--shadow);
+        box-shadow: none;
         font-size: 12px;
         line-height: 1.7;
         color: var(--text-faint);
@@ -820,7 +820,7 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         background: var(--surface);
         border-radius: 18px;
         padding: 20px;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        box-shadow: none;
         text-align: center;
       }
       .preview-body {
@@ -1573,7 +1573,7 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 999px;
-        box-shadow: 0 14px 40px var(--shadow-hover);
+        box-shadow: none;
       }
 
       .bottom-nav a {
@@ -1625,7 +1625,7 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         background: var(--surface);
         border-radius: 20px;
         padding: 18px;
-        box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45);
+        box-shadow: none;
         text-align: center;
       }
 
@@ -1681,12 +1681,12 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         -webkit-backdrop-filter: blur(calc(6px + var(--nav-op, 0.66) * 22px)) saturate(180%);
         backdrop-filter: blur(calc(6px + var(--nav-op, 0.66) * 22px)) saturate(180%);
         border-color: rgba(180, 168, 150, 0.30) !important;
-        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        box-shadow: none;
       }
       [data-mood="dark"] .bottom-nav {
         background: rgba(var(--nav-base, 42, 38, 33), var(--nav-op, 0.62)) !important;
         border-color: rgba(255, 255, 255, 0.10) !important;
-        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        box-shadow: none;
       }
       html.glass-off .bottom-nav,
       html.glass-off [data-mood="dark"] .bottom-nav {

@@ -29,7 +29,7 @@ export const townStyles = `
         background-image:
           repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 6px, transparent 6px 12px),
           repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 14px, transparent 14px 28px);
-        box-shadow: inset 0 0 34px rgba(40,80,20,.22);
+        box-shadow: none;
         /* ★ 地图不能无限往下长。
            原来 3 列住户网格，30 户就是 10 行 ≈ 900px，
            一进小镇页要滑好几屏才看到底下的按钮。
@@ -137,16 +137,16 @@ export const townStyles = `
         padding: 14px 10px 12px;
         border: 0; border-radius: 16px;
         background: linear-gradient(180deg, #fffaf1, #f6ecdb);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 3px 0 #e2d0b4, 0 6px 16px rgba(120,90,50,.12);
+        box-shadow: none;
         font-family: inherit; cursor: pointer; text-align: center;
         overflow: hidden; -webkit-tap-highlight-color: transparent;
         transition: transform .12s, box-shadow .12s;
       }
       html[data-mood='dark'] .tw-entry {
         background: linear-gradient(180deg, #38312a, #2f2922);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 3px 0 #221d18;
+        box-shadow: none;
       }
-      .tw-entry:hover { transform: translateY(-2px); box-shadow: 0 5px 0 #e2d0b4, 0 10px 22px rgba(120,90,50,.18) }
+      .tw-entry:hover { transform: translateY(-2px); box-shadow: none}
       .tw-entry:active { transform: translateY(0) scale(.98) }
       .tw-entry::before {
         content: ''; position: absolute; inset: 0;

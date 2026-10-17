@@ -18,27 +18,39 @@ export const settingsTemplate = `<div class="container">
         <div class="guide-body">
           <div class="guide-grid">
             <div class="g-item">
-              <span class="g-ico">🎨</span>
+              <span class="g-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/>
+  <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/>
+</svg></span>
               <b>一个人画</b>
               <i>16 / 32 / 64 三种尺寸，32 色彩板，橡皮、颜料桶、取色器、镜像、草稿槽，随时导出 PNG。</i>
             </div>
             <div class="g-item">
-              <span class="g-ico">🖼️</span>
+              <span class="g-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M19 21H5v-2h14v2ZM5 19H3v-4h2v4Zm16 0h-2v-4h2v4ZM13 5h2v2h2v2h-4v8h-2V9H7V7h2V5h2V3h2v2Z"/>
+</svg></span>
               <b>发到社区</b>
               <i>上传作品进社区广场，别人可以送你光尘、投你一票，还能生成朋友圈小卡片分享。</i>
             </div>
             <div class="g-item">
-              <span class="g-ico">📷</span>
+              <span class="g-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/>
+  <path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/>
+</svg></span>
               <b>照片变像素</b>
               <i>用「像素相机」把照片一键转成像素画，再手动改几笔就是你的作品。</i>
             </div>
             <div class="g-item">
-              <span class="g-ico">🏆</span>
+              <span class="g-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+<path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/>
+</svg></span>
               <b>每周主题比赛</b>
               <i>开启后按题目作画，参赛作品能参加投票，赢的是本周最受欢迎的一张。</i>
             </div>
             <div class="g-item">
-              <span class="g-ico">✋</span>
+              <span class="g-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M21 7h2v5h-2zm-4-2h2v7h-2zm-4-2h2v8h-2zM9 3h2v8H9zM5 5h2v8H5zm14 0h2v2h-2zm-4-2h2v2h-2zm-4-2h2v2h-2zM7 3h2v2H7zm-4 8h2v2H3zm-2 2h2v2H1zm0 2h2v2H1zm2 2h2v2H3zm2 2h2v2H5zm2 2h12v2H7zm12-2h2v2h-2zm2-7h2v7h-2zM5 13h2v2H5zm2 2h2v2H7z"/>
+</svg></span>
               <b>手型平移</b>
               <i>选 ✋ 只拖动画布不落笔；任何工具下点 ✥ 都能切成拖动模式。</i>
             </div>
@@ -321,7 +333,9 @@ export const settingsTemplate = `<div class="container">
         <div class="group-title">联系与社区</div>
         <div class="contact-card">
           <router-link class="entry" to="/mod">
-            <span class="entry-ico">🛡️</span>
+            <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M4 2h16v2H4zM2 4h2v10H2zm18 0h2v10h-2zM4 14h2v2H4zm2 2h2v2H6zm4 4h4v2h-4zm10-6h-2v2h2zm-2 2h-2v2h2zm-2 2h-2v2h2zm-6 0H8v2h2z"/>
+</svg></span>
             <span class="entry-body">
               <span class="entry-label">审核记录</span>
               <div class="entry-desc">我下架过哪些作品 · 误下架可以一键恢复</div>
@@ -371,10 +385,24 @@ export const settingsTemplate = `<div class="container">
       <section class="group">
         <div class="group-title">致谢</div>
         <div class="credit-card">
-          <!-- 美术素材现在全部是站内自绘的像素图标，不再有外部素材。
+          <!-- 界面图标来自 Pixelarticons（MIT，第一条），画布里的像素图仍是站内自绘。
                音效还留着 gamersounds.com 的十个文件，那一条在下面。 -->
+          <a class="entry" href="https://pixelarticons.com/" target="_blank" rel="noopener noreferrer">
+            <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/>
+  <path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/>
+</svg></span>
+            <span class="entry-body">
+              <span class="entry-label">Pixelarticons</span>
+              <div class="entry-desc">本站的扁平像素图标 · MIT License · pixelarticons.com</div>
+            </span>
+            <span class="entry-arrow">›</span>
+          </a>
+          <div class="entry-sep"></div>
           <a class="entry" href="https://gamersounds.com/" target="_blank" rel="noopener noreferrer">
-            <span class="entry-ico">🔊</span>
+            <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M17 22h-2v-2h-2v-2h2V6h-2V4h2V2h2v20Zm-4-4h-2v-2h2v2ZM11 8v2H9v4h2v2H7V8h4Zm2 0h-2V6h2v2Z"/>
+</svg></span>
             <span class="entry-body">
               <span class="entry-label">gamersounds.com</span>
               <div class="entry-desc">十个音效文件（点击 / 命中 / 火焰 / 金币 / 升级等）· 免费游戏音效素材</div>
@@ -383,7 +411,9 @@ export const settingsTemplate = `<div class="container">
           </a>
           <div class="entry-sep"></div>
           <a class="entry" href="https://github.com/Konsheng/Sensitive-lexicon" target="_blank" rel="noopener noreferrer">
-            <span class="entry-ico">🛡️</span>
+            <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M4 2h16v2H4zM2 4h2v10H2zm18 0h2v10h-2zM4 14h2v2H4zm2 2h2v2H6zm4 4h4v2h-4zm10-6h-2v2h2zm-2 2h-2v2h2zm-2 2h-2v2h2zm-6 0H8v2h2z"/>
+</svg></span>
             <span class="entry-body">
               <span class="entry-label">Sensitive-lexicon</span>
               <div class="entry-desc">内容安全词库 · MIT License · Copyright (c) 2024~2099 Konsheng</div>
@@ -392,7 +422,9 @@ export const settingsTemplate = `<div class="container">
           </a>
           <div class="entry-sep"></div>
           <a class="entry" href="https://opencode.ai" target="_blank" rel="noopener noreferrer">
-            <span class="entry-ico">⌨️</span>
+            <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zM6 16h2v2H6zm2-2h2v2H8zm-2-2h2v2H6z"/>
+</svg></span>
             <span class="entry-body">
               <span class="entry-label">OpenCode</span>
               <div class="entry-desc">本站代码编写工具</div>
@@ -401,7 +433,9 @@ export const settingsTemplate = `<div class="container">
           </a>
           <div class="entry-sep"></div>
           <a class="entry" href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener noreferrer">
-            <span class="entry-ico">🐋</span>
+            <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M5 3h14v2H5zm0 16h14v2H5zM3 5h2v14H3zm16 0h2v14h-2zM9 7h6v2H9zm0 8h6v2H9zM7 9h2v6H7zm8 0h2v6h-2zm-4-8h2v2h-2zm0 20h2v2h-2zM1 11h2v2H1zm20 0h2v2h-2zm0-4h2v2h-2zm0 8h2v2h-2zM1 15h2v2H1zm0-8h2v2H1zm6-6h2v2H7zm8 0h2v2h-2zm0 20h2v2h-2zm-8 0h2v2H7z"/>
+</svg></span>
             <span class="entry-body">
               <span class="entry-label">DeepSeek Harness</span>
               <div class="entry-desc">本站的开发工具链 · 开源 · DeepSeek</div>
@@ -410,7 +444,7 @@ export const settingsTemplate = `<div class="container">
           </a>
           <div class="entry-sep"></div>
           <a class="entry" href="https://www.linux.org" target="_blank" rel="noopener noreferrer">
-            <span class="entry-ico">🐧</span>
+            <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M15 22H9v-2h6v2Zm-6-2H7v-2h2v2Zm8 0h-2v-2h2v2ZM3 14h4v4H5v-2H1v-4h2v2Zm20 2h-4v2h-2v-4h4v-2h2v4Zm-10-3h-2v-2H9V9h6v2h-2v2Zm-8-1H3v-2h2v2Zm16 0h-2v-2h2v2ZM7 10H5V8h2v2Zm12 0h-2V8h2v2ZM9 8H7V4h2v4Zm8 0h-2V4h2v4Zm-2-4H9V2h6v2Z"/></svg></span>
             <span class="entry-body">
               <span class="entry-label">Linux</span>
               <div class="entry-desc">本站的开发环境</div>
@@ -425,7 +459,9 @@ export const settingsTemplate = `<div class="container">
         <div class="group-title">友链</div>
         <div class="credit-card">
           <a class="entry" href="https://www.fayederolex.top" target="_blank" rel="noopener noreferrer">
-            <span class="entry-ico">🔗</span>
+            <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M4 6h7v2H4zm0 10h7v2H4zM2 8h2v8H2zm18-2h-7v2h7zm0 10h-7v2h7zm2-8h-2v8h2zM7 11h10v2H7z"/>
+</svg></span>
             <span class="entry-body">
               <span class="entry-label">Fayeder Olex</span>
               <div class="entry-desc">www.fayederolex.top</div>
@@ -434,7 +470,9 @@ export const settingsTemplate = `<div class="container">
           </a>
           <div class="entry-sep"></div>
           <a class="entry" href="https://blog.ltx88.icu" target="_blank" rel="noopener noreferrer">
-            <span class="entry-ico">🔗</span>
+            <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M4 6h7v2H4zm0 10h7v2H4zM2 8h2v8H2zm18-2h-7v2h7zm0 10h-7v2h7zm2-8h-2v8h2zM7 11h10v2H7z"/>
+</svg></span>
             <span class="entry-body">
               <span class="entry-label">ltx88 blog</span>
               <div class="entry-desc">blog.ltx88.icu</div>
