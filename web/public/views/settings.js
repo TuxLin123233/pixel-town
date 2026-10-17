@@ -59,8 +59,8 @@ export default {
             const navPosRow = document.getElementById('navPosRow')
       if (navPosRow) {
         const POS = [
-          { v: 'bottom', ico: '⬇️', name: '底部' },
-          { v: 'top', ico: '⬆️', name: '顶部' },
+          { v: 'bottom', ico: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M13 12h6v2h-2v2h-2v2h-2v2h-2v-2H9v-2H7v-2H5v-2h6V4h2v8Z"/> </svg>', name: '底部' },
+          { v: 'top', ico: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 20h2V4h-2zm2-12h2V6h-2zm2 2h2V8h-2zm2 2h2v-2h-2zm-6-4H9V6h2z"/> <path d="M15 10H7V8h8zm2 2H5v-2h12z"/> </svg>', name: '顶部' },
         ]
         let cur = readLS(NAV_POS_KEY, 'bottom')
         if (!POS.some((p) => p.v === cur)) cur = 'bottom'
@@ -255,7 +255,7 @@ export default {
           body.className = 'lay-body'
           const b = document.createElement('b')
           b.className = 'lay-title'
-          b.textContent = (L.ico || '') + ' ' + L.label
+          b.innerHTML = (L.ico || '') + ' ' + L.label
           const i = document.createElement('i')
           i.textContent = L.desc
           body.append(b, i)
@@ -325,7 +325,7 @@ export default {
           const left = document.createElement('div')
           const lb = document.createElement('div')
           lb.className = 'row-label'
-          lb.textContent = (f.ico || '') + ' ' + f.label
+          lb.innerHTML = (f.ico || '') + ' ' + f.label
           const ds = document.createElement('div')
           ds.className = 'row-desc'
           ds.textContent = f.desc
@@ -433,8 +433,8 @@ export default {
       if (themePicks) {
         // 上：浅色系　下：夜间系
         const GROUPS = [
-          { key: 'light', label: '浅色系', ico: '☀️' },
-          { key: 'dark', label: '夜间系', ico: '🌙' },
+          { key: 'light', label: '浅色系', ico: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M13 22h-2v-3h2v3Zm-6-3H5v-2h2v2Zm12 0h-2v-2h2v2Zm-4-2H9v-2h6v2Zm-6-2H7V9h2v6Zm8 0h-2V9h2v6ZM5 13H2v-2h3v2Zm17 0h-3v-2h3v2Zm-7-4H9V7h6v2ZM7 7H5V5h2v2Zm12 0h-2V5h2v2Zm-6-2h-2V2h2v3Z"/></svg>' },
+          { key: 'dark', label: '夜间系', ico: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M18 22H8v-2h10v2ZM8 20H6v-2h2v2Zm12 0h-2v-2h2v2ZM6 18H4v-2h2v2Zm16 0h-2v-4h-2v-2h2v-2h2v8ZM4 16H2V6h2v10Zm14 0h-6v-2h6v2Zm-6-2h-2v-2h2v2Zm-2-2H8V6h2v6ZM6 6H4V4h2v2Zm8-2h-2v2h-2V4H6V2h8v2Z"/> </svg>' },
         ]
         GROUPS.forEach((g) => {
           const list = THEMES.filter((t) => t.group === g.key)
