@@ -2117,7 +2117,8 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         margin: 0 16px;
       }
 
-      /* 2) 今日一题 / 抽一个 提到首屏，不再沉在作品流下面 */
+      /* 2) 今日一题 / 发现 已收进「今日画师」圆圈里，区块本身隐藏（id 保留给 JS） */
+      #dailyPanel, #discover { display: none !important; }
       .container {
         display: flex;
         flex-direction: column;

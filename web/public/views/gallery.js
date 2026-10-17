@@ -1060,6 +1060,23 @@ export default {
           x.fillRect(10, 22, 20, 3); x.fillRect(10, 28, 12, 3)
           h.appendChild(cv)
         }, () => { location.href = '/paint' })
+        // 发现：随机开一幅，替代原来页面底部那块「掷一个」
+        mk('发现', (h) => {
+          const cv = document.createElement('canvas')
+          cv.width = cv.height = 44
+          const x = cv.getContext('2d')
+          x.fillStyle = '#fdf3e0'
+          x.fillRect(0, 0, 44, 44)
+          x.fillStyle = '#c08b3e'
+          x.fillRect(12, 12, 8, 8); x.fillRect(26, 12, 8, 8)
+          x.fillRect(12, 26, 8, 8); x.fillRect(26, 26, 8, 8)
+          h.appendChild(cv)
+        }, () => {
+          if (!records || !records.length) return
+          const pick = records[Math.floor(Math.random() * records.length)]
+          if (pick) preview(pick)
+        })
+
         people.slice(0, 7).forEach((p) => {
           mk(p.name, (h) => {
             const cv = document.createElement('canvas')
