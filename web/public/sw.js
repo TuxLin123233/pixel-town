@@ -7,7 +7,7 @@
 //     表现为「改了但没变化」。代码正确性比离线速度重要。
 //   - 图标、图片：缓存优先（体积大、变动少）
 
-const VERSION = 'lw-v1.25.7'
+const VERSION = 'lw-v1.25.8'
 const SHELL_CACHE = 'lw-shell-' + VERSION
 
 /* 预缓存清单。
@@ -60,6 +60,8 @@ const SHELL = [
   '/views/mine.js',
   '/views/mine/mine-styles.js',
   '/views/mine/mine-template.js',
+  '/views/user/user-template.js',
+  '/views/user/user-styles.js',
   '/views/intro.js',
   '/views/avatar.js',
   '/views/achieve.js',
