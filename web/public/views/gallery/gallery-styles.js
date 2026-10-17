@@ -1730,4 +1730,51 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         background: transparent; color: var(--accent);
         border: 1px solid var(--border-strong); box-shadow: none;
       }
+
+
+      /* ============ 布局改版：内容优先 ============
+         不挪 DOM（挪坏了），改用 flex order 重排：作品列表提到最前面，
+         佳作和三个活动块放到列表下面。每个 section 的 id 和事件绑定都不受影响。 */
+      .container {
+        display: flex;
+        flex-direction: column;
+      }
+      .container > .header      { order: 0; }
+      .container > .finder      { order: 1; }
+      .container > .gallery-grid{ order: 2; }
+      .container > .featured    { order: 3; }
+      .container > .daily       { order: 4; }
+      .container > .contest     { order: 5; }
+      .container > .discover    { order: 6; }
+      .container > #sentinel,
+      .container > #status      { order: 7; }
+      .container > .disclaimer  { order: 8; }
+      .container > .copyright   { order: 9; }
+      .container > .author-page { order: 10; }
+      .gallery-grid { margin-top: 16px; }
+      .featured { border-top: 1px solid var(--border); }
+
+      /* 按钮统一：小号、细线、透明底；行动按钮才用强调色 */
+      .daily-cta, .contest-cta, .discover-btn, .filter-toggle,
+      .search-clear, .range-tabs button, .fp-reset, .fp-chip, .chip {
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        box-shadow: none;
+        background: transparent;
+        border: 1px solid var(--border-strong);
+        color: var(--text-muted);
+      }
+      .daily-cta, .contest-cta { color: var(--accent); border-color: var(--accent); }
+      .range-tabs button.active { color: var(--accent); border-color: var(--accent); background: transparent; }
+      .filter-toggle[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); }
+
+      /* 搜索/筛选区也不再是卡片，直接贴着页面 */
+      .finder {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        margin-bottom: 6px;
+      }
 `
