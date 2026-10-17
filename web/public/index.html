@@ -294,9 +294,38 @@
     <script src="/lw-deco.js"></script>
     <script src="/lw-dialog.js"></script>
     <script src="/lw-workmenu.js"></script>
+    <!-- 首屏骨架：Vue 挂载前先显示品牌和一句「正在进入」，避免 2.5 秒空窗。
+         放在 #app 里 —— Vue 挂载时会整体替换，不需要任何 JS 去删。 -->
+    <style>
+      .boot {
+        min-height: 100vh;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 12px;
+        background: #fdf8f2; color: #3b342c;
+      }
+      [data-mood="dark"] .boot { background: #211c17; color: #f1ead9; }
+      .boot-logo {
+        font-size: 26px; font-weight: 800; letter-spacing: .12em;
+      }
+      .boot-tip { font-size: 12px; opacity: .5; letter-spacing: .05em; }
+      .boot-dots { display: flex; gap: 6px; margin-top: 4px; }
+      .boot-dots i {
+        width: 5px; height: 5px; border-radius: 1px;
+        background: currentColor; opacity: .25;
+        animation: bootPulse 1s ease-in-out infinite;
+      }
+      .boot-dots i:nth-child(2) { animation-delay: .15s }
+      .boot-dots i:nth-child(3) { animation-delay: .3s }
+      @keyframes bootPulse { 0%,100% { opacity: .18 } 50% { opacity: .6 } }
+      @media (prefers-reduced-motion: reduce) { .boot-dots i { animation: none; opacity: .4 } }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app"><div class="boot" id="bootSkeleton" aria-hidden="true">
+      <div class="boot-logo">像素小镇</div>
+      <div class="boot-tip">正在进入小镇…</div>
+      <div class="boot-dots"><i></i><i></i><i></i></div>
+    </div></div>
     <div id="toast"></div>
     <!-- 启动失败兜底。
          app.js 用的是**静态 import**，所以任何一个视图文件有语法错误，
@@ -320,7 +349,7 @@
         })
         function show() {
           var app = document.getElementById('app')
-          if (app && app.children.length) return // 挂上了，什么都不做
+          if (document.getElementById('siteRoot')) return // 挂上了，什么都不做
           var box = document.getElementById('bootFail')
           if (!box) return
           var msg = document.getElementById('bootFailMsg')

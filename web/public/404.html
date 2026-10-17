@@ -61,7 +61,7 @@
          看着就像「卡住了」。原来样式内联在 HTML 里没这个问题，是拆出去的副作用。
          这里只内联「底色」这一件事：取 site.css 里 :root / [data-mood="dark"]
          的 --bg 渐变起始色，所以真正到位时只是渐变淡入，看不出跳变。
-         ⚠️ 改 site.css 里 --bg 的配色时，这两行也要跟着改。 -->
+  改 site.css 里 --bg 的配色时，这两行也要跟着改。 -->
     <style>
       html { background: #fdf8f2; }
       [data-mood="dark"] { background: #211c17; }
@@ -228,8 +228,8 @@
          起因：按钮、卡片这些交互元素上，手指按下去稍微一划就选中了一片文字，
          手机上还会弹出「拷贝 / 查询 / 翻译」那个系统菜单，非常干扰。
 
-         ★ 输入框必须保留选中能力 —— 不然改错字、选中重输都做不到。
-         ★ 法律页面（用户协议、版权声明）也保留 —— 那两页的内容
+  输入框必须保留选中能力 —— 不然改错字、选中重输都做不到。
+  法律页面（用户协议、版权声明）也保留 —— 那两页的内容
            用户有理由复制留存，禁掉不合理。 */
       html, body, #app {
         -webkit-user-select: none;
@@ -264,7 +264,7 @@
     </style>
     <style id="view-style"></style>
     <!-- 细节收敛层。
-         ★ 必须放在 #view-style **之后** —— 视图 CSS 是运行时注入到
+  必须放在 #view-style **之后** —— 视图 CSS 是运行时注入到
            #view-style 里的，同优先级下后出现的赢。放前面就白写了。 -->
     <link rel="stylesheet" href="/styles/detail.css">
 
@@ -294,9 +294,38 @@
     <script src="/lw-deco.js"></script>
     <script src="/lw-dialog.js"></script>
     <script src="/lw-workmenu.js"></script>
+    <!-- 首屏骨架：Vue 挂载前先显示品牌和一句「正在进入」，避免 2.5 秒空窗。
+         放在 #app 里 —— Vue 挂载时会整体替换，不需要任何 JS 去删。 -->
+    <style>
+      .boot {
+        min-height: 100vh;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 12px;
+        background: #fdf8f2; color: #3b342c;
+      }
+      [data-mood="dark"] .boot { background: #211c17; color: #f1ead9; }
+      .boot-logo {
+        font-size: 26px; font-weight: 800; letter-spacing: .12em;
+      }
+      .boot-tip { font-size: 12px; opacity: .5; letter-spacing: .05em; }
+      .boot-dots { display: flex; gap: 6px; margin-top: 4px; }
+      .boot-dots i {
+        width: 5px; height: 5px; border-radius: 1px;
+        background: currentColor; opacity: .25;
+        animation: bootPulse 1s ease-in-out infinite;
+      }
+      .boot-dots i:nth-child(2) { animation-delay: .15s }
+      .boot-dots i:nth-child(3) { animation-delay: .3s }
+      @keyframes bootPulse { 0%,100% { opacity: .18 } 50% { opacity: .6 } }
+      @media (prefers-reduced-motion: reduce) { .boot-dots i { animation: none; opacity: .4 } }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app"><div class="boot" id="bootSkeleton" aria-hidden="true">
+      <div class="boot-logo">像素小镇</div>
+      <div class="boot-tip">正在进入小镇…</div>
+      <div class="boot-dots"><i></i><i></i><i></i></div>
+    </div></div>
     <div id="toast"></div>
     <!-- 启动失败兜底。
          app.js 用的是**静态 import**，所以任何一个视图文件有语法错误，
@@ -320,7 +349,7 @@
         })
         function show() {
           var app = document.getElementById('app')
-          if (app && app.children.length) return // 挂上了，什么都不做
+          if (document.getElementById('siteRoot')) return // 挂上了，什么都不做
           var box = document.getElementById('bootFail')
           if (!box) return
           var msg = document.getElementById('bootFailMsg')
