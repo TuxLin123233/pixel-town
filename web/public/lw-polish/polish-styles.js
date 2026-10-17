@@ -256,6 +256,10 @@ html[data-theme='dark'] .lwp-skel-card {
      邮件行  约 72px
      家具格  约 84px  */
 .lwp-hold { min-height: 12px; }
+/* ★ .lwp-hold 只用来占位，只放 min-height。
+   不要给它（或它的组合选择器）加 position / inset ——
+   长按进度环以前也用这个类并带 position:absolute; inset:0，
+   结果空的图片网格被整屏绝对定位到页面顶部，图片填进来才瞬移回原位。 */
 
 /* 作品网格：占两行卡位。加载完填进去正好，不会把下面的内容顶走 */
 #gallery.lwp-hold,
@@ -498,7 +502,13 @@ img.lwp-fadein { opacity: 0; transition: opacity var(--lwp-dur-3) ease-out }
 img.lwp-fadein.lwp-on { opacity: 1 }
 
 /* ============ 21. 长按进度环 ============ */
-.lwp-hold {
+/* ★ 类名是 .lwp-hold-ring，不是 .lwp-hold！
+   14b 的「加载占位」也用过 .lwp-hold（min-height），如果这里再写
+   .lwp-hold { position:absolute; inset:0 }，两个规则会叠到同一个类上：
+   空的作品网格（#gallery / .mine-grid / .u-grid …）一被加上占位类，
+   就整屏绝对定位到页面顶部；等图片填进来、占位类撤掉，再瞬移回原位。
+   用户看到的就是「图片先出现在顶部然后跳走」。 */
+.lwp-hold-ring {
   position: absolute;
   inset: 0;
   border-radius: inherit;

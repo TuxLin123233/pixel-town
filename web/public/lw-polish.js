@@ -365,7 +365,13 @@ import { POLISH_ICONS as ICONS } from './lw-polish/polish-icons.js'
       if (reduce) continue
       el.style.position = el.style.position || 'relative'
       var ring = document.createElement('div')
-      ring.className = 'lwp-hold'
+      /* ★ 不要写成 'lwp-hold'：那个类名已经被「加载时占位」用了
+         （14b 的 min-height），而 21 节又给 .lwp-hold 写了
+         position:absolute; inset:0 —— 两个同名规则叠加，
+         空的作品网格一加占位类就变成「整屏绝对定位在页面顶部」，
+         图片填进来、占位类撤掉时再瞬移回原位（用户看到的就是
+         「图片先出现在顶部再跳走」）。长按环单独用一个类名。 */
+      ring.className = 'lwp-hold-ring'
       el.appendChild(ring)
       var raf = 0
       var t0 = 0
