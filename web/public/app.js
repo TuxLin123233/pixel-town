@@ -34,12 +34,43 @@ const views = {
   stats: () => import('./views/stats.js'),
 }
 
+
+/* ---------- 按需加载全局脚本 ----------
+   原来 qrcode / omggif / 三个装饰层都塞在 <head> 里，每个页面都要下 ~146KB。
+   现在：
+   - 装饰层（lw-anim / lw-fx / lw-deco）按视图需要加载，视图挂载前就绪；
+   - qrcode / omggif 只在用到时（或首屏画完之后的空闲时间）才拉。 */
+const scriptCache = {}
+function loadScript(src) {
+  if (scriptCache[src]) return scriptCache[src]
+  scriptCache[src] = new Promise((resolve, reject) => {
+    const el = document.createElement('script')
+    el.src = src
+    el.onload = resolve
+    el.onerror = () => { scriptCache[src] = null; reject(new Error('load fail ' + src)) }
+    document.head.appendChild(el)
+  })
+  return scriptCache[src]
+}
+
+/* 哪些视图在挂载时就要用到这些装饰层 */
+const VIEW_DEPS = {
+  gallery: ['/lw-anim.js', '/lw-fx.js', '/lw-deco.js'],
+  mine: ['/lw-anim.js', '/lw-fx.js', '/lw-deco.js'],
+  achieve: ['/lw-anim.js', '/lw-fx.js'],
+  paint: ['/omggif.js'],   // 导出 GIF 要用，画板挂载前备好，避免点了才报错
+  settings: ['/lw-deco.js'],
+}
+
 // 缓存已加载的视图模块（存 Promise，这样预取和真正加载共用同一次请求）
 const viewCache = {}
 
 // 异步加载视图并包装
 async function loadView(name, retried) {
   try {
+    // 视图挂载前先把它要用的装饰层备好
+    const deps = VIEW_DEPS[name]
+    if (deps) await Promise.all(deps.map((src) => loadScript(src).catch(() => {})))
     if (!viewCache[name]) viewCache[name] = views[name]()
     const mod = await viewCache[name]
     return withAutoCleanup(mod.default || mod)
@@ -365,6 +396,13 @@ document.addEventListener('pointerdown', (e) => {
 window.__lwRouter = router
 
 createApp(App).use(router).mount('#app')
+
+/* 首屏画完之后再拉 qrcode / omggif（分享卡片 / 导出 GIF 才用得到），
+   不跟首屏抢带宽。 */
+setTimeout(function () {
+  loadScript('/qrcode.js').catch(function () {})
+  loadScript('/omggif.js').catch(function () {})
+}, 2500)
 
 /* ---------- 自绘像素图标 ----------
    Vue 是运行时编译的，v-for 渲染出来的 <i data-px> 要等 DOM 出来才有。
