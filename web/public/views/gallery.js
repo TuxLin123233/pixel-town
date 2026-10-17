@@ -1004,11 +1004,77 @@ export default {
          但那是靠运气，以后有人提前调一次 appendCards 就会踩 TDZ。 */
       let cards = []
 
+      /* 今日画师：从当前这批作品里取作者，去重后做成一排头像。
+         第一个固定是「今日一题」，点了去画板。 */
+      function renderStories(records) {
+        const box = document.getElementById('stories')
+        if (!box || box.dataset.done === '1') return
+        box.dataset.done = '1'
+        const seen = new Set()
+        const people = []
+        records.forEach((r) => {
+          const name = r.author || ''
+          const key = r.ownerUser || name
+          if (!name || seen.has(key)) return
+          seen.add(key)
+          people.push({ name: name, uid: r.ownerUser })
+        })
+        const mk = (label, draw, onClick) => {
+          const a = document.createElement('a')
+          a.className = 'story'
+          a.href = 'javascript:void(0)'
+          const ring = document.createElement('span')
+          ring.className = 'story-ring'
+          const holder = document.createElement('i')
+          ring.appendChild(holder)
+          draw(holder)
+          const b = document.createElement('b')
+          b.textContent = label
+          a.append(ring, b)
+          a.addEventListener('click', (e) => { e.preventDefault(); onClick() })
+          box.appendChild(a)
+        }
+        // 今日一题
+        mk('今日一题', (h) => {
+          const cv = document.createElement('canvas')
+          cv.width = cv.height = 44
+          const x = cv.getContext('2d')
+          x.fillStyle = '#eef3fd'
+          x.fillRect(0, 0, 44, 44)
+          x.fillStyle = '#5b8def'
+          x.fillRect(10, 10, 24, 3); x.fillRect(10, 16, 16, 3)
+          x.fillRect(10, 22, 20, 3); x.fillRect(10, 28, 12, 3)
+          h.appendChild(cv)
+        }, () => { location.href = '/paint' })
+        people.slice(0, 7).forEach((p) => {
+          mk(p.name, (h) => {
+            const cv = document.createElement('canvas')
+            cv.width = cv.height = 44
+            if (p.uid && window.LWAvatar) {
+              try { window.LWAvatar.draw(cv, p.uid, 44) } catch (e) {}
+            }
+            if (!cv.__drawn) {
+              const x = cv.getContext('2d')
+              let s = 0
+              for (let i = 0; i < p.name.length; i++) s = (s * 31 + p.name.charCodeAt(i)) & 0xffff
+              x.fillStyle = ['#f5be64', '#e8786e', '#78c4a0', '#9678c8', '#5b8def'][s % 5]
+              x.fillRect(0, 0, 44, 44)
+              x.fillStyle = '#fff'
+              x.font = '700 22px sans-serif'
+              x.textAlign = 'center'; x.textBaseline = 'middle'
+              x.fillText(p.name.slice(0, 1), 22, 24)
+            }
+            h.appendChild(cv)
+          }, () => { if (p.name) openAuthor(p.name) })
+        })
+      }
+
       function appendCards(records) {
         // 先把卡片画出来（此时头像用默认的），再批量拉真头像回来重绘，
         // 这样不用等接口就能出内容
         const authorAvatars = []
         const firstNew = cards.length
+        if (firstNew === 0) renderStories(records)
         records.forEach((rec) => {
           const card = document.createElement('div')
           card.className = 'card'
@@ -1044,6 +1110,13 @@ export default {
             meta.append(b)
           }
           meta.append(makeLikeButton(rec))
+          const cmtBtn = document.createElement('button')
+          cmtBtn.className = 'ig-cmt'
+          cmtBtn.type = 'button'
+          cmtBtn.title = '看评论'
+          cmtBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 2h16v2H4zM2 4h2v12H2zm18-2h2v14h-2zM4 16h10v2H4zm8 2h2v4h-2z"/></svg>'
+          cmtBtn.addEventListener('click', (e) => { e.stopPropagation(); preview(rec) })
+          meta.append(cmtBtn)
           if (rec.contest) {
             const vb = makeVoteButton(rec)
             vb.__rec = rec
@@ -1089,7 +1162,11 @@ export default {
           tm.textContent = formatTime(rec.time)
 
           sub.append(au, sizeBadge, tm)
-          card.append(c, meta, sub)
+          const cap = document.createElement('div')
+          cap.className = 'ig-cap'
+          cap.textContent = '查看评论'
+          cap.addEventListener('click', (e) => { e.stopPropagation(); preview(rec) })
+          card.append(c, meta, sub, cap)
           if (Array.isArray(rec.tags) && rec.tags.length) {
             const tw = document.createElement('div')
             tw.className = 'card-tags'

@@ -7,12 +7,18 @@
 
 export const galleryTemplate = `<div class="container">
       <div class="header">
-        <router-link class="back" to="/paint">← 返回画板</router-link>
+        <router-link class="back" to="/paint" aria-label="返回画板">←</router-link>
         <div class="header-text">
-          <h1>全部作品</h1>
+          <h1>社区</h1>
           <div id="count">加载中…</div>
         </div>
+        <router-link class="ig-bell" to="/notifications" aria-label="通知">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 2h6v2H9zM8 4h2v2H8zM6 6h2v8H6zm12-2h2v10h-2zM4 16h2v4H4zm14 0h2v4h-2zM7 19h10v2H7zM12 10h2v2h-2z"/></svg>
+        </router-link>
       </div>
+
+      <!-- 今日画师：一排圆形头像，点进去看作者主页 -->
+      <div class="stories" id="stories"></div>
 
       <section class="finder" id="finder">
         <div class="search-row">

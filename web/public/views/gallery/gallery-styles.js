@@ -1891,4 +1891,70 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
       }
       .card .card-tags { order: 4; margin-top: 6px; }
       .card .mod-hide { order: 5; align-self: flex-start; margin-top: 8px; }
+
+      /* ============ 社区：顶栏 / 今日画师 / 帖子细节 ============ */
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px 10px;
+      }
+      .header .back {
+        width: 30px; height: 30px; flex: none;
+        display: inline-flex; align-items: center; justify-content: center;
+        border: 1px solid var(--border); border-radius: 8px;
+        color: var(--text-muted); text-decoration: none; font-size: 14px;
+      }
+      .header-text { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 8px; }
+      .header-text h1 { font-size: 21px; font-weight: 800; letter-spacing: .02em; }
+      .header-text #count { font-size: 11px; color: var(--text-faint); font-family: ui-monospace, Menlo, monospace; }
+      .ig-bell {
+        width: 30px; height: 30px; flex: none;
+        display: inline-flex; align-items: center; justify-content: center;
+        border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted);
+      }
+      .ig-bell svg { width: 15px; height: 15px; }
+
+      /* 今日画师：一排圆形头像（平面细环，不用社交软件那种彩色渐变大圈） */
+      .stories {
+        display: flex;
+        gap: 13px;
+        padding: 2px 16px 14px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .stories::-webkit-scrollbar { display: none; }
+      .story {
+        flex: none; width: 56px;
+        display: flex; flex-direction: column; align-items: center; gap: 5px;
+        text-decoration: none;
+      }
+      .story-ring {
+        width: 52px; height: 52px; border-radius: 50%; padding: 2px;
+        background: linear-gradient(140deg, var(--accent, #5b8def), #e8c07a);
+      }
+      .story-ring i {
+        display: block; width: 100%; height: 100%;
+        border-radius: 50%; border: 3px solid var(--bg);
+        overflow: hidden; background: #fff;
+      }
+      .story-ring canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+      .story b {
+        font-size: 10px; font-weight: 500; color: var(--text-muted);
+        max-width: 56px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+
+      /* 帖子：图整宽通栏，操作行更像流里的帖子而不是卡片 */
+      .card .art { margin: 0 -16px; width: calc(100% + 32px); }
+      .ig-cmt {
+        display: inline-flex; align-items: center; gap: 4px;
+        background: none; border: 0; padding: 0;
+        font-size: 12px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+      }
+      .ig-cmt svg { width: 16px; height: 16px; }
+      .ig-cap {
+        order: 5;
+        margin-top: 6px;
+        font-size: 12px; color: var(--text-faint); cursor: pointer;
+      }
 `
