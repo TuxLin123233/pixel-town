@@ -42,7 +42,7 @@ export default {
       <div class="tw-bar">
         <a class="tw-back" id="twBack" href="/mine">← 我的</a>
         <div class="tw-bar-main">
-          <div class="tw-title" id="twTitle">🏘️ 像素小镇</div>
+ <div class="tw-title" id="twTitle"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z"/></svg> 像素小镇</div>
           <div class="tw-sub" id="twSub"></div>
         </div>
         <button class="lw-refresh" id="twRefresh" type="button" data-label="刷新"></button>
@@ -648,7 +648,7 @@ export default {
           '</button>'
         : ''
 
-      $('twTitle').textContent = '🏘️ 像素小镇'
+ $('twTitle').textContent = '️ 像素小镇'
       $('twSub').textContent = list.length
         ? list.length + ' 户人家' + (folded ? ' · 已收起 ' + more + ' 户' : '')
         : '还没有人盖房子'
@@ -660,7 +660,7 @@ export default {
           ? '<div class="tw-grid">' + grid + '</div>' + foldHtml
           : '<div class="tw-empty">镇上还空着。<br />回自己的小屋摆几件家具，<br />你就是这里的第一户人家。</div>') +
         '</div>' +
-        '<div class="tw-sign">🏠 点谁家的房子，就去谁家串门<br />串门只能看，动不了人家的东西</div>' +
+ '<div class="tw-sign"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z"/></svg> 点谁家的房子，就去谁家串门<br />串门只能看，动不了人家的东西</div>' +
         '</div>' +
         '<div class="tw-entries">' +
         entryCard('twGoHome', 'home', '我的小屋', '摆家具、贴墙纸、挑窗外天气') +
@@ -734,7 +734,7 @@ export default {
         '" type="button"' + (placed ? ' disabled' : '') + ' data-' + mode + '="' + esc(f.id) + '">' +
         '<canvas data-art="' + esc(f.id) + '"></canvas>' +
         '<span>' + esc(f.name) + (placed ? ' 已摆出' : '') + '</span>' +
-        (mode === 'buy' ? '<span class="tw-item-price">' + f.price + ' ✨</span>' : '') +
+ (mode === 'buy' ? '<span class="tw-item-price">' + f.price + ' </span>' : '') +
         '</button>'
       )
     }
@@ -748,7 +748,7 @@ export default {
         '<canvas data-surface="' + esc(sf.id) + '"></canvas>' +
         '<span>' + esc(sf.name) + '</span>' +
         (on ? '<span class="tw-item-price">用着这个</span>'
-            : has ? '' : '<span class="tw-item-price">' + sf.price + ' ✨</span>') +
+ : has ? '' : '<span class="tw-item-price">' + sf.price + ' </span>') +
         '</button>'
       )
     }
@@ -756,7 +756,7 @@ export default {
     function tabsHtml() {
       const cats = cat.cats || {}
       const all = Object.keys(cats).concat(['wall', 'floor'])
-      const label = (k) => (k === 'wall' ? '🧱 墙纸' : k === 'floor' ? '🟫 地板' : cats[k])
+ const label = (k) => (k === 'wall' ? ' 墙纸' : k === 'floor' ? ' 地板' : cats[k])
       return all
         .map((k) => '<button class="tw-tab' + (shopTab === k ? ' on' : '') +
           '" type="button" data-tab="' + esc(k) + '">' + esc(label(k)) + '</button>')
@@ -791,13 +791,13 @@ export default {
             (shop.length > TRAY_MAX
               ? '<div class="tw-hint">这一类还有 ' + (shop.length - TRAY_MAX) + ' 件，买下前面这些会继续露出来</div>'
               : '')
-          : '<div class="tw-hint">这一类的家具你都买齐了 🎉</div>'
+ : '<div class="tw-hint">这一类的家具你都买齐了 </div>'
       }
 
       return (
         '<div class="tw-tray">' +
         '<div class="tw-tray-h">我的家具 <span>点一件拿在手上，再点房间放下</span></div>' +
-        '<div class="tw-tabs"><button class="tw-tab" type="button" id="twToBag">🏠 去家具商店</button></div>' +
+ '<div class="tw-tabs"><button class="tw-tab" type="button" id="twToBag"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z"/></svg> 去家具商店</button></div>' +
         mineHtml +
         '<div class="tw-tray-h" style="margin-top:14px">家具铺 <span>买下就永久归你，想摆几件摆几件</span></div>' +
         '<div class="tw-tabs">' + tabsHtml() + '</div>' +
@@ -884,7 +884,7 @@ export default {
         .join('')
       return (
         '<div class="tw-board">' +
-        '<div class="tw-board-h">💬 留言板 <span>' + rows.length + ' 条' +
+ '<div class="tw-board-h"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4v2h16zm0 14H6v2h14zm2-12h-2v12h2zM4 4H2v18h2zm2 14H4v2h2z"/></svg> 留言板 <span>' + rows.length + ' 条' +
         (mine ? ' · 来你家的人可以留一句' : ' · 给屋主留一句') + '</span></div>' +
         (mine
           ? ''
@@ -899,7 +899,7 @@ export default {
 
     /* ---------- 小屋 ---------- */
     function renderHome() {
-      $('twTitle').textContent = mine ? '🏠 我的小屋' : '🏠 ' + (woodName || '镇民') + '的家'
+ $('twTitle').textContent = mine ? ' 我的小屋' : ' ' + (woodName || '镇民') + '的家'
       const nx = nextSizeOf()
       const wname = WEATHER_NAME[curWeather()] || (myWeather ? '自定义' : '')
       $('twSub').textContent = mine
@@ -917,16 +917,16 @@ export default {
             '<button class="tw-btn ghost" type="button" id="twClear">全部收起来</button>' +
             '</div>' +
             '<div class="tw-acts">' +
-            '<button class="tw-btn ghost" type="button" id="twShot">🖼️ 存成图片</button>' +
+ '<button class="tw-btn ghost" type="button" id="twShot"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/><path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/></svg> 存成图片</button>' +
             '</div>' +
             '<div class="tw-acts">' +
             (nx
-              ? '<button class="tw-btn ghost" type="button" id="twUp">📐 扩建成' + esc(nx.name) +
-                '（' + nx.size + '×' + nx.size + '，' + nx.price + ' ✨）</button>'
-              : '<span class="tw-hint">🏆 这已经是你家最大的院子了</span>') +
+ ? '<button class="tw-btn ghost" type="button" id="twUp"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 13h16v-2H4zm7-8h2V3h-2zM9 7h4V5H9zm4 0h2V5h-2zm2 2h2V7h-2zM7 9h8V7H7zm4 10h2v2h-2zm-2-2h4v2H9zm4 0h2v2h-2zm2-2h2v2h-2zm-8 0h8v2H7z"/></svg> 扩建成' + esc(nx.name) +
+ '（' + nx.size + '×' + nx.size + '，' + nx.price + ' ）</button>'
+ : '<span class="tw-hint"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/></svg> 这已经是你家最大的院子了</span>') +
             '</div>' +
         '<div class="tw-weather">' +
-        '<div class="tw-weather-h">🌤️ 窗外的天气</div>' +
+ '<div class="tw-weather-h"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M13 22h-2v-3h2v3Zm-6-3H5v-2h2v2Zm12 0h-2v-2h2v2Zm-4-2H9v-2h6v2Zm-6-2H7V9h2v6Zm8 0h-2V9h2v6ZM5 13H2v-2h3v2Zm17 0h-3v-2h3v2Zm-7-4H9V7h6v2ZM7 7H5V5h2v2Zm12 0h-2V5h2v2Zm-6-2h-2V2h2v3Z"/></svg> 窗外的天气</div>' +
         '<div class="tw-tabs">' +
         WEATHER_LIST.map((w) =>
           '<button class="tw-tab' + (myWeather === w.key ? ' on' : '') + '" type="button" data-weather="' +
@@ -949,8 +949,8 @@ export default {
             '<button class="tw-btn' + (liked ? ' on' : '') + '" type="button" id="twGift"' +
             (liked ? ' disabled' : '') + '>' +
             (liked
-              ? '✅ 已经给这间屋子送过光尘了'
-              : '✨ 送 ' + giftCost + ' 个光尘给 ' + esc(woodName || '屋主')) +
+ ? '✅ 已经给这间屋子送过光尘了'
+ : ' 送 ' + giftCost + ' 个光尘给 ' + esc(woodName || '屋主')) +
             '</button></div>') +
         boardHtml() +
         (mine ? trayHtml() : '')
@@ -1114,7 +1114,7 @@ export default {
           }
           dirty = false
           if (window.sfx) window.sfx('save')
-          msg('布置好了，镇上的人都能来看 ✨')
+ msg('布置好了，镇上的人都能来看 ')
           renderHome()
         })
       }
@@ -1211,7 +1211,7 @@ export default {
           house.wall = d2.wall
           house.floor = d2.floor
         }
-        msg('「' + f.name + '」买好了，已经给你换上 ✨')
+ msg('「' + f.name + '」买好了，已经给你换上 ')
         renderHome()
         return
       }
@@ -1237,9 +1237,9 @@ export default {
          光尘账本那个数字本身也会跳一下（在 dust 组件里）。 */
       if (window.LWDialog && window.LWDialog.floatText) {
         const btn = document.querySelector('[data-gifthome]') || document.querySelector('.tw-gift')
-        window.LWDialog.floatText(btn || document.body, '-' + giftCost + ' ✨', { color: '#c0392b' })
+ window.LWDialog.floatText(btn || document.body, '-' + giftCost + ' ', { color: '#c0392b' })
       }
-      msg('光尘送到了，' + who + ' 会看到的 ✨')
+ msg('光尘送到了，' + who + ' 会看到的 ')
       renderHome()
     }
 
@@ -1288,7 +1288,7 @@ export default {
       floorY = d.floor || floorY
       if (d.book && window.dust && window.dust.take) window.dust.take(d.book)
       if (window.sfx) window.sfx('save')
-      msg('扩建好了！现在有 ' + ROOM + '×' + ROOM + ' 大 🎉')
+ msg('扩建好了！现在有 ' + ROOM + '×' + ROOM + ' 大 ')
       renderHome()
     }
 

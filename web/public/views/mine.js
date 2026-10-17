@@ -9,11 +9,11 @@ const CLAIM_KEY = 'paintClaim'
 
 /** 签到连续天数对应的徽章 */
 const MEDALS = [
-  { need: 1, ico: '🌱', name: '启程' },
-  { need: 3, ico: '🔥', name: '连续 3 天' },
-  { need: 7, ico: '⭐', name: '连续 7 天' },
-  { need: 30, ico: '💎', name: '连续 30 天' },
-  { need: 100, ico: '👑', name: '连续 100 天' },
+ { need: 1, ico: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/> <path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/></svg>', name: '启程' },
+ { need: 3, ico: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M9 2h2v4H9zM7 6h2v2H7zM5 8h2v2H5zm8 2h2v2h-2zm2-2h2v2h-2zm2 2h2v2h-2zm2 2h2v6h-2zM3 10h2v8H3zm8-4h2v4h-2zm6 12h2v2h-2zM7 20h10v2H7zm-2-2h2v2H5zm4-2h6v4H9z"/> <path d="M11 14h2v3h-2z"/></svg>', name: '连续 3 天' },
+ { need: 7, ico: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M5 20H8V22H3V16H5V20ZM21 22H16V20H19V16H21V22ZM10 20H8V18H10V20ZM16 20H14V18H16V20ZM14 18H10V16H14V18ZM7 16H5V13H7V16ZM19 16H17V13H19V16ZM5 13H3V11H5V13ZM21 13H19V11H21V13ZM9 9H3V11H1V7H9V9ZM23 11H21V9H15V7H23V11ZM11 7H9V3H11V7ZM15 7H13V3H15V7ZM13 3H11V1H13V3Z"/></svg>', name: '连续 7 天' },
+ { need: 30, ico: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 1h10v2H7zM5 3h2v2H5zm12 0h2v2h-2zm2 2h2v2h-2zm0 8h2v2h-2zm-2 2h2v2h-2zm-2 2h2v2h-2zm-2 2h2v2h-2zm-2 2h2v2h-2zm-2-2h2v2H9zm-2-2h2v2H7zm-2-2h2v2H5zm-2-2h2v2H3zm0-8h2v2H3zM1 7h2v6H1zm20 0h2v6h-2zM3 9h18v2H3zm6-6h2v3H9zM7 6h2v3H7zm8 0h2v3h-2zm-8 5h2v2H7zm2 2h2v3H9zm2 3h2v3h-2zm2-3h2v3h-2zm2-2h2v2h-2zm-2-8h2v3h-2z"/></svg>', name: '连续 30 天' },
+ { need: 100, ico: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M3 3h2v12H3zm16 0h2v12h-2zm-8 0h2v2h-2zM9 5h2v2H9zM5 5h2v2H5z"/> <path d="M3 3h2v2H3zm4 4h2v2H7zm6-2h2v2h-2zm2 2h2v2h-2zm2-2h2v2h-2zM5 15h14v2H5zm-2 4h18v2H3z"/></svg>', name: '连续 100 天' },
 ]
 
 /** 页面上几张卡片的 id（按顺序） */
@@ -131,7 +131,7 @@ export default {
         if (slot) {
           slot.innerHTML =
             '<div class="m-card" id="likedCard">\n' +
-            '      <div class="m-card-title">✨ 送过光尘的画<span class="m-tip" id="likedTip"></span></div>\n' +
+ ' <div class="m-card-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/><path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/></svg> 送过光尘的画<span class="m-tip" id="likedTip"></span></div>\n' +
             '      <div class="mine-grid" id="likedGrid"></div>\n' +
             '      <div id="likedEmpty"></div>\n' +
             '    </div>'
@@ -142,7 +142,7 @@ export default {
         if (slot) {
           slot.innerHTML =
             '<div class="m-card" id="favCard">\n' +
-            '      <div class="m-card-title">☆ 我的收藏<span class="m-tip" id="favTip"></span></div>\n' +
+ ' <div class="m-card-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M5 20H8V22H3V16H5V20ZM21 22H16V20H19V16H21V22ZM10 20H8V18H10V20ZM16 20H14V18H16V20ZM14 18H10V16H14V18ZM7 16H5V13H7V16ZM19 16H17V13H19V16ZM5 13H3V11H5V13ZM21 13H19V11H21V13ZM9 9H3V11H1V7H9V9ZM23 11H21V9H15V7H23V11ZM11 7H9V3H11V7ZM15 7H13V3H15V7ZM13 3H11V1H13V3Z"/></svg> 我的收藏<span class="m-tip" id="favTip"></span></div>\n' +
             '      <div class="mine-grid" id="favGrid"></div>\n' +
             '      <div id="favEmpty"></div>\n' +
             '    </div>'
@@ -152,7 +152,7 @@ export default {
       const titleMap = {
         works: ['我的作品', '这里只显示你自己发布的作品', 'mineTip'],
         gifted: ['送出的光尘', '你送过光尘的作品都在这里', 'likedTip'],
-        fav: ['我的收藏', '在社区作品页点 ☆ 就能收藏', 'favTip'],
+ fav: ['我的收藏', '在社区作品页点 就能收藏', 'favTip'],
       }
       const tm = titleMap[MODE]
       if (tm) {
@@ -377,7 +377,7 @@ export default {
         // 今天已签、或处于当前连续区间内的日子才算亮
         const inStreak = i < streak
         dot.className = 'sign-dot' + (inStreak ? ' on' : '') + (i === 0 ? ' today' : '')
-        dot.textContent = inStreak ? '✓' : ''
+ dot.textContent = inStreak ? '' : ''
         const lab = document.createElement('div')
         lab.className = 'sign-lab'
         lab.textContent = i === 0 ? '今天' : names[d.getDay()]
@@ -405,7 +405,7 @@ export default {
         const got = streak >= m.need
         const el = document.createElement('span')
         el.className = 'medal' + (got ? ' got' : '')
-        el.textContent = m.ico + ' ' + m.name
+        el.innerHTML = m.ico + ' ' + m.name
         box.appendChild(el)
       })
       /* 刚够到的徽章弹一下，让「又解锁一个」这件事被看见 */
@@ -452,7 +452,7 @@ export default {
         if (window.achSync) window.achSync()
         if (window.sfx) window.sfx(d.streak > 1 ? 'streak' : 'coin')
         if (d.bonus) {
-          toast('达成连续 ' + d.streak + ' 天！额外获得 ' + d.bonus + ' 个光尘 ✨')
+ toast('达成连续 ' + d.streak + ' 天！额外获得 ' + d.bonus + ' 个光尘 ')
           return
         }
         const hit = MEDALS.find((m) => m.need === d.streak)
@@ -689,7 +689,7 @@ export default {
       if (st.best && st.best.workName) {
         best.hidden = false
         best.innerHTML =
-          '👑 收到的光尘最多：<b>' + escapeHtml(st.best.workName) + '</b> · ' + (st.best.likes || 0) + ' 份光尘'
+ ' 收到的光尘最多：<b>' + escapeHtml(st.best.workName) + '</b> · ' + (st.best.likes || 0) + ' 份光尘'
       }
     }
 
@@ -1064,7 +1064,7 @@ export default {
       }
       if (!times.length) {
         $('likedEmpty').innerHTML =
-          '还没给别人的画送过光尘。<br />去社区看看，<b>✨ 送光尘</b>给喜欢的作品'
+ '还没给别人的画送过光尘。<br />去社区看看，<b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/><path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/></svg> 送光尘</b>给喜欢的作品'
         return
       }
       // 逐个取作品；失败的不影响其余
@@ -1119,7 +1119,7 @@ export default {
       if (tip) tip.textContent = times.length ? times.length + ' 件' : ''
       if (!times.length) {
         $('favEmpty').innerHTML =
-          '还没有收藏。<br />去社区打开喜欢的作品，点 <b>☆</b> 收藏它'
+ '还没有收藏。<br />去社区打开喜欢的作品，点 <b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M5 20H8V22H3V16H5V20ZM21 22H16V20H19V16H21V22ZM10 20H8V18H10V20ZM16 20H14V18H16V20ZM14 18H10V16H14V18ZM7 16H5V13H7V16ZM19 16H17V13H19V16ZM5 13H3V11H5V13ZM21 13H19V11H21V13ZM9 9H3V11H1V7H9V9ZM23 11H21V9H15V7H23V11ZM11 7H9V3H11V7ZM15 7H13V3H15V7ZM13 3H11V1H13V3Z"/></svg> </b> 收藏它'
         return
       }
       const got = []
@@ -1254,7 +1254,7 @@ export default {
         document.body.removeChild(ta)
       }
       if (window.sfx) window.sfx('tap')
-      toast(ok ? '邀请链接已复制，快发给好友吧 🎉' : '复制失败，邀请码：' + inviteData.code)
+ toast(ok ? '邀请链接已复制，快发给好友吧 ' : '复制失败，邀请码：' + inviteData.code)
     })
     const inviteBindInput = $('inviteBindInput')
     inviteBindInput.addEventListener('input', () => {
@@ -1285,7 +1285,7 @@ export default {
         paintInvite(d)
         inviteBindInput.value = ''
         if (window.sfx) window.sfx('ok')
-        toast('🎁 绑定成功，' + (d.reward || 0) + ' 光尘已到账')
+ toast(' 绑定成功，' + (d.reward || 0) + ' 光尘已到账')
         if (window.dust) window.dust.refresh()
         setTimeout(() => renderSign(), 600)
       } catch (e) {

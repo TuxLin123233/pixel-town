@@ -633,3 +633,11 @@ html[data-theme][data-mood="dark"] {
   --shadow3: transparent;
   --shadow-hover: transparent;
 }
+
+/* 内联的像素图标（Pixelarticons，viewBox 0 0 24 24）默认按字号大小走，
+   和文字同色、基线对齐；需要具体尺寸的地方（如设置页图标槽）再单独覆盖。 */
+svg[viewBox="0 0 24 24"] {
+  width: 1.15em; height: 1.15em;
+  vertical-align: -0.18em;
+  fill: currentColor;
+}
