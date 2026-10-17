@@ -580,4 +580,113 @@ export const mineStyles = `
       .dust-bar { background: transparent; border: 1px solid var(--border); }
       .sign-day { background: transparent; border: 1px solid var(--border); }
       .sign-day.on { background: var(--surface-2); border-color: var(--border-strong); }
+
+      /* ============ 我的：个人主页（信息前置） ============
+         原来七八张卡竖着排，找一个功能要滚很久。现在按「主页」重排：
+         头像+名字 → 数据行 → 签到 → 常去的地方（高光圆）→ 作品 3 列网格。
+         纯 CSS 重排 + 重绘，DOM 和逻辑不动。 */
+      .mine-wrap {
+        display: flex;
+        flex-direction: column;
+      }
+      .mine-wrap > .me-hero   { order: 1; }
+      .mine-wrap > #statCard  { order: 2; }
+      .mine-wrap > #signCard  { order: 3; }
+      .mine-wrap > #linkCard  { order: 4; }
+      .mine-wrap > #mineCard  { order: 5; }
+      .mine-wrap > #likedSlot { order: 6; }
+
+      /* 1) 头像 + 名字 */
+      .me-hero {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 6px 2px 14px;
+      }
+      .me-av {
+        width: 76px; height: 76px; flex: none;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .me-av canvas { width: 100% !important; height: 100% !important; border-radius: 50%; }
+      .me-av-edit { display: none; }
+      .me-hero-txt { flex: 1; min-width: 0; }
+      .me-hero-name { font-size: 17px; font-weight: 800; margin-bottom: 2px; }
+      .me-hero-bio { font-size: 12px; color: var(--text-muted); line-height: 1.55; }
+      .me-hero-sub { font-size: 11px; color: var(--text-faint); margin-top: 3px; }
+
+      /* 2) 数据行：作品 / 光尘 / 今日 / 天数 */
+      #statCard { border-bottom: 1px solid var(--border); padding: 4px 0 14px; }
+      #statCard > .m-card-title { display: none; }
+      #statCard .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        text-align: center;
+      }
+      #statCard .stat { padding: 0; }
+      #statCard .stat-num { font-size: 18px; }
+      #statCard .stat-lab { font-size: 10.5px; margin-top: 2px; }
+      #statCard .size-bars,
+      #statCard .best-work { display: none; }
+
+      /* 3) 常去的地方 → 一排高光圆 */
+      #linkCard { border-bottom: 1px solid var(--border); padding: 4px 0 14px; }
+      #linkCard > .m-card-title { display: none; }
+      #linkCard .m-links {
+        display: flex;
+        gap: 15px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      #linkCard .m-links::-webkit-scrollbar { display: none; }
+      #linkCard .m-link {
+        flex: none;
+        width: 58px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        gap: 5px;
+      }
+      #linkCard .m-link .ml-ico {
+        width: 52px; height: 52px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        display: flex; align-items: center; justify-content: center;
+      }
+      #linkCard .m-link .ml-ico svg { width: 21px; height: 21px; color: var(--text-muted); }
+      #linkCard .m-link .ml-num { display: none; }
+      #linkCard .m-link span:not(.ml-ico):not(.ml-num) {
+        font-size: 10px;
+        color: var(--text-muted);
+        text-align: center;
+      }
+
+      /* 4) 作品：3 列方格 */
+      #mineCard { padding-top: 8px; }
+      #mineCard .mine-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3px;
+      }
+      #mineCard .mine-item { background: var(--surface); }
+      #mineCard .mine-filter { justify-content: center; }
+
+      /* 强制主页式排布（覆盖文件里更早、同优先级的规则） */
+      .mine-wrap { display: flex !important; flex-direction: column !important; }
+      .mine-wrap > .me-hero   { order: 1 !important; justify-content: flex-start !important; }
+      .mine-wrap > #statCard  { order: 2 !important; }
+      .mine-wrap > #signCard  { order: 3 !important; }
+      .mine-wrap > #linkCard  { order: 4 !important; }
+      .mine-wrap > #mineCard  { order: 5 !important; }
+      .mine-wrap > .cloudhu-btn,
+      .mine-wrap > .portal-btn { order: 6 !important; }
+      .mine-wrap .me-av,
+      .mine-wrap .me-av canvas { width: 76px !important; height: 76px !important; }
+      .mine-wrap .me-av canvas { border-radius: 50% !important; }
+      .mine-wrap .me-hero-txt { text-align: left !important; }
+
 `
