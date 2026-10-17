@@ -321,7 +321,7 @@ export default {
         <template v-else>
           <!-- 总览 -->
           <div class="stat-card">
-            <div class="stat-title">📊 总览</div>
+            <div class="stat-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zM7 11h2v6H7zm4-4h2v10h-2zm4 6h2v4h-2z"/> </svg>  总览</div>
             <div class="overview-grid">
               <div class="overview-item">
                 <div class="overview-num">{{ stats.totalUsers }}</div>
@@ -399,7 +399,7 @@ export default {
 
           <!-- 本周主题比赛 -->
           <div class="stat-card">
-            <div class="stat-title">🏆 本周主题赛</div>
+            <div class="stat-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg>  本周主题赛</div>
             <div class="contest-head">
               <span class="contest-theme">{{ stats.contest.theme }}</span>
               <span class="contest-week">{{ stats.contest.week }}</span>
@@ -424,7 +424,7 @@ export default {
 
           <!-- 创作方式分布 -->
           <div class="stat-card">
-            <div class="stat-title">🖌️ 大家都怎么画</div>
+            <div class="stat-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  大家都怎么画</div>
             <div class="chart-bars">
               <div v-for="item in stats.methodDistribution" :key="item.key" class="chart-row">
                 <div class="chart-label">{{ item.label }}</div>
@@ -438,7 +438,7 @@ export default {
 
           <!-- 画布尺寸分布 -->
           <div class="stat-card">
-            <div class="stat-title">📐 画布尺寸分布</div>
+            <div class="stat-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 13h16v-2H4zm7-8h2V3h-2zM9 7h4V5H9zm4 0h2V5h-2zm2 2h2V7h-2zM7 9h8V7H7zm4 10h2v2h-2zm-2-2h4v2H9zm4 0h2v2h-2zm2-2h2v2h-2zm-8 0h8v2H7z"/> </svg>  画布尺寸分布</div>
             <div class="chart-bars">
               <div v-for="item in stats.sizeDistribution" :key="item.size" class="chart-row">
                 <div class="chart-label">{{ item.size }}</div>
@@ -452,7 +452,7 @@ export default {
 
           <!-- 热门标签 -->
           <div v-if="stats.topTags.length" class="stat-card">
-            <div class="stat-title">🔖 热门标签</div>
+            <div class="stat-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M6 2h12v2H6zM4 4h2v18H4zm14 0h2v18h-2zm-2 16h2v2h-2zm-2-2h2v2h-2zm-8 2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4z"/> </svg>  热门标签</div>
             <div class="tag-cloud">
               <span
                 v-for="(t, i) in stats.topTags"

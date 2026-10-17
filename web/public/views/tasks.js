@@ -132,7 +132,7 @@ export default {
         <button class="lw-refresh" id="tkRefresh" type="button" data-label="刷新"></button>
       </div>
       <div class="tk-head2">
-        <span class="tk-title">📋 每日任务</span>
+        <span class="tk-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 6h2v14H4zm2 14h12v2H6zM18 6h2v14h-2zM6 4h2v2H6zm10 0h2v2h-2zm-6-2h4v2h-4zm0 4h4v2h-4zM8 2h2v6H8zm6 0h2v6h-2z"/> </svg>  每日任务</span>
         <span class="tk-sum" id="tkSum" hidden></span>
       </div>
       <div class="tk-bar" id="tkBar" hidden><div class="tk-bar-in" id="tkBarIn"></div></div>

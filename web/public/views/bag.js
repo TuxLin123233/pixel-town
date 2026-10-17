@@ -97,7 +97,7 @@ export default {
       <div class="bg-bar">
         <a class="bg-back" id="bgBack" href="/town">← 小镇</a>
         <div class="bg-bar-main">
-          <div class="bg-title" id="bgTitle">🏠 家具商店</div>
+          <div class="bg-title" id="bgTitle"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z"/> </svg>  家具商店</div>
           <div class="bg-sub" id="bgSub"></div>
         </div>
         <button class="lw-refresh" id="bgRefresh" type="button" data-label="刷新"></button>

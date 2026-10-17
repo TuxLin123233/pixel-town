@@ -26,14 +26,14 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
     </div>
     <div class="mode-overlay" id="modeOverlay" hidden>
       <div class="mode-box start-box">
-        <h2>🎨 像素小镇 · 画板</h2>
+        <h2><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  像素小镇 · 画板</h2>
         <div class="mode-sub">先选方向，再选这次的具体参数</div>
 
         <div class="start-sec">
           <div class="start-label">创作方向</div>
           <div class="start-dirs" id="startDirs">
             <button type="button" class="start-dir on" data-dir="pixel">
-              <span class="start-ico">🖌️</span>
+              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg> </span>
               <span class="start-body"><b>像素画</b><i>逐格上色，可选题目与帧动画</i></span>
             </button>
             <button type="button" class="start-dir" data-dir="spray">
@@ -70,7 +70,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
           <div class="start-label">创作方式</div>
           <div class="start-modes" id="startModes">
             <button type="button" class="start-mode" data-mode="free">
-              <span class="start-ico">🖌️</span>
+              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg> </span>
               <span class="start-body"><b>自由模式</b><i>想画什么就画什么</i></span>
             </button>
             <button type="button" class="start-mode" data-mode="prompt" hidden>
@@ -78,7 +78,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
               <span class="start-body"><b>题目模式</b><i>按主题出题，可换题</i></span>
             </button>
             <button type="button" class="start-mode" data-mode="anim" hidden>
-              <span class="start-ico">🎞️</span>
+              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg> ️</span>
               <span class="start-body"><b>帧动画</b><i>逐帧作画导出 GIF</i></span>
             </button>
           </div>
@@ -95,7 +95,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
               <span class="start-body"><b>每日挑战</b><i id="startDailyText">每天一个题目</i></span>
             </button>
             <button type="button" class="start-join" data-join="contest" hidden>
-              <span class="start-ico">🏆</span>
+              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg> </span>
               <span class="start-body"><b>本周主题</b><i id="startContestText">每周一个主题</i></span>
             </button>
           </div>
@@ -105,7 +105,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
           <div class="start-label">辅助工具</div>
           <label class="start-toggle">
             <input type="checkbox" id="startImage">
-            <span class="start-body"><b>📷 像素相机</b><i>把照片变成像素画再手改（请只用自己的照片）</i></span>
+            <span class="start-body"><b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/> <path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/> </svg>  像素相机</b><i>把照片变成像素画再手改（请只用自己的照片）</i></span>
           </label>
         </div>
 
@@ -132,7 +132,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
     </div>
 
     <div class="prompt-card" id="promptCard" hidden>
-      <button class="prompt-roll" id="promptRoll" type="button" title="换一题">🎲</button>
+      <button class="prompt-roll" id="promptRoll" type="button" title="换一题"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg> </button>
       <div class="prompt-body">
         <div class="prompt-text" id="promptText">正在出题…</div>
         <div class="prompt-meta" id="promptMeta"></div>
@@ -164,7 +164,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
     <div class="spray-bar" id="sprayBar" hidden>
       <div class="spray-pal" id="sprayPal"></div>
       <div class="spray-pal-foot">
-        <button class="spray-tool wide" type="button" id="sprayMoreColor" title="更多颜色">🎨 更多颜色</button>
+        <button class="spray-tool wide" type="button" id="sprayMoreColor" title="更多颜色"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  更多颜色</button>
         <span class="spray-cur">
           <span class="spray-cur-sw" id="sprayCurSw"></span>
           <span class="spray-cur-tx" id="sprayCurTx">#e53935</span>
@@ -198,7 +198,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
     <div class="gravity-bar" id="gravityBar" hidden>
       <div class="gravity-pal" id="gravityPal"></div>
       <div class="gravity-pal-foot">
-        <button class="spray-tool wide" type="button" id="gravityMoreColor" title="更多颜色">🎨 更多颜色</button>
+        <button class="spray-tool wide" type="button" id="gravityMoreColor" title="更多颜色"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  更多颜色</button>
         <span class="spray-cur">
           <span class="spray-cur-sw" id="gravityCurSw"></span>
           <span class="spray-cur-tx" id="gravityCurTx">#e53935</span>
@@ -339,7 +339,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
 
       <label class="join-opt" id="contestRow" hidden for="contestCheck">
         <input type="radio" name="joinPick" id="contestCheck" value="contest">
-        <span class="join-ico">🏆</span>
+        <span class="join-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg> </span>
         <span class="join-text">
           <span class="join-name" id="contestLabel"></span>
           <span class="join-desc">每周一个主题，社区投票选本周最佳</span>
@@ -368,7 +368,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
 
     <div class="anim-editor" id="animEditor" hidden>
       <div class="anim-head">
-        <span class="anim-title">🎞️ 帧动画</span>
+        <span class="anim-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg> ️ 帧动画</span>
         <div class="anim-count-group" id="animCountGroup">
           <button class="anim-count-btn active" data-count="4" type="button">4 帧</button>
           <button class="anim-count-btn" data-count="8" type="button">8 帧</button>
@@ -409,7 +409,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
         </div>
         <img id="animImg" alt="帧动画 GIF">
         <div class="card-actions">
-          <a id="animDownload" class="card-btn" href="#" download="guangyu-anim.gif">⬇️ 保存 GIF</a>
+          <a id="animDownload" class="card-btn" href="#" download="guangyu-anim.gif"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M21 15v4h-2v-4zm-2 4v2H5v-2zM5 15v4H3v-4zm8-12v14h-2V3z"/> <path d="M7 11v2h10v-2zm2 2v2h2v-2zm4 0v2h2v-2z"/> <path d="M15 11v2h2v-2z"/> </svg>  保存 GIF</a>
         </div>
         <div class="card-note">长按图片也能保存到相册；GIF 会自动循环播放。</div>
       </div>

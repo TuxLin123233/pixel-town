@@ -163,7 +163,7 @@ export default {
     <div class="mail-page">
       <div class="mail-head">
         <router-link class="mail-back" to="/mine">← 我的</router-link>
-        <div class="mail-title">✉️ 信箱</div>
+        <div class="mail-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M6 8h2v2H6zm2 2h2v2H8zm10-2h-2v2h2zm-2 2h-2v2h2zm-6 2h4v2h-4zM2 6h2v12H2zm18 0h2v12h-2zM4 4h16v2H4zm0 14h16v2H4z"/> </svg>  信箱</div>
         <button class="lw-refresh" id="mailRefresh" type="button" data-label="刷新"></button>
       </div>
       <div class="mail-bar">
@@ -246,7 +246,7 @@ export default {
             '<div class="mail-time">' + esc(fmtTime(m.time)) + '</div>' +
             (m.body ? '<div class="mail-text">' + esc(m.body) + '</div>' : '') +
             (can
-              ? '<div class="mail-act"><span class="mail-attach">✨ 附件 ' + m.dust + ' 个光尘</span>' +
+              ? '<div class="mail-act"><span class="mail-attach"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/> <path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/> </svg>  附件 ' + m.dust + ' 个光尘</span>' +
                 '<button class="mail-btn" type="button" data-claim="' + esc(m.id) + '">领取</button></div>'
               : '') +
             '</div></div>' +

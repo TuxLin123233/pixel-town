@@ -320,7 +320,7 @@ export default {
       if (state.run.floor > 10) return winRun()
       const opts = shuffle(CARD_POOL.slice()).slice(0, 3)
       const arena = $('crArena')
-      arena.innerHTML = '<b style="color:var(--text)">🎉 胜利！选一张加入牌组：</b><div class="cr-hand" id="crPick"></div>'
+      arena.innerHTML = '<b style="color:var(--text)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/> <path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/> </svg>  胜利！选一张加入牌组：</b><div class="cr-hand" id="crPick"></div>'
       const pick = $('crPick')
       opts.forEach((c) => {
         const b = document.createElement('button'); b.className = 'cr-card'

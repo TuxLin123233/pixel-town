@@ -56,7 +56,7 @@ export const settingsTemplate = `<div class="container">
             </div>
           </div>
           <div class="guide-tips">
-            <b>💡 三个上手小提示</b>
+            <b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/> <path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/> </svg>  三个上手小提示</b>
             <ul>
               <li>画错了按 <kbd>↩️</kbd> 撤销；手机上也可以直接点工具栏的撤销。</li>
               <li>点底部「社区」看看别人画了什么，喜欢的可以点♥；再点一次能取消。</li>
@@ -141,7 +141,7 @@ export const settingsTemplate = `<div class="container">
 
       <section class="group foldx">
         <button class="group-fold" id="foldLook" type="button" aria-expanded="true">
-          <span class="group-title">🎨 外观</span>
+          <span class="group-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  外观</span>
           <span class="fold-caret">▾</span>
         </button>
         <div class="fold-body" id="foldLookBody">
@@ -244,7 +244,7 @@ export const settingsTemplate = `<div class="container">
 
       <section class="group foldx">
         <button class="group-fold" id="foldNav" type="button" aria-expanded="true">
-          <span class="group-title">🚀 启动与导航</span>
+          <span class="group-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 20h2V4h-2zm2-12h2V6h-2zm2 2h2V8h-2zm2 2h2v-2h-2zm-6-4H9V6h2z"/> <path d="M15 10H7V8h8zm2 2H5v-2h12z"/> </svg>  启动与导航</span>
           <span class="fold-caret">▾</span>
         </button>
         <div class="fold-body" id="foldNavBody">
@@ -296,7 +296,7 @@ export const settingsTemplate = `<div class="container">
       <section class="group">
         <div class="group-title">更多</div>
         <router-link class="entry" to="/terms">
-          <span class="entry-ico">📄</span>
+          <span class="entry-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M6 4H4v16h2zm10-2H6v2h10zm4 4h-2v14h2zm-2 14H6v2h12zM16 4h2v2h-2zm-4 0h2v6h-2z"/> <path d="M12 8h6v2h-6z"/> </svg> </span>
           <span class="entry-body">
             <span class="entry-label">使用条款</span>
             <div class="entry-desc">服务性质、禁止事项与责任划分</div>

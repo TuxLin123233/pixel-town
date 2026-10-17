@@ -79,7 +79,7 @@ export default {
     <div class="ntf-page">
       <div class="ntf-head">
         <router-link class="ntf-back" to="/mine">← 我的</router-link>
-        <div class="ntf-title">🔔 通知</div>
+        <div class="ntf-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M9 2h6v2H9zM7 4h2v2H7zm8 0h2v2h-2zM5 6h2v7H5zm12 0h2v7h-2zM3 13h2v4H3zm16 0h2v4h-2z"/> <path d="M3 15h18v2H3zm5 3h2v2H8zm6 0h2v2h-2zm-4 2h4v2h-4z"/> </svg>  通知</div>
         <button class="lw-refresh" id="ntfRefresh" type="button" data-label="刷新"></button>
       </div>
       <div class="ntf-sum" id="ntfSum">正在读取…</div>

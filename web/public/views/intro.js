@@ -204,7 +204,7 @@ export default {
     <div class="in-page">
       <div class="in-head">
         <router-link class="in-back" to="/mine">← 我的</router-link>
-        <div class="in-title">👤 个人信息</div>
+        <div class="in-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M9 2h6v2H9zm0 8h6v2H9zm6-6h2v6h-2zM7 4h2v6H7zM4 18h2v4H4zm14 0h2v4h-2zM8 14h8v2H8zm-2 2h2v2H6zm10 0h2v2h-2z"/> </svg>  个人信息</div>
       </div>
       <div id="inBody"><div class="in-card">正在读取…</div></div>
     </div>`,
@@ -308,7 +308,7 @@ export default {
         '<span class="in-tag' + (todayBd ? ' today' : '') + '">' +
         (birthday ? '🎂 ' + bdText(birthday) + (todayBd ? '　今天！' : '') : '生日未填') +
         '</span>' +
-        (joinedAt ? '<span class="in-tag">🏠 入住 ' + daysSince(joinedAt) + ' 天</span>' : '') +
+        (joinedAt ? '<span class="in-tag"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z"/> </svg>  入住 ' + daysSince(joinedAt) + ' 天</span>' : '') +
         '</div>' +
         (pstats
           ? '<div class="in-sum">' +

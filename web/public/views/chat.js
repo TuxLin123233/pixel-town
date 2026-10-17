@@ -50,11 +50,11 @@ export default {
       <div class="ch-bar">
         <a class="ch-back" id="chBack" href="/mine">← 我的</a>
         <div class="ch-bar-main">
-          <div class="ch-title" id="chTitle">💬 好友</div>
+          <div class="ch-title" id="chTitle"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M20 2H4v2h16zm0 14H6v2h14zm2-12h-2v12h2zM4 4H2v18h2zm2 14H4v2h2z"/> </svg>  好友</div>
           <div class="ch-sub" id="chSub"></div>
         </div>
         <button class="ch-icon-btn" id="chDel" type="button" hidden
-                aria-label="清空这段对话" title="清空这段对话">🗑️</button>
+                aria-label="清空这段对话" title="清空这段对话"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M18 22H6V20H18V22ZM9 6H15V4H17V6H22V8H20V20H18V8H6V20H4V8H2V6H7V4H9V6ZM15 4H9V2H15V4Z"/> </svg> </button>
         <button class="lw-refresh" id="chRefresh" type="button" data-label="刷新"></button>
       </div>
       <div class="ch-note" id="chNote" hidden></div>
@@ -588,7 +588,7 @@ export default {
         }
         return (
           '<div class="ch-rps">' +
-          '<div class="ch-rps-h">🎲 对方发起猜拳' + (r.wager ? '（押 ' + r.wager + ' 光尘）' : '') + '</div>' +
+          '<div class="ch-rps-h"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg>  对方发起猜拳' + (r.wager ? '（押 ' + r.wager + ' 光尘）' : '') + '</div>' +
           '<div class="ch-rps-btns">' +
           ['rock', 'scissors', 'paper']
             .map((k) => '<button class="ch-rps-b" type="button" data-rps="' + k +
@@ -605,7 +605,7 @@ export default {
           ? '<div class="ch-quote">' + esc(m.reply.name) + '：' + esc(m.reply.text) + '</div>'
           : ''
         if (k === 'dust') {
-          return quote + '<div class="ch-gift"><span class="ch-gift-ico">🎁</span>' +
+          return quote + '<div class="ch-gift"><span class="ch-gift-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 6h16v2H4zM2 8h2v4H2zm2 4h16v2H4zm16-4h2v4h-2zM6 4h2v2H6zm2-2h3v2H8zm3 2h2v2h-2zm2-2h3v2h-3zm3 2h2v2h-2zM4 14h2v6H4zm2 6h12v2H6zm12-6h2v6h-2zm-7-6h2v4h-2zm0 6h2v6h-2z"/> </svg> </span>' +
             '<span class="ch-gift-amt">' + (m.dust || 0) + ' 光尘</span></div>' +
             (m.text ? '<div class="ch-gift-note">' + esc(m.text) + '</div>' : '')
         }
@@ -616,7 +616,7 @@ export default {
         if (k === 'work' && m.work) {
           return quote + '<div class="ch-work" data-goto="' + m.work.t + '">' +
             '<canvas class="ch-work-cv" data-work="' + m.work.t + '" data-wsize="' + m.work.size + '"></canvas>' +
-            '<div class="ch-work-n">🖼️ ' + esc(m.work.name) + '</div></div>' +
+            '<div class="ch-work-n"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/> <path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/> </svg>  ' + esc(m.work.name) + '</div></div>' +
             (m.text ? '<div class="ch-gift-note">' + esc(m.text) + '</div>' : '')
         }
         if (k === 'rps') return quote + rpsHtml(m)
@@ -647,10 +647,10 @@ export default {
         '</div>' +
         '<div class="ch-plus" id="chPlus" hidden>' +
         '<div class="ch-plus-grid" id="chPlusGrid">' +
-        '<button class="ch-plus-i" type="button" data-pane="gift"><span>🎁</span><span>送光尘</span></button>' +
-        '<button class="ch-plus-i" type="button" data-pane="doodle"><span>🎨</span><span>涂鸦</span></button>' +
-        '<button class="ch-plus-i" type="button" data-pane="work"><span>🖼️</span><span>画作</span></button>' +
-        '<button class="ch-plus-i" type="button" data-pane="rps"><span>🎲</span><span>猜拳</span></button>' +
+        '<button class="ch-plus-i" type="button" data-pane="gift"><span><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 6h16v2H4zM2 8h2v4H2zm2 4h16v2H4zm16-4h2v4h-2zM6 4h2v2H6zm2-2h3v2H8zm3 2h2v2h-2zm2-2h3v2h-3zm3 2h2v2h-2zM4 14h2v6H4zm2 6h12v2H6zm12-6h2v6h-2zm-7-6h2v4h-2zm0 6h2v6h-2z"/> </svg> </span><span>送光尘</span></button>' +
+        '<button class="ch-plus-i" type="button" data-pane="doodle"><span><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg> </span><span>涂鸦</span></button>' +
+        '<button class="ch-plus-i" type="button" data-pane="work"><span><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/> <path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/> </svg> </span><span>画作</span></button>' +
+        '<button class="ch-plus-i" type="button" data-pane="rps"><span><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg> </span><span>猜拳</span></button>' +
         '</div>' +
         // ---- 送光尘 ----
         '<div class="ch-pane" id="chPaneGift" hidden>' +

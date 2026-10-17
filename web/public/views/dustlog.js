@@ -59,7 +59,7 @@ export default {
     <div class="dl-page">
       <div class="dl-head">
         <router-link class="dl-back" to="/mine">← 我的</router-link>
-        <div class="dl-title">📒 光尘明细</div>
+        <div class="dl-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M6 2h14v2H6zm0 18h14v2H6zM20 4h2v16h-2zM4 4h2v16H4z"/> <path d="M2 7h6v2H2zm0 4h6v2H2zm0 4h6v2H2zM16 4h2v16h-2z"/> </svg>  光尘明细</div>
         <button class="lw-refresh" id="dlRefresh" type="button" data-label="刷新"></button>
       </div>
       <div class="dl-bal" id="dlBal">

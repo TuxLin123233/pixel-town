@@ -482,11 +482,11 @@ export default {
           <div class="ver-body">
             <div class="ver-title"><span class="ver-tag">v1.5.1</span> 聊天送光尘 · 涂鸦 · 猜拳 · 家具 104 件 · 房间能扩建 <span class="ver-date">2026-10</span></div>
             <ul class="ver-list">
-              <li><span class="li-tag tag-new">新功能</span><b>聊天不再只有打字和表情了</b>。输入框左边多了一个「＋」，里面是四样东西：<b>🎁 送光尘 / 🎨 涂鸦 / 🖼️ 画作 / 🎲 猜拳</b></li>
-              <li><span class="li-tag tag-new">新功能</span><b>🎁 送光尘</b>：选个金额（也能自己填），送出去就<b>真的进对方账本</b>，不是贴个图。气泡会显示成一张礼物卡，可以附一句话</li>
-              <li><span class="li-tag tag-new">新功能</span><b>🎨 手绘涂鸦</b>：16×16 的小画板，16 种颜色，用手指随手画一张发过去。像素小镇里聊天当然要能画两笔</li>
-              <li><span class="li-tag tag-new">新功能</span><b>🖼️ 分享画作</b>：从自己的作品里挑一幅发过去，对方点一下就能跳到社区里看那一幅</li>
-              <li><span class="li-tag tag-new">新功能</span><b>🎲 猜拳</b>：石头剪刀布，<b>可以押光尘</b>（最多 200）。有个讲究：你先出拳，但<b>在对方出拳之前，他看不到你出的是什么</b> —— 服务端会把没出完的那一方的拳藏起来，所以后出的人占不到便宜。平局谁也不用掏钱</li>
+              <li><span class="li-tag tag-new">新功能</span><b>聊天不再只有打字和表情了</b>。输入框左边多了一个「＋」，里面是四样东西：<b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 6h16v2H4zM2 8h2v4H2zm2 4h16v2H4zm16-4h2v4h-2zM6 4h2v2H6zm2-2h3v2H8zm3 2h2v2h-2zm2-2h3v2h-3zm3 2h2v2h-2zM4 14h2v6H4zm2 6h12v2H6zm12-6h2v6h-2zm-7-6h2v4h-2zm0 6h2v6h-2z"/> </svg>  送光尘 / 🎨 涂鸦 / 🖼️ 画作 / 🎲 猜拳</b></li>
+              <li><span class="li-tag tag-new">新功能</span><b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 6h16v2H4zM2 8h2v4H2zm2 4h16v2H4zm16-4h2v4h-2zM6 4h2v2H6zm2-2h3v2H8zm3 2h2v2h-2zm2-2h3v2h-3zm3 2h2v2h-2zM4 14h2v6H4zm2 6h12v2H6zm12-6h2v6h-2zm-7-6h2v4h-2zm0 6h2v6h-2z"/> </svg>  送光尘</b>：选个金额（也能自己填），送出去就<b>真的进对方账本</b>，不是贴个图。气泡会显示成一张礼物卡，可以附一句话</li>
+              <li><span class="li-tag tag-new">新功能</span><b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  手绘涂鸦</b>：16×16 的小画板，16 种颜色，用手指随手画一张发过去。像素小镇里聊天当然要能画两笔</li>
+              <li><span class="li-tag tag-new">新功能</span><b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/> <path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/> </svg>  分享画作</b>：从自己的作品里挑一幅发过去，对方点一下就能跳到社区里看那一幅</li>
+              <li><span class="li-tag tag-new">新功能</span><b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 4h16v2H4zm0 14h16v2H4zM2 6h2v12H2zm18 0h2v12h-2zM8 9h2v6H8z"/> <path d="M6 11h6v2H6zm8-2h2v2h-2zm2 4h2v2h-2z"/> </svg>  猜拳</b>：石头剪刀布，<b>可以押光尘</b>（最多 200）。有个讲究：你先出拳，但<b>在对方出拳之前，他看不到你出的是什么</b> —— 服务端会把没出完的那一方的拳藏起来，所以后出的人占不到便宜。平局谁也不用掏钱</li>
               <li><span class="li-tag tag-new">新功能</span><b>↩️ 引用回复</b>和<b>😀 表情回应</b>：每条消息下面有「引用」和「回应」两个小按钮。回应支持 👍❤️😂😮😢🎉，再点一次就取消，不刷屏也能搭上话</li>
               <li><span class="li-tag tag-new">新功能</span>小屋的家具从 12 件扩到 <b>104 件</b>，分成 12 类（座椅 / 桌台 / 床铺 / 收纳 / 灯具 / 植物 / 装饰 / 电器 / 乐器 / 宠物 / 厨具 / 杂物），从 8 光尘的蜡烛到 200 光尘的王座。家具铺改成分类翻页，买过的自动从铺子里消失</li>
               <li><span class="li-tag tag-new">新功能</span><b>墙纸和地板</b>，一共 50 款。不是硬画 50 张图，而是 8 种墙纸花纹 × 4 套配色现算出来的。白送「白墙 + 橡木地板」，新屋子不会一进去就是毛坯。买完自动换上，不用手动摆</li>
@@ -665,7 +665,7 @@ export default {
               <li><span class="li-tag tag-new">新功能</span><b>别人的画师主页上能直接送光尘了</b>。
               以前 <code>/u</code> 主页的作品墙上只有一张张图，<b>点开大图才能送</b>，
               主页上根本没有送光尘的按钮（用户反馈「无法给其它用户点赞」）。
-              现在每幅画左下角都有 <b>✨ 数量</b> 的按钮，点一下就送，
+              现在每幅画左下角都有 <b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/> <path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/> </svg>  数量</b> 的按钮，点一下就送，
               送完点亮并显示这幅画累计收到多少；点图片本身仍然进大图</li>
               <li><span class="li-tag tag-fix">修复</span><b>送光尘的按钮是灰的、点了没反应</b>（用户反馈「有按钮，就是点不了」）。
               相机作品按规则不能收光尘，按钮会置灰（<code>opacity:.42</code> + <code>not-allowed</code>），
@@ -789,7 +789,7 @@ export default {
               <li><span class="li-tag tag-ui">界面</span>头像页顶部留白收紧（页面内边距 14→8、标题下间距 12→8），画布和工具往上提</li>
               <li><span class="li-tag tag-ui">界面</span>设置页「外观」「启动与导航」的折叠样式补上 —— 之前只有 HTML 和交互，样式没写进去，所以显示成原生按钮的样子</li>
               <li><span class="li-tag tag-fix">修复</span><b>头像计费把余额清零</b>：上次把价格改成「像素画 20 / 喷漆 30」时，服务端还在拿整个价格表对象做比较 —— <code>26 &lt; {…}</code> 恒为 false，余额检查形同虚设直接放行，扣费时 <code>26 - {…}</code> 算出 NaN 又被兜成 0。表现就是「26 个光尘也能改头像，改完余额变 0」。现在按当前画法取数字价格，每次保存都扣，扣完就是真扣</li>
-              <li><span class="li-tag tag-new">新功能</span>头像支持两种画法：<b>🖌️ 像素画</b>（16×16 逐格涂，20 光尘）和 <b>💨 像素喷漆</b>（64×64 自由喷，保存时降采样到 16×16，30 光尘）。两套完全独立，切换时提醒会丢失当前内容；已有头像再改会先弹窗确认价格；余额不够会直接告诉你还差几个</li>
+              <li><span class="li-tag tag-new">新功能</span>头像支持两种画法：<b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  像素画</b>（16×16 逐格涂，20 光尘）和 <b>💨 像素喷漆</b>（64×64 自由喷，保存时降采样到 16×16，30 光尘）。两套完全独立，切换时提醒会丢失当前内容；已有头像再改会先弹窗确认价格；余额不够会直接告诉你还差几个</li>
               <li><span class="li-tag tag-new">新功能</span>社区公告也发到信箱里了：打开信箱会收到「国庆更新说明」一封信，不用专门跑到社区看公告。一人一封，不会重复收到</li>
               <li><span class="li-tag tag-ui">界面</span>设置页「外观」和「启动与导航」两组改成可折叠的下拉，点标题收起来，点开恢复；展开状态会记住，下次进来还是你上次的样子。里面的功能一个没少（20 套主题、6 款导航样式、画板布局折叠都还在）</li>
               <li><span class="li-tag tag-ui">界面</span>画板「自定义颜色」按钮上方加了 14px 空隙，之前紧贴上方的当前色值行</li>

@@ -119,7 +119,7 @@ export default {
         <router-link class="rk-back" to="/mine">← 返回我的</router-link>
         <button class="lw-refresh" id="rkRefresh" type="button" data-label="刷新"></button>
       </div>
-      <div class="rk-title">🏆 排行榜</div>
+      <div class="rk-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg>  排行榜</div>
       <div class="rk-sub" id="rkSub">看看谁今天最受欢迎</div>
       <div class="rk-tabs">
         <button class="rk-tab" type="button" data-t="daily">每日榜</button>
