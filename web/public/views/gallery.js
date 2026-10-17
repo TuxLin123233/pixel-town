@@ -348,6 +348,20 @@ export default {
 
       // 取作品里出现最多的几个颜色（相互拉开距离），用于卡片点缀
       // 取作品里出现最多的几个颜色（相互拉开距离），用于卡片点缀
+      /* 作品真实用到的颜色（按出现次数排），不给占位色 —— 色板要诚实 */
+      function workPalette(pixels, n, count) {
+        const m = new Map()
+        for (let i = 0; i < n * n; i++) {
+          const p = pixels[i]
+          if (!p) continue
+          const key = (p[0] >> 4) + ',' + (p[1] >> 4) + ',' + (p[2] >> 4)
+          const cur = m.get(key)
+          if (cur) cur.n++
+          else m.set(key, { c: [p[0], p[1], p[2]], n: 1 })
+        }
+        return [...m.values()].sort((a, b) => b.n - a.n).slice(0, count).map((x) => x.c)
+      }
+
       function dominantColors(pixels, n, count) {
         const buckets = new Map()
         for (let i = 0; i < n * n; i++) {
@@ -1092,6 +1106,28 @@ export default {
           c.decoding = 'async'
           c.src = pixelsToURL(rec.pixels, rs)
 
+          /* 图片下面显示这幅画用到的色板：像素画的身份信息，
+             点任意色块可以复制它的色号（方便别人取色）。 */
+          const pal = document.createElement('div')
+          pal.className = 'ig-pal'
+          workPalette(rec.pixels, rs, 6).forEach((col) => {
+            const hex = '#' + col.map((v) => ('0' + v.toString(16)).slice(-2)).join('')
+            const sw = document.createElement('button')
+            sw.className = 'ig-sw'
+            sw.type = 'button'
+            sw.style.background = hex
+            sw.title = hex
+            sw.setAttribute('aria-label', '复制颜色 ' + hex)
+            sw.addEventListener('click', async (e) => {
+              e.stopPropagation()
+              try {
+                await navigator.clipboard.writeText(hex)
+                toast('已复制 ' + hex)
+              } catch (err) { toast(hex) }
+            })
+            pal.appendChild(sw)
+          })
+
           const meta = document.createElement('div')
           meta.className = 'card-meta'
           const nm = document.createElement('span')
@@ -1166,7 +1202,7 @@ export default {
           cap.className = 'ig-cap'
           cap.textContent = '查看评论'
           cap.addEventListener('click', (e) => { e.stopPropagation(); preview(rec) })
-          card.append(c, meta, sub, cap)
+          card.append(c, pal, meta, sub, cap)
           if (Array.isArray(rec.tags) && rec.tags.length) {
             const tw = document.createElement('div')
             tw.className = 'card-tags'

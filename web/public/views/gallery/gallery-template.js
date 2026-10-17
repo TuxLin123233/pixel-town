@@ -7,7 +7,6 @@
 
 export const galleryTemplate = `<div class="container">
       <div class="header">
-        <router-link class="back" to="/paint" aria-label="返回画板">←</router-link>
         <div class="header-text">
           <h1>社区</h1>
           <div id="count">加载中…</div>

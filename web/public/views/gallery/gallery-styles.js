@@ -1957,4 +1957,22 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         margin-top: 6px;
         font-size: 12px; color: var(--text-faint); cursor: pointer;
       }
+
+      /* 图片下的色板：这幅画用到的 6 个主色 */
+      .ig-pal {
+        order: 3;
+        display: flex;
+        gap: 6px;
+        margin-top: 9px;
+      }
+      .ig-sw {
+        width: 20px; height: 20px;
+        border-radius: 4px;
+        border: 1px solid var(--border);
+        padding: 0;
+        cursor: pointer;
+      }
+      .ig-sw:active { opacity: .75; }
+      .card .card-meta { order: 4; }
+      .ig-cap { order: 5; }
 `
