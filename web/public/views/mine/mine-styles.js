@@ -432,7 +432,11 @@ export const mineStyles = `
         font-size: 12px;
       }
       .m-link .ml-ico { font-size: 18px; }
-      .m-link .ml-num { font-size: 14px; font-weight: 800; color: var(--accent); line-height: 1.3; }
+      .m-link .ml-num {
+        font-size: 14px; font-weight: 800; color: var(--text-muted); line-height: 1.3;
+        /* 没有数字的卡片也留出这一行，四列格子里文字才能对齐 */
+        min-height: 1.3em;
+      }
       /* 4 列时格子更窄，字号跟着收一档，避免「每日任务」这类四字标签换行 */
       .m-link span:not(.ml-ico):not(.ml-num) { font-size: 11px; white-space: nowrap; }
 

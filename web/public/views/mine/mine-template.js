@@ -112,14 +112,17 @@ export const mineTemplate = `<div class="container mine-wrap">
         </router-link>
         <router-link class="m-link" to="/intro">
  <span class="ml-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M9 2h6v2H9zm0 8h6v2H9zm6-6h2v6h-2zM7 4h2v6H7zM4 18h2v4H4zm14 0h2v4h-2zM8 14h8v2H8zm-2 2h2v2H6zm10 0h2v2h-2z"/></svg> </span>
+          <span class="ml-num"></span>
           <span>个人信息</span>
         </router-link>
         <router-link class="m-link" to="/settings">
  <span class="ml-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M8 14H7v6H5v-6H2v-2h6v2Zm5 6h-2V10h2v10Zm9-2h-3v2h-2v-2h-1v-2h6v2Zm-3-4h-2V4h2v10ZM7 10H5V4h2v6Zm6-4h2v2H9V6h2V4h2v2Z"/></svg> </span>
+          <span class="ml-num"></span>
           <span>设置</span>
         </router-link>
         <a class="m-link" href="/paint">
  <span class="ml-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/><path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/></svg> </span>
+          <span class="ml-num"></span>
           <span>去画</span>
         </a>
       </div>
