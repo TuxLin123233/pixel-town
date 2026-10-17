@@ -173,7 +173,7 @@ export const galleryTemplate = `<div class="container">
   <button class="fav-btn" id="previewFav" type="button" title="收藏这幅画"> 收藏</button>
           <button class="vote-btn" id="previewVoteBtn" type="button" hidden><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg>  投一票</button>
           <button class="share-btn" id="previewShare" type="button"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 6h7v2H4zm0 10h7v2H4zM2 8h2v8H2zm18-2h-7v2h7zm0 10h-7v2h7zm2-8h-2v8h2zM7 11h10v2H7z"/> </svg>  复制链接</button>
-          <button class="share-btn" id="previewCard" type="button">🃏 生成朋友圈卡片</button>
+          <button class="share-btn" id="previewCard" type="button"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h18v2H3zM3 19h18v2H3zM3 5h2v14H3zM19 5h2v14h-2zM7 9h4v2H7zM13 9h4v2h-4zM7 13h4v2H7zM13 13h4v2h-4z"/></svg> 卡片</button>
           <button class="share-btn" id="previewPaletteBtn" type="button" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  用色</button>
   <button class="report-hold" id="previewReport" type="button"> 长按举报</button>
         </div>

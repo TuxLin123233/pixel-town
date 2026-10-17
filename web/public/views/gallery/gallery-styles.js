@@ -568,13 +568,13 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         box-shadow: none;
         cursor: pointer;
         text-align: left;
-        transition: transform 0.1s ease, box-shadow 0.2s ease;
+        transition: none;
         color: inherit;
         font: inherit;
       }
 
       .card:hover { box-shadow: none; }
-      .card:active { transform: scale(0.97); }
+      /* 之前这里有个 scale 按下效果：卡片里是 canvas，缩放时部分安卓 GPU 会留残影，去掉 */
 
       /* 不同作品类型用不同描边颜色区分：参赛=蓝 · 动画=紫 · 多人=青 */
       .card.t-contest { border-color: rgba(91, 141, 239, 0.55); }
@@ -1777,4 +1777,54 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
         padding: 0;
         margin-bottom: 6px;
       }
+
+      /* ============ 详情页操作条：统一网格 ============
+         原来 6 个按钮挤成一条：高度 24px、每个底色还不一样（红/蓝/透明），
+         手机上换行后参差不齐。改成 4 列网格：
+         送光尘 / 收藏 各占两格（主操作），分享 / 投票 / 调色板 / 卡片 各占一格，
+         举报单独占一行做次要操作。 */
+      .preview-like {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);   /* 主操作占 3 格、次操作占 2 格：三个次操作刚好填满一行 */
+        gap: 8px;
+        align-items: stretch;
+      }
+      .preview-like .like-btn,
+      .preview-like .fav-btn,
+      .preview-like .vote-btn,
+      .preview-like .share-btn,
+      .preview-like .report-hold {
+        width: 100%;
+        justify-content: center;
+        height: 32px;
+        padding: 0 8px;
+        border-radius: 6px;
+        font-size: 11.5px;
+        font-weight: 600;
+        line-height: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: background .15s, border-color .15s, color .15s;
+      }
+      .preview-like .like-btn,
+      .preview-like .fav-btn { grid-column: span 3; height: 36px; font-size: 12.5px; }
+      .preview-like .share-btn,
+      .preview-like .vote-btn { grid-column: span 2; }
+      .preview-like .report-hold {
+        grid-column: span 6;
+        height: 28px;
+        border: 0;
+        background: transparent;
+        color: var(--text-faint);
+        font-weight: 500;
+      }
+      .preview-like .report-hold:active { background: transparent; color: var(--text-muted); }
+      /* 统一描边：用主题线色，主操作只在「已选」时上色 */
+      .preview-like .like-btn,
+      .preview-like .fav-btn,
+      .preview-like .vote-btn,
+      .preview-like .share-btn { border: 1px solid var(--border-strong); background: transparent; color: var(--text-muted); }
+      .preview-like .like-btn { color: var(--like); border-color: var(--like-border); }
+      .preview-like .like-btn.liked { background: var(--like); border-color: var(--like); color: #fff; }
 `
