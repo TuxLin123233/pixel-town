@@ -3,6 +3,11 @@
  *
  * 由 views/gallery.js 拆分而来（内容原样搬移，未做任何改动）。
  * 主文件通过 import 引入：见 views/gallery.js 顶部。
+ *
+ * 布局：社区页按「信息流」排 —— 顶栏 → 今日画师 → 单列 feed。
+ * 活动区（今日一题 / 大赛 / 佳作 / 发现）、作者页、免责声明和页脚
+ * 全部排在 feed 下面，id 一个不少（gallery.js 按 id 取元素）。
+ * 作品卡（.card）由 gallery.js 的 appendCards 动态生成，模板里没有。
  */
 
 export const galleryTemplate = `<div class="container">
@@ -16,13 +21,16 @@ export const galleryTemplate = `<div class="container">
         </router-link>
       </div>
 
-      <!-- 今日画师：一排圆形头像，点进去看作者主页 -->
+      <!-- 今日画师：一排圆形头像，点进去看作者主页。由 gallery.js 填充 -->
       <div class="stories" id="stories"></div>
 
+      <!-- 搜索 / 筛选：按信息流改版后不再露出搜索框和筛选按钮，
+           只保留「当前筛选」这一行胶囊（无筛选时 chipRow 自带 hidden，
+           整块高度为 0，feed 紧贴今日画师）。id 全部保留给 gallery.js。 -->
       <section class="finder" id="finder">
         <div class="search-row">
           <input class="search-input" id="searchInput" type="search" placeholder="搜作品名、作者或标签…" autocomplete="off">
-  <button class="search-clear" id="searchClear" type="button" hidden></button>
+          <button class="search-clear" id="searchClear" type="button" hidden></button>
         </div>
         <div class="chip-row" id="chipRow" hidden></div>
         <div class="tag-cloud" id="tagCloud" hidden></div>
@@ -58,19 +66,10 @@ export const galleryTemplate = `<div class="container">
         <div class="sec-bar" id="secBar" hidden></div>
       </section>
 
-      <section class="daily" id="dailyPanel" hidden>
-        <div class="daily-head">
-  <span class="daily-title"> 今日一题</span>
-          <span class="daily-day" id="dailyDay"></span>
-        </div>
-        <div class="daily-theme">今日题目《<b id="dailyTheme"></b>》</div>
-        <div class="daily-prompt" id="dailyPrompt"></div>
-        <div class="daily-cta-row">
-          <a class="daily-cta" id="dailyCta" href="/paint"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  去创作</a>
-          <span class="daily-tip" id="dailyTip"></span>
-        </div>
-        <div class="daily-top" id="dailyTop"></div>
-      </section>
+      <!-- 单列 feed：gallery.js 往这里 append 帖子（.card） -->
+      <div id="gallery" class="gallery-grid"></div>
+      <div id="sentinel" class="status">加载中…</div>
+      <div id="status" class="status" hidden></div>
 
       <section class="author-page" id="authorPage" hidden>
         <div class="author-head">
@@ -85,6 +84,20 @@ export const galleryTemplate = `<div class="container">
           </div>
         </div>
         <div class="author-works" id="authorWorks"></div>
+      </section>
+
+      <section class="daily" id="dailyPanel" hidden>
+        <div class="daily-head">
+  <span class="daily-title"> 今日一题</span>
+          <span class="daily-day" id="dailyDay"></span>
+        </div>
+        <div class="daily-theme">今日题目《<b id="dailyTheme"></b>》</div>
+        <div class="daily-prompt" id="dailyPrompt"></div>
+        <div class="daily-cta-row">
+          <a class="daily-cta" id="dailyCta" href="/paint"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  去创作</a>
+          <span class="daily-tip" id="dailyTip"></span>
+        </div>
+        <div class="daily-top" id="dailyTop"></div>
       </section>
 
       <section class="contest" id="contestPanel" hidden>
@@ -102,20 +115,6 @@ export const galleryTemplate = `<div class="container">
         <div class="contest-top" id="contestTop"></div>
       </section>
 
-
-      <section class="discover" id="discover">
-        <div class="discover-head">
-          <div class="discover-text">
-            <b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M22 22h-2v-2h2v2Zm-2-2h-2v-2h2v2Zm-6-2H6v-2h8v2Zm4 0h-2v-2h2v2ZM6 16H4v-2h2v2Zm10 0h-2v-2h2v2ZM4 14H2V6h2v8Zm14 0h-2V6h2v8ZM6 6H4V4h2v2Zm10 0h-2V4h2v2Zm-2-2H6V2h8v2Z"/> </svg>  发现</b>
-            <i>随机翻出一件旧作品，给被时间埋掉的好东西一次机会</i>
-          </div>
-          <button class="discover-btn" id="discoverBtn" type="button">掷一个</button>
-        </div>
-        <div class="discover-body" id="discoverBody">
-          <div class="discover-empty">手气不错的话，能翻出别人埋在底下的老画</div>
-        </div>
-      </section>
-
       <section class="featured" id="featured" hidden>
         <div class="featured-head">
           <span><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg>  佳作展示</span>
@@ -129,9 +128,18 @@ export const galleryTemplate = `<div class="container">
         <div class="featured-row" id="featuredRow"></div>
       </section>
 
-      <div id="gallery" class="gallery-grid"></div>
-      <div id="sentinel" class="status">加载中…</div>
-      <div id="status" class="status" hidden></div>
+      <section class="discover" id="discover">
+        <div class="discover-head">
+          <div class="discover-text">
+            <b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M22 22h-2v-2h2v2Zm-2-2h-2v-2h2v2Zm-6-2H6v-2h8v2Zm4 0h-2v-2h2v2ZM6 16H4v-2h2v2Zm10 0h-2v-2h2v2ZM4 14H2V6h2v8Zm14 0h-2V6h2v8ZM6 6H4V4h2v2Zm10 0h-2V4h2v2Zm-2-2H6V2h8v2Z"/> </svg>  发现</b>
+            <i>随机翻出一件旧作品，给被时间埋掉的好东西一次机会</i>
+          </div>
+          <button class="discover-btn" id="discoverBtn" type="button">掷一个</button>
+        </div>
+        <div class="discover-body" id="discoverBody">
+          <div class="discover-empty">手气不错的话，能翻出别人埋在底下的老画</div>
+        </div>
+      </section>
 
       <div class="disclaimer">
         以下作品均来自全网上传。全部作品仅支持预览，不可载入作画，请尊重原作者，切勿抄袭或直接提交他人作品。

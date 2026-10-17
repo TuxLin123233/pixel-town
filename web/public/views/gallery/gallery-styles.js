@@ -1732,26 +1732,12 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
       }
 
 
-      /* ============ 布局改版：内容优先 ============
-         不挪 DOM（挪坏了），改用 flex order 重排：作品列表提到最前面，
-         佳作和三个活动块放到列表下面。每个 section 的 id 和事件绑定都不受影响。 */
-      .container {
-        display: flex;
-        flex-direction: column;
-      }
-      .container > .header      { order: 0; }
-      .container > .finder      { order: 1; }
-      .container > .gallery-grid{ order: 2; }
-      .container > .featured    { order: 3; }
-      .container > .daily       { order: 4; }
-      .container > .contest     { order: 5; }
-      .container > .discover    { order: 6; }
-      .container > #sentinel,
-      .container > #status      { order: 7; }
-      .container > .disclaimer  { order: 8; }
-      .container > .copyright   { order: 9; }
-      .container > .author-page { order: 10; }
-      .gallery-grid { margin-top: 16px; }
+      /* ============ 布局：社区按信息流排 ============
+         模板里已经按「顶栏 → 今日画师 → 单列 feed → 活动区 → 页脚」排好，
+         不再用 flex order 硬挪 DOM（顺序和 id 放在一起看更直观）。
+         body 去掉左右内边距，作品图才能真正通栏；各区块自己控制 16px 内缩。 */
+      body { padding: 8px 0 116px; }
+      .container { width: 100%; max-width: 760px; margin: 0 auto; }
       .featured { border-top: 1px solid var(--border); }
 
       /* 按钮统一：小号、细线、透明底；行动按钮才用强调色 */
@@ -1829,109 +1815,157 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
       .preview-like .like-btn.liked { background: var(--like); border-color: var(--like); color: #fff; }
 
       /* ============ 社区：单列大图流（Feed） ============
-         沿用「一屏一张、图大、装饰少」这个通用交互模式，但不照搬任何 App 的外观：
-         作者行用站内头像 + 名字，点赞位是「送光尘」，颜色和图标全部走站内令牌。
-         卡片 DOM 顺序：图 → 标题/操作 → 作者 → 标签，
-         这里用 flex order 重排成：作者 → 图 → 操作 → 标签。 */
+         页面观感参考「一屏一张、图大、装饰少」的信息流，但颜色和图标全部走站内令牌：
+         作者行用站内头像 + 名字，点赞位是「送光尘」。
+         appendCards 的 DOM 顺序是：图 → 色板 → 操作行 → 作者行 → 查看评论 → 标签，
+         这里用 flex order 重排成：作者 → 图 → 色板 → 操作行 → 查看评论 → 标签。 */
       .gallery-grid {
         display: block;
-        margin-top: 8px;
+        margin: 0;
       }
-      .card {
+      /* 用 .gallery-grid .card 提高一级权重：detail.css 在视图样式之后加载，
+         同权重会盖掉这里的圆角 / 边框 */
+      .gallery-grid .card {
+        position: relative;
         display: flex;
         flex-direction: column;
         width: 100%;
-        margin: 0 0 20px;
-        padding: 14px 16px 16px;
+        margin: 0;
+        padding: 0;
         background: transparent;
         border: 0;
         border-top: 1px solid var(--border);
         border-radius: 0;
+        box-shadow: none;
+        cursor: pointer;
+        text-align: left;
+        color: inherit;
+        font: inherit;
       }
-      .card:first-child { border-top: 0; }
-      /* 作者行（头像 + 作者 + 尺寸/时间） */
-      .card .card-sub {
+      .gallery-grid .card.hl { box-shadow: 0 0 0 3px var(--accent); }
+      /* 作者行：圆形头像 + 名字 + 尺寸/时间（右对齐） */
+      .gallery-grid .card .card-sub {
         order: 1;
         display: flex;
         align-items: center;
         gap: 8px;
-        margin: 0 0 10px;
+        margin: 0;
+        padding: 10px 16px 9px;
+        font-size: 12px;
       }
-      .card .card-av { width: 26px; height: 26px; border-radius: 50%; }
-      .card .card-author { font-size: 13px; font-weight: 700; color: var(--text); }
-      .card .card-size,
-      .card .card-time { font-size: 11px; color: var(--text-faint); margin-left: 0; }
-      /* 作品图：整宽、正方形、像素清晰 */
-      .card .art {
+      .gallery-grid .card .card-av {
+        width: 30px; height: 30px; flex: none;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        image-rendering: pixelated;
+      }
+      .gallery-grid .card .card-author {
+        flex: 1 1 auto; min-width: 0;
+        font-size: 13px; font-weight: 700; color: var(--text);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      .gallery-grid .card .card-size {
+        flex: none; margin-left: auto; padding: 0;
+        border: 0; border-radius: 0;
+        font-size: 11px; color: var(--text-faint);
+        font-family: ui-monospace, Menlo, monospace;
+      }
+      .gallery-grid .card .card-time {
+        flex: none; margin: 0;
+        font-size: 11px; color: var(--text-faint);
+        font-family: ui-monospace, Menlo, monospace;
+      }
+      /* 作品图：通栏、正方形、像素清晰 */
+      .gallery-grid .card .art {
         order: 2;
         width: 100%;
         aspect-ratio: 1;
         object-fit: contain;
         image-rendering: pixelated;
-        background: #fff;
+        background: var(--art-bg);
+        border: 0;
+        border-radius: 0;
         display: block;
       }
-      /* 操作行：送光尘 / 标题 / 投票 */
-      .card .card-meta {
-        order: 3;
+      /* 操作行：作品名（左）+ 送光尘 + 评论（右） */
+      .gallery-grid .card .card-meta {
+        order: 4;
         display: flex;
         align-items: center;
         gap: 12px;
-        margin: 9px 0 0;
+        margin: 0;
+        padding: 10px 16px 0;
+        flex-wrap: nowrap;
       }
-      .card .card-meta .card-name {
-        font-size: 13px;
-        font-weight: 700;
+      .gallery-grid .card .card-meta .card-name {
         order: -1;
-        flex: 1;
+        flex: 1 1 auto;
         min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        font-size: 13px; font-weight: 700; color: var(--text);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
       }
-      .card .card-tags { order: 4; margin-top: 6px; }
-      .card .mod-hide { order: 5; align-self: flex-start; margin-top: 8px; }
+      .gallery-grid .card .card-meta .anim-badge,
+      .gallery-grid .card .card-meta .room-badge {
+        font-size: 10px; padding: 1px 7px;
+      }
+      .gallery-grid .card .card-tags {
+        order: 6;
+        display: flex; flex-wrap: wrap; gap: 8px;
+        margin: 0; padding: 0 16px 12px;
+      }
+      .gallery-grid .card .card-tag {
+        font-size: 12px; font-weight: 600; color: var(--accent);
+        background: none; border: 0; border-radius: 0; padding: 0;
+      }
+      .gallery-grid .card .mod-hide {
+        order: 7;
+        position: absolute; left: auto; right: 10px; top: 54px;
+        z-index: 3;
+        margin: 0;
+      }
 
-      /* ============ 社区：顶栏 / 今日画师 / 帖子细节 ============ */
+      /* ============ 社区：顶栏 / 今日画师 ============ */
       .header {
         display: flex;
         align-items: center;
         gap: 10px;
-        padding: 14px 16px 10px;
-      }
-      .header .back {
-        width: 30px; height: 30px; flex: none;
-        display: inline-flex; align-items: center; justify-content: center;
-        border: 1px solid var(--border); border-radius: 8px;
-        color: var(--text-muted); text-decoration: none; font-size: 14px;
+        margin: 0;
+        padding: 12px 16px 8px;
       }
       .header-text { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 8px; }
       .header-text h1 { font-size: 21px; font-weight: 800; letter-spacing: .02em; }
-      .header-text #count { font-size: 11px; color: var(--text-faint); font-family: ui-monospace, Menlo, monospace; }
-      .ig-bell {
-        width: 30px; height: 30px; flex: none;
-        display: inline-flex; align-items: center; justify-content: center;
-        border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted);
+      .header-text #count {
+        margin: 0;
+        font-size: 11px; color: var(--text-faint);
+        font-family: ui-monospace, Menlo, monospace;
       }
-      .ig-bell svg { width: 15px; height: 15px; }
+      .ig-bell {
+        width: 28px; height: 28px; flex: none;
+        display: inline-flex; align-items: center; justify-content: center;
+        border: 0; border-radius: 50%;
+        background: none; color: var(--text-muted);
+      }
+      .ig-bell:active { background: var(--surface-2); }
+      .ig-bell svg { width: 19px; height: 19px; }
 
-      /* 今日画师：一排圆形头像（平面细环，不用社交软件那种彩色渐变大圈） */
+      /* 今日画师：一排圆形头像，横向可滑 */
       .stories {
         display: flex;
-        gap: 13px;
-        padding: 2px 16px 14px;
+        gap: 14px;
+        padding: 0 16px 12px;
         overflow-x: auto;
         scrollbar-width: none;
       }
       .stories::-webkit-scrollbar { display: none; }
       .story {
-        flex: none; width: 56px;
+        flex: none; width: 58px;
         display: flex; flex-direction: column; align-items: center; gap: 5px;
         text-decoration: none;
       }
       .story-ring {
-        width: 52px; height: 52px; border-radius: 50%; padding: 2px;
-        background: linear-gradient(140deg, var(--accent, #5b8def), #e8c07a);
+        width: 54px; height: 54px; border-radius: 50%; padding: 2px;
+        background: linear-gradient(140deg, #f5be64, #e8786e 46%, #9678c8);
       }
       .story-ring i {
         display: block; width: 100%; height: 100%;
@@ -1941,41 +1975,163 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
       .story-ring canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
       .story b {
         font-size: 10px; font-weight: 500; color: var(--text-muted);
-        max-width: 56px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        max-width: 58px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       }
 
-      /* 帖子：图整宽通栏，操作行更像流里的帖子而不是卡片 */
-      .card .art { margin: 0 -16px; width: calc(100% + 32px); }
-      .ig-cmt {
-        display: inline-flex; align-items: center; gap: 4px;
-        background: none; border: 0; padding: 0;
-        font-size: 12px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+      /* 帖子细节：操作行更像流里的帖子，而不是卡片 */
+      .gallery-grid .card .like-btn {
+        flex: none;
+        display: inline-flex; align-items: center; gap: 5px;
+        margin-left: auto;
+        padding: 0; border: 0; border-radius: 0;
+        background: none;
+        color: var(--like);
+        font-size: 12.5px; font-weight: 700; line-height: 1;
       }
-      .ig-cmt svg { width: 16px; height: 16px; }
-      .ig-cap {
+      /* feed 里的送光尘没有内联图标，用 mask 补一个像素光尘，
+         颜色跟着 currentColor 走（已送 / 置灰都能自动变色） */
+      .gallery-grid .card .like-btn::before {
+        content: '';
+        width: 15px; height: 15px;
+        background: currentColor;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z'/%3E%3Cpath fill='%23000' d='M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z'/%3E%3C/svg%3E") center / contain no-repeat;
+                mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z'/%3E%3Cpath fill='%23000' d='M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z'/%3E%3C/svg%3E") center / contain no-repeat;
+      }
+      .gallery-grid .card .like-btn.liked { background: none; border: 0; color: var(--like); }
+      .gallery-grid .card .like-btn.no-dust { opacity: .45; filter: grayscale(1); }
+      .gallery-grid .card .ig-cmt {
+        flex: none;
+        display: inline-flex; align-items: center; gap: 4px;
+        margin: 0; padding: 0;
+        background: none; border: 0;
+        font-size: 12.5px; font-weight: 600; color: var(--text-muted);
+        cursor: pointer;
+      }
+      .gallery-grid .card .ig-cmt svg { width: 18px; height: 18px; }
+      .gallery-grid .card .ig-cap {
         order: 5;
-        margin-top: 6px;
-        font-size: 12px; color: var(--text-faint); cursor: pointer;
+        margin: 0;
+        padding: 5px 16px 12px;
+        font-size: 12px; color: var(--text-faint);
+        cursor: pointer;
       }
 
       /* 图片下的色板：这幅画用到的 6 个主色 */
-      .ig-pal {
+      .gallery-grid .card .ig-pal {
         order: 3;
         display: flex;
+        flex-wrap: wrap;
         gap: 6px;
-        margin-top: 9px;
+        margin: 0;
+        padding: 10px 16px 0;
       }
-      .ig-sw {
-        width: 20px; height: 20px;
-        border-radius: 4px;
+      .gallery-grid .card .ig-sw {
+        width: 22px; height: 22px;
+        border-radius: 6px;
         border: 1px solid var(--border);
         padding: 0;
         cursor: pointer;
       }
-      .ig-sw:active { opacity: .75; }
-      .card .card-meta { order: 4; }
-      .ig-cap { order: 5; }
+      .gallery-grid .card .ig-sw:active { opacity: .75; }
 
-      /* 筛选入口已去掉，这排「当前筛选」的残留胶囊也一起藏掉 */
-      .chip-row { display: none !important; }
+      /* ============ 筛选入口：只留「当前筛选」胶囊 ============
+         信息流里不再放搜索框 / 筛选按钮 / 标签云 / 分区条，
+         但这些节点 gallery.js 要按 id 取，全部留在 DOM 里、只隐藏。
+         点卡片标签进入筛选时，chipRow 会自己取消 hidden 露出来，点一下即可清除。 */
+      .finder {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+      }
+      .finder .search-row,
+      .finder .tag-cloud,
+      .finder .filter-panel,
+      .finder .sec-bar { display: none !important; }
+      .finder .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+        padding: 0 16px 10px;
+      }
+      .finder .chip-row .chip { font-size: 11px; padding: 3px 10px; }
+
+      /* ============ feed 下面的活动区：紧凑，不抢首屏 ============ */
+      .daily, .contest, .featured, .discover {
+        margin: 0;
+        padding: 12px 16px;
+        border: 0;
+        border-bottom: 1px solid var(--border);
+        border-radius: 0;
+        background: transparent;
+      }
+      [data-mood="dark"] .contest { background: transparent; }
+      .daily-head { margin-bottom: 6px; }
+      .daily-title { font-size: 13px; }
+      .daily-day { font-size: 10px; }
+      .daily-theme { font-size: 13px; }
+      .daily-prompt { font-size: 11.5px; margin-top: 2px; }
+      .daily-cta-row { margin-top: 8px; gap: 8px; }
+      .daily-top { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; margin-top: 8px; }
+      .daily-top img { border-radius: 6px; }
+
+      .contest-head { font-size: 13px; }
+      .contest-badge { font-size: 10px; padding: 2px 8px; }
+      .contest-theme { margin-top: 4px; font-size: 14px; }
+      .contest-prompt { margin-top: 2px; font-size: 11.5px; }
+      .contest-meta { font-size: 11px; }
+      .contest-cta-row { margin-top: 8px; gap: 8px; }
+      .contest-top { margin-top: 8px; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 6px; }
+      .contest-empty, .discover-empty { font-size: 12px; }
+
+      .featured-head { font-size: 13px; margin-bottom: 8px; gap: 6px; }
+      .featured-sub { font-size: 10.5px; margin-bottom: 8px; }
+      .featured-row { gap: 8px; padding-bottom: 2px; }
+      .f-card { flex: 0 0 76px; }
+      .f-art { width: 76px; height: 76px; border-radius: 8px; border-width: 1px; }
+      .f-name { max-width: 76px; font-size: 10px; margin-top: 4px; }
+      .f-meta { margin-top: 1px; gap: 4px; }
+      .f-author, .f-like, .f-size { font-size: 9.5px; }
+
+      .discover-head { gap: 10px; }
+      .discover-text b { font-size: 13px; }
+      .discover-text i { font-size: 10.5px; }
+      .discover-btn { padding: 5px 12px; font-size: 12px; }
+      .discover-body { margin-top: 8px; }
+
+      /* 作者页排在 feed 下面，打开后 scrollIntoView 会滚过去 */
+      .author-page { margin: 12px 16px; padding: 12px 14px; border-radius: 12px; }
+      .author-works { grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
+
+      .status { padding: 16px 0; font-size: 12px; }
+
+      .disclaimer { margin: 12px 16px 0; padding: 12px 14px; border-radius: 12px; font-size: 11.5px; line-height: 1.65; }
+      .copyright { margin: 12px 16px 8px; font-size: 11px; }
+
+      /* ============ 父级追加的两条要求 ============ */
+      /* 1) 作品图左右留白，不贴边 */
+      .gallery-grid .card .art {
+        width: calc(100% - 32px);
+        margin: 0 16px;
+      }
+
+      /* 2) 今日一题 / 抽一个 提到首屏，不再沉在作品流下面 */
+      .container {
+        display: flex;
+        flex-direction: column;
+      }
+      .container > .header        { order: 1; }
+      .container > #stories       { order: 2; }
+      .container > #dailyPanel    { order: 3; }
+      .container > #discover      { order: 4; }
+      .container > #gallery       { order: 5; }
+      .container > #sentinel,
+      .container > #status        { order: 6; }
+      .container > #authorPage    { order: 7; }
+      .container > #contestPanel  { order: 8; }
+      .container > #featured      { order: 9; }
+      .container > .disclaimer    { order: 10; }
+      .container > .copyright     { order: 11; }
 `

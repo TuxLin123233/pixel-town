@@ -1079,7 +1079,11 @@ export default {
               x.fillText(p.name.slice(0, 1), 22, 24)
             }
             h.appendChild(cv)
-          }, () => { if (p.name) openAuthor(p.name) })
+          }, () => {
+            /* 点头像直接进画师主页；没有 uid 才退回页内作者视图 */
+            if (p.uid) location.href = '/u?uid=' + encodeURIComponent(p.uid)
+            else if (p.name) openAuthor(p.name)
+          })
         })
       }
 
