@@ -81,7 +81,7 @@
       }
 
       :root {
-        --bg: linear-gradient(160deg, #fdf8f2 0%, #f2ece2 100%);
+        --bg: #fdf8f2;
         --surface: #fff;
         --surface-2: #efe9e0;
         --surface-3: #f0ece4;
@@ -114,7 +114,7 @@
         --nav-halo: 255, 255, 255;
       }
       [data-mood="dark"] {
-        --bg: linear-gradient(160deg, #211c17 0%, #18140f 100%);
+        --bg: #211c17;
         --surface: #2a251f;
         --surface-2: #38312a;
         --surface-3: #322c25;
@@ -148,7 +148,7 @@
 
       /* ---------- 5 套特色主题 ---------- */
       html[data-theme="sakura"] {
-        --bg: linear-gradient(160deg, #fdf2f5 0%, #f6e3ea 100%);
+        --bg: #fdf2f5;
         --surface: #fffafb;
         --surface-2: #f7e7ec;
         --surface-3: #f2dde4;
@@ -169,7 +169,7 @@
         --nav-halo: 255, 255, 255;
       }
       html[data-theme="sea"] {
-        --bg: linear-gradient(160deg, #f0f8fa 0%, #ddeef2 100%);
+        --bg: #f0f8fa;
         --surface: #fbfeff;
         --surface-2: #e4f1f4;
         --surface-3: #d8eaee;
@@ -189,7 +189,7 @@
         --like-border: #f2ccd3;
       }
       html[data-theme="mint"] {
-        --bg: linear-gradient(160deg, #f2f9f1 0%, #e2f1e3 100%);
+        --bg: #f2f9f1;
         --surface: #fcfffc;
         --surface-2: #e6f2e6;
         --surface-3: #dcecdd;
@@ -209,7 +209,7 @@
         --like-border: #f2ccd3;
       }
       html[data-theme="sunset"] {
-        --bg: linear-gradient(160deg, #fff6ec 0%, #fbe6d2 100%);
+        --bg: #fff6ec;
         --surface: #fffcf8;
         --surface-2: #fbeedd;
         --surface-3: #f7e3cf;
@@ -229,7 +229,7 @@
         --like-border: #f2ccc4;
       }
       html[data-theme="midnight"] {
-        --bg: linear-gradient(160deg, #191a2e 0%, #12131f 100%);
+        --bg: #191a2e;
         --surface: #21223a;
         --surface-2: #2b2c48;
         --surface-3: #33345a;
@@ -486,8 +486,7 @@
       /* 渐变：用强调色渐变，存在感最强 */
       html[data-nav-style='gradient'] .bottom-nav,
       html[data-nav-style='gradient'][data-theme] .bottom-nav {
-        background: linear-gradient(135deg, var(--accent) 0%,
-          color-mix(in srgb, var(--accent) 62%, #000) 100%) !important;
+        background: var(--accent) 62%, #000) 100%) !important;
         -webkit-backdrop-filter: none !important;
         backdrop-filter: none !important;
         border-color: transparent !important;
@@ -606,3 +605,31 @@
           animation: none !important;
         }
       }
+
+/* ============ 轻量化：全站压平 ============
+   画板页是白底 + 1px 细线 + 单一蓝色强调；其余页面被「暖色渐变底 +
+   多层暖灰 surface + 柔和投影」压得比较重，所以看起来"臃肿"。
+
+   这一层只动观感、不动布局：
+   - 页面底色：渐变已在各自主题里压平成纯色（保留色相）
+   - surface-2/3 向白靠拢，卡片之间不再靠色差「浮起来」
+   - 投影令牌清空，层级只靠描边
+   放在文件最后，覆盖前面所有主题的取值。 */
+:root,
+html[data-theme] {
+  --surface-2: #f7f3ec;
+  --surface-3: #f2ece3;
+  --shadow1: transparent;
+  --shadow2: transparent;
+  --shadow3: transparent;
+  --shadow-hover: transparent;
+}
+[data-mood="dark"],
+html[data-theme][data-mood="dark"] {
+  --surface-2: #2f2a24;
+  --surface-3: #342f28;
+  --shadow1: transparent;
+  --shadow2: transparent;
+  --shadow3: transparent;
+  --shadow-hover: transparent;
+}

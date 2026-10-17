@@ -8,11 +8,11 @@ var CSS = `
    原来阴影写死了 5 种不同数值，层级感是乱的。
    收成一套，以后改一处就全站生效。 */
 :root {
-  --lwp-sh-1: 0 1px 2px rgba(60, 48, 36, .06);
-  --lwp-sh-2: 0 2px 8px rgba(60, 48, 36, .08);
-  --lwp-sh-3: 0 4px 16px rgba(60, 48, 36, .10);
-  --lwp-sh-4: 0 10px 32px rgba(60, 48, 36, .14);
-  --lwp-sh-5: 0 18px 52px rgba(60, 48, 36, .20);
+  --lwp-sh-1: transparent;
+  --lwp-sh-2: transparent;
+  --lwp-sh-3: transparent;
+  --lwp-sh-4: transparent;
+  --lwp-sh-5: transparent;
   --lwp-r-xs: 6px;
   --lwp-r-sm: 9px;
   --lwp-r: 13px;
@@ -25,11 +25,11 @@ var CSS = `
   --lwp-ease-back: cubic-bezier(.2, 1.3, .4, 1);
 }
 html[data-theme='dark'] {
-  --lwp-sh-1: 0 1px 2px rgba(0, 0, 0, .3);
-  --lwp-sh-2: 0 2px 8px rgba(0, 0, 0, .34);
-  --lwp-sh-3: 0 4px 16px rgba(0, 0, 0, .38);
-  --lwp-sh-4: 0 10px 32px rgba(0, 0, 0, .44);
-  --lwp-sh-5: 0 18px 52px rgba(0, 0, 0, .55);
+  --lwp-sh-1: transparent;
+  --lwp-sh-2: transparent;
+  --lwp-sh-3: transparent;
+  --lwp-sh-4: transparent;
+  --lwp-sh-5: transparent;
 }
 
 /* ============ 2. 文字渲染 ============ */
