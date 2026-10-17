@@ -13,8 +13,11 @@
 
 export const mineTemplate = `<div class="container mine-wrap">
 
-  <!-- 过滤页（/mine/works 等）的返回入口，主页由脚本 hidden -->
-  <router-link class="back-bar" id="mineBack" to="/mine" hidden>← 返回我的</router-link>
+  <!-- 过滤页（/mine/works 等）的返回入口，主页由脚本 hidden。
+       箭头直接写站内的扁平图标（Pixelarticons arrow-left），不要再靠 "←" 让
+       emoji 替换生成 —— 那条路生成的是 22×14 的画布，再被 CSS 缩到 14×9，
+       像素被插值糊掉，看着像细线图标，跟本页其他扁平图标不是一套。 -->
+  <router-link class="back-bar" id="mineBack" to="/mine" hidden><svg class="bb-ico" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11v2H4v-2zM8 13v2H6v-2zm2 2v2H8v-2zm2 2v2h-2v-2zm-4-6V9H6v2z"/><path d="M10 15V7H8v8zm2 2V5h-2v12z"/></svg> 返回我的</router-link>
 
   <!-- ============ 1. 顶栏 ============ -->
   <header class="ig-top">

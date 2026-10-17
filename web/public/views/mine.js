@@ -1065,12 +1065,17 @@ export default {
 
       /* 右上角的「⋯」：只有自己的画才给（别人的画没有可操作项）。
          挂 mousedown/touchstart 的 stopPropagation 不够 —— 直接用 click
-         并阻止冒泡，避免点菜单按钮时把卡片本身的「跳到社区」也触发了。 */
+         并阻止冒泡，避免点菜单按钮时把卡片本身的「跳到社区」也触发了。
+         图标用站内的扁平图标（Pixelarticons more-horizontal），不写 "⋯"
+         那个文字符号 —— 文字符号在不同字体下形状/粗细都不一样。 */
       if (own && window.LWWorkMenu) {
         const more = document.createElement('button')
         more.type = 'button'
         more.className = 'mine-more'
-        more.textContent = '⋯'
+        more.innerHTML =
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">' +
+          '<path d="M3 9h2v2H3zm8 0h2v2h-2zm8 0h2v2h-2zM1 11h2v2H1zm8 0h2v2H9zm8 0h2v2h-2zM3 13h2v2H3zm8 0h2v2h-2zm8 0h2v2h-2zM5 11h2v2H5zm8 0h2v2h-2zm8 0h2v2h-2z"/>' +
+          '</svg>'
         more.title = '更多操作'
         more.setAttribute('aria-label', '更多操作')
         more.addEventListener('click', (e) => {

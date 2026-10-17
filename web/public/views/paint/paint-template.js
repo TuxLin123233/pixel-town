@@ -37,11 +37,11 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
               <span class="start-body"><b>像素画</b><i>逐格上色，可选题目与帧动画</i></span>
             </button>
             <button type="button" class="start-dir" data-dir="spray">
-  <span class="start-ico"></span>
+              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M9 3h4v4H9zM7 7h8v2H7zM5 21h12v2H5zM15 9h2v12h-2zM5 9h2v12H5zm4 8h6v2H9z"/> <path d="M9 13h2v6H9z"/> <path d="M9 13h8v2H9zm6-10h2v2h-2zm2-2h2v2h-2zm0 4h2v2h-2z"/> </svg> </span>
               <span class="start-body"><b>像素喷漆</b><i>按住拖着喷，64×64 出图</i></span>
             </button>
             <button type="button" class="start-dir" data-dir="gravity">
-              <span class="start-ico">⏳</span>
+              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 22H8v-2h8v2Zm-8-2H6v-4h2v4Zm10 0h-2v-4h2v4Zm-8-4H8v-2h2v2Zm6 0h-2v-2h2v2Zm-6-6h4v4h-4v-4Zm0 0H8V8h2v2Zm6 0h-2V8h2v2ZM8 8H6V4h2v4Zm10 0h-2V4h2v4Zm-2-4H8V2h8v2Z"/> </svg> </span>
               <span class="start-body"><b>像素重力</b><i>撒一把，看它自己往下堆</i></span>
             </button>
           </div>
@@ -70,11 +70,11 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
           <div class="start-label">创作方式</div>
           <div class="start-modes" id="startModes">
             <button type="button" class="start-mode" data-mode="free">
-              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg> </span>
+              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 16H6V18H8V20H10V22H2V14H4V16ZM12 20H10V18H12V20ZM14 18H12V16H14V18ZM10 16H8V14H10V16ZM16 16H14V14H16V16ZM6 14H4V12H6V14ZM12 14H10V12H12V14ZM18 14H16V12H18V14ZM8 12H6V10H8V12ZM14 12H12V10H14V12ZM20 12H18V10H20V12ZM10 10H8V8H10V10ZM18 10H16V8H18V10ZM22 10H20V8H22V10ZM12 8H10V6H12V8ZM16 8H14V6H16V8ZM20 8H18V6H20V8ZM14 6H12V4H14V6ZM18 6H16V4H18V6ZM16 4H14V2H16V4Z"/> </svg> </span>
               <span class="start-body"><b>自由模式</b><i>想画什么就画什么</i></span>
             </button>
             <button type="button" class="start-mode" data-mode="prompt" hidden>
-  <span class="start-ico"></span>
+              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M2 3h9v2H2zM0 19h11v2H0zM13 3h9v2h-9zm0 16h11v2H13zM11 5h2v18h-2zM0 5h2v14H0zm22 0h2v14h-2zm-7 2h5v2h-5zm0 4h5v2h-5zm0 4h2v2h-2z"/> </svg> </span>
               <span class="start-body"><b>题目模式</b><i>按主题出题，可换题</i></span>
             </button>
             <button type="button" class="start-mode" data-mode="anim" hidden>
@@ -91,7 +91,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
               <span class="start-body"><b>暂不参加</b><i>只自己画</i></span>
             </button>
             <button type="button" class="start-join" data-join="daily" hidden>
-  <span class="start-ico"></span>
+              <span class="start-ico"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M5 4h14v2H5zm0 16h14v2H5zM3 10h2v10H3zm0-4h2v2H3zm16 0h2v2h-2zm0 4h2v10h-2zM3 8h18v2H3zm12-6h2v2h-2zM7 2h2v2H7z"/> </svg> </span>
               <span class="start-body"><b>每日挑战</b><i id="startDailyText">每天一个题目</i></span>
             </button>
             <button type="button" class="start-join" data-join="contest" hidden>
@@ -117,7 +117,7 @@ export const paintTemplate = `<div class="consent-overlay" id="consentOverlay" h
           </div>
           <label class="start-toggle">
             <input type="checkbox" id="startSprayMirror">
-  <span class="start-body"><b> 左右镜像</b><i>只喷一半，另一边自动对称（进画板后还能改成上下或四角）</i></span>
+  <span class="start-body"><b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 7h2v4h-2zm0-6h2v4h-2zm0 12h2v4h-2zm0 6h2v4h-2zm-4-8h2v2H7zm10 0h-2v2h2zM5 13h2v2H5zm14 0h-2v2h2zM5 9h2v4H5zm14 0h-2v4h2zM3 7h2v10H3zm18 0h-2v10h2z"/> </svg>  左右镜像</b><i>只喷一半，另一边自动对称（进画板后还能改成上下或四角）</i></span>
           </label>
         </div>
 

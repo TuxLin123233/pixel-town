@@ -26,7 +26,9 @@
       }
       .lw-refresh:active { background: var(--border); }
       .lw-refresh[disabled] { opacity: 0.55; cursor: default; }
-      .lw-refresh .lr-ico { font-size: 13px; }
+      .lw-refresh .lr-ico { display: inline-flex; align-items: center; justify-content: center; }
+      /* 图标是内联 SVG（Pixelarticons reload），固定像素尺寸，别再跟着字号变 */
+      .lw-refresh .lr-ico svg { width: 14px; height: 14px; display: block; }
       .lw-refresh.busy .lr-ico { animation: lrSpin 0.8s linear infinite; }
       @keyframes lrSpin { to { transform: rotate(360deg); } }
       @media (prefers-reduced-motion: reduce) {

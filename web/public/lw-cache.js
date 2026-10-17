@@ -38,6 +38,18 @@ function drop(key) {
 }
 
 /**
+ * 刷新按钮里的图标：站内的扁平图标（Pixelarticons reload，MIT）。
+ * 以前这里写的是 "⟳" 文字符号 —— 它跟着字体走，不同平台粗细/形状不一样，
+ * 而且跟站里其他扁平像素图标不是一套，所以换成内联 SVG。
+ */
+const REFRESH_ICO =
+  '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<path d="M16 4h2v6h-2zm-2-2h2v2h-2zm0 2h2v8h-2zM4 8H2v5h2z"/>' +
+  '<path d="M4 6h16v2H4zm4 14H6v-6h2zm2 2H8v-2h2zm0-2H8v-8h2zm10-4h2v-5h-2z"/>' +
+  '<path d="M20 18H4v-2h16z"/>' +
+  '</svg>'
+
+/**
  * 绑一个「刷新」按钮。
  *   el      按钮元素
  *   run     真正干活的函数，返回 Promise
@@ -47,7 +59,7 @@ function drop(key) {
 function bindRefresh(el, run, onDone, silent) {
   if (!el) return
   const label = el.getAttribute('data-label') || '刷新'
-  el.innerHTML = '<span class="lr-ico">⟳</span><span class="lr-tx">' + label + '</span>'
+  el.innerHTML = '<span class="lr-ico">' + REFRESH_ICO + '</span><span class="lr-tx">' + label + '</span>'
   el.disabled = false
   el.addEventListener('click', async () => {
     if (el.disabled) return

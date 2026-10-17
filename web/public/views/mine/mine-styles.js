@@ -416,6 +416,8 @@ export const mineStyles = `
       }
       .mine-grid .mine-cap,
       .mine-grid .mine-more { display: none; }
+      /* 「更多操作」按钮里的图标：扁平像素图标（Pixelarticons more-horizontal） */
+      .mine-more svg { width: 16px; height: 16px; display: block; }
 
       .ig-empty {
         font-size: 12px;
@@ -523,11 +525,20 @@ export const mineStyles = `
       .ig-sign-hidden { display: none !important; }
 
       .back-bar {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 3px;
         padding: 12px 0 0;
         font-size: 12px;
         color: var(--accent);
         text-decoration: none;
+      }
+      /* 返回箭头：站内扁平图标，跟标签栏、快捷入口同一套（不缩放出模糊边） */
+      .back-bar .bb-ico {
+        width: 15px;
+        height: 15px;
+        display: block;
+        flex: none;
       }
 
       /* 过滤页（/mine/fav、/mine/gifted）只留对应列表，不再重复主页作品墙 */
