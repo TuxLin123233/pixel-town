@@ -27,12 +27,6 @@ export const galleryTemplate = `<div class="container">
         <div class="chip-row" id="chipRow" hidden></div>
         <div class="tag-cloud" id="tagCloud" hidden></div>
 
-        <!-- 过滤器：折叠面板，默认收起，不占地方 -->
-        <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false">
-          <span><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M8 14H7v6H5v-6H2v-2h6v2Zm5 6h-2V10h2v10Zm9-2h-3v2h-2v-2h-1v-2h6v2Zm-3-4h-2V4h2v10ZM7 10H5V4h2v6Zm6-4h2v2H9V6h2V4h2v2Z"/></svg>  筛选</span>
-          <span class="ft-badge" id="filterBadge" hidden>0</span>
-          <span class="ft-caret">▾</span>
-        </button>
         <div class="filter-panel" id="filterPanel" hidden>
           <div class="fp-group" data-group="method">
             <span class="fp-label">画布</span>

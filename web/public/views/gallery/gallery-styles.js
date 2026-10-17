@@ -1975,4 +1975,7 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
       .ig-sw:active { opacity: .75; }
       .card .card-meta { order: 4; }
       .ig-cap { order: 5; }
+
+      /* 筛选入口已去掉，这排「当前筛选」的残留胶囊也一起藏掉 */
+      .chip-row { display: none !important; }
 `
