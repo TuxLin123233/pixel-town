@@ -24,7 +24,7 @@ export const galleryTemplate = `<div class="container">
 
         <!-- 过滤器：折叠面板，默认收起，不占地方 -->
         <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false">
-          <span>⚙️ 筛选</span>
+          <span><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M8 14H7v6H5v-6H2v-2h6v2Zm5 6h-2V10h2v10Zm9-2h-3v2h-2v-2h-1v-2h6v2Zm-3-4h-2V4h2v10ZM7 10H5V4h2v6Zm6-4h2v2H9V6h2V4h2v2Z"/></svg>  筛选</span>
           <span class="ft-badge" id="filterBadge" hidden>0</span>
           <span class="ft-caret">▾</span>
         </button>
@@ -67,7 +67,7 @@ export const galleryTemplate = `<div class="container">
         <div class="daily-theme">今日题目《<b id="dailyTheme"></b>》</div>
         <div class="daily-prompt" id="dailyPrompt"></div>
         <div class="daily-cta-row">
-          <a class="daily-cta" id="dailyCta" href="/paint">🎨 去创作</a>
+          <a class="daily-cta" id="dailyCta" href="/paint"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  去创作</a>
           <span class="daily-tip" id="dailyTip"></span>
         </div>
         <div class="daily-top" id="dailyTop"></div>
@@ -90,14 +90,14 @@ export const galleryTemplate = `<div class="container">
 
       <section class="contest" id="contestPanel" hidden>
         <div class="contest-head">
-          <span class="contest-title">🏆 本周大赛</span>
+          <span class="contest-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg>  本周大赛</span>
           <span class="contest-badge" id="contestBadge">进行中</span>
         </div>
         <div class="contest-theme">本周主题《<b id="contestTheme"></b>》</div>
         <div class="contest-prompt" id="contestPrompt"></div>
         <div class="contest-meta" id="contestMeta"></div>
         <div class="contest-cta-row">
-          <router-link class="contest-cta" to="/paint?contest=1">🎨 去创作参赛</router-link>
+          <router-link class="contest-cta" to="/paint?contest=1"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  去创作参赛</router-link>
           <span class="contest-tip" id="contestTip"></span>
         </div>
         <div class="contest-top" id="contestTop"></div>
@@ -107,7 +107,7 @@ export const galleryTemplate = `<div class="container">
       <section class="discover" id="discover">
         <div class="discover-head">
           <div class="discover-text">
-            <b>🔍 发现</b>
+            <b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M22 22h-2v-2h2v2Zm-2-2h-2v-2h2v2Zm-6-2H6v-2h8v2Zm4 0h-2v-2h2v2ZM6 16H4v-2h2v2Zm10 0h-2v-2h2v2ZM4 14H2V6h2v8Zm14 0h-2V6h2v8ZM6 6H4V4h2v2Zm10 0h-2V4h2v2Zm-2-2H6V2h8v2Z"/> </svg>  发现</b>
             <i>随机翻出一件旧作品，给被时间埋掉的好东西一次机会</i>
           </div>
           <button class="discover-btn" id="discoverBtn" type="button">掷一个</button>
@@ -119,7 +119,7 @@ export const galleryTemplate = `<div class="container">
 
       <section class="featured" id="featured" hidden>
         <div class="featured-head">
-          <span>🏆 佳作展示</span>
+          <span><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg>  佳作展示</span>
           <div class="range-tabs" id="rangeTabs">
             <button type="button" data-range="all" class="active">总榜</button>
             <button type="button" data-range="today">今日</button>
@@ -169,17 +169,17 @@ export const galleryTemplate = `<div class="container">
           <span id="previewTime" class="preview-time"></span>
         </div>
         <div class="preview-like">
-          <button class="like-btn" id="previewLike" type="button" title="送光尘给这幅画">✨ <span id="previewLikeCount">0</span></button>
+          <button class="like-btn" id="previewLike" type="button" title="送光尘给这幅画"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M11 1h2v4h-2zm0 22h2v-4h-2zM9 5h2v4H9zm0 14h2v-4H9zm4-14h2v4h-2zm0 14h2v-4h-2zM5 9h4v2H5zm14 0h-4v2h4zM1 11h4v2H1zm22 0h-4v2h4zM5 13h4v2H5zm14 0h-4v2h4zm0-12h2v6h-2z"/> <path d="M17 3h6v2h-6zM3 17h2v2H3zm-2 2h2v2H1zm2 2h2v2H3zm2-2h2v2H5z"/> </svg>  <span id="previewLikeCount">0</span></button>
           <button class="fav-btn" id="previewFav" type="button" title="收藏这幅画">☆ 收藏</button>
-          <button class="vote-btn" id="previewVoteBtn" type="button" hidden>🏆 投一票</button>
-          <button class="share-btn" id="previewShare" type="button">🔗 复制链接</button>
+          <button class="vote-btn" id="previewVoteBtn" type="button" hidden><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M16 17H13V19H15V21H9V19H11V17H8V15H16V17ZM18 5H22V11H20V7H18V11H20V13H18V15H16V5H8V15H6V13H4V11H6V7H4V11H2V5H6V3H18V5Z"/> </svg>  投一票</button>
+          <button class="share-btn" id="previewShare" type="button"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 6h7v2H4zm0 10h7v2H4zM2 8h2v8H2zm18-2h-7v2h7zm0 10h-7v2h7zm2-8h-2v8h2zM7 11h10v2H7z"/> </svg>  复制链接</button>
           <button class="share-btn" id="previewCard" type="button">🃏 生成朋友圈卡片</button>
-          <button class="share-btn" id="previewPaletteBtn" type="button" aria-expanded="false">🎨 用色</button>
+          <button class="share-btn" id="previewPaletteBtn" type="button" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  用色</button>
           <button class="report-hold" id="previewReport" type="button">🚩 长按举报</button>
         </div>
         <div class="cmt-box" id="cmtBox">
           <div class="cmt-head">
-            <span class="cmt-title">💬 评论</span>
+            <span class="cmt-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M20 2H4v2h16zm0 14H6v2h14zm2-12h-2v12h2zM4 4H2v18h2zm2 14H4v2h2z"/> </svg>  评论</span>
             <button class="lw-refresh" id="cmtRefresh" type="button" data-label="刷新"></button>
           </div>
           <textarea class="cmt-in" id="cmtInput" maxlength="200" rows="2"

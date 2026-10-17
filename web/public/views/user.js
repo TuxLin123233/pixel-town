@@ -391,9 +391,9 @@ export default {
         '<div class="u-hero">' +
         '<div class="u-av" id="uAv">' + avBox + '</div>' +
         '<div class="u-id">' +
-        '<div class="u-name">' + esc(profile.username) + (profile.isMod ? ' <span class="mod-badge">🛡️ 审核员</span>' : '') + (profile.todayBirthday ? ' 🎂' : '') + '</div>' +
+        '<div class="u-name">' + esc(profile.username) + (profile.isMod ? ' <span class="mod-badge"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zM2 4h2v10H2zm18 0h2v10h-2zM4 14h2v2H4zm2 2h2v2H6zm4 4h4v2h-4zm10-6h-2v2h2zm-2 2h-2v2h2zm-2 2h-2v2h2zm-6 0H8v2h2z"/> </svg>  审核员</span>' : '') + (profile.todayBirthday ? ' 🎂' : '') + '</div>' +
         (profile.isMod
-          ? '<div class="u-modline">🛡️ 已审核下架 <b>' + (Number(profile.modHides) || 0) + '</b> 件</div>'
+          ? '<div class="u-modline"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zM2 4h2v10H2zm18 0h2v10h-2zM4 14h2v2H4zm2 2h2v2H6zm4 4h4v2h-4zm10-6h-2v2h2zm-2 2h-2v2h2zm-2 2h-2v2h2zm-6 0H8v2h2z"/> </svg>  已审核下架 <b>' + (Number(profile.modHides) || 0) + '</b> 件</div>'
           : '') +
         (joined ? '<div class="u-joined">' + esc(joined) + '</div>' : '') +
         tagHtml +
@@ -406,12 +406,12 @@ export default {
             /* 互相关注才能私信（后端只放好友过去），所以只在好友时给这个入口。
                不然点了也会被后端挡回来，不如不给。 */
             (f.friend
-              ? '<button class="u-chat" id="uChatBtn" type="button">💬 与他聊天</button>'
+              ? '<button class="u-chat" id="uChatBtn" type="button"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M20 2H4v2h16zm0 14H6v2h14zm2-12h-2v12h2zM4 4H2v18h2zm2 14H4v2h2z"/> </svg>  与他聊天</button>'
               : '') +
             /* 去逛他家的小屋。小屋那条链路本来就支持看别人
                （/town/home?to=xxx 会带 uid 去读），只是主页上一直没入口，
                于是「小镇」这个玩法只有屋主自己进得去，别人看不到。 */
-            '<button class="u-visit" id="uVisitBtn" type="button">🏠 逛他家</button>' +
+            '<button class="u-visit" id="uVisitBtn" type="button"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z"/> </svg>  逛他家</button>' +
             '<button class="u-follow' + (f.iFollow ? ' on' : '') + '" id="uFollowBtn" type="button">' +
             (f.friend ? '🤝 好友' : f.iFollow ? '已申请' : '＋ 加好友') + '</button>' +
             '</div>') +
@@ -430,7 +430,7 @@ export default {
         '<div class="u-stat"><b>' + fmt(m.days || 0) + '</b><span>创作天</span></div>' +
         '<div class="u-stat"><b>' + fmt(m.signTotal || 0) + '</b><span>签到</span></div>' +
         '</div>' +
-        '<div class="u-sec">🖼️ 作品<span>' + works.length + ' 件</span></div>' +
+        '<div class="u-sec"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M4 2h16v2H4zm0 18h16v2H4zM2 4h2v16H2zm18 0h2v16h-2zm-4 8h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm-8 0h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z"/> <path d="M20 16h2v2h-2zM8 16h2v2H8zm-2 2h2v2H6zM8 6h2v2H8zM6 8h2v2H6zm2 2h2v2H8zm2-2h2v2h-2z"/> </svg>  作品<span>' + works.length + ' 件</span></div>' +
         '<div class="u-grid" id="uWorks">' +
         (works.length
           ? works
@@ -463,7 +463,7 @@ export default {
             (works.length - WORKS_INIT) +
             ' 件）</button>'
           : '') +
-        '<div class="u-sec">🏅 成就<span>' +
+        '<div class="u-sec"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M5 20H8V22H3V16H5V20ZM21 22H16V20H19V16H21V22ZM10 20H8V18H10V20ZM16 20H14V18H16V20ZM14 18H10V16H14V18ZM7 16H5V13H7V16ZM19 16H17V13H19V16ZM5 13H3V11H5V13ZM21 13H19V11H21V13ZM9 9H3V11H1V7H9V9ZM23 11H21V9H15V7H23V11ZM11 7H9V3H11V7ZM15 7H13V3H15V7ZM13 3H11V1H13V3Z"/> </svg>  成就<span>' +
         /* 看别人时只报拿到了几个：写成「12/153」等于把人家还差多少也说了。
            看自己才需要分母 —— 那是我该去追的清单。 */
         (ach && ach.ok

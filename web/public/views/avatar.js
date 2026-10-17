@@ -245,7 +245,7 @@ export default {
     <div class="av-page">
       <div class="av-head">
         <router-link class="av-back" to="/mine">← 我的</router-link>
-        <div class="av-title">🎨 画头像</div>
+        <div class="av-title"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  画头像</div>
         <button class="lw-refresh" id="avRefresh" type="button" data-label="刷新"></button>
       </div>
       <div id="avBody">
@@ -436,7 +436,7 @@ export default {
         '<div class="av-cost">' + costHtml + '</div>' +
         '<div class="av-modes" id="avModes">' +
         '<button class="av-mode' + (mode === 'pixel' ? ' on' : '') + '" type="button" data-mode="pixel">' +
-        '<b>🖌️ 像素画</b><i>16×16 逐格涂 · ' + COSTS.pixel + ' ✨</i></button>' +
+        '<b><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M7 2h10v2H7zM5 4h2v10H5zm12-2h2v12h-2z"/> <path d="M13 2h2v6h-2zM9 2h2v4H9zm-4 8h14v2H5zm2 4h10v2H7zm2 2h2v4H9zm4 0h2v4h-2zm-4 4h6v2H9z"/> </svg>  像素画</b><i>16×16 逐格涂 · ' + COSTS.pixel + ' ✨</i></button>' +
         '<button class="av-mode' + (mode === 'spray' ? ' on' : '') + '" type="button" data-mode="spray">' +
         '<b>💨 像素喷漆</b><i>64×64 自由喷 · ' + COSTS.spray + ' ✨</i></button>' +
         '</div>' +
@@ -458,7 +458,7 @@ export default {
             '<span class="av-brush-n" id="sprayBrushNum">' + (spray ? spray.getBrush() : 3) + '</span></div>'
           : '<div class="av-pal" id="avPal"></div>' +
             '<div class="av-tools">' +
-            '<button class="av-tool' + (tool === 'pen' ? ' on' : '') + '" type="button" data-tool="pen">✏️ 画笔</button>' +
+            '<button class="av-tool' + (tool === 'pen' ? ' on' : '') + '" type="button" data-tool="pen"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M4 16H6V18H8V20H10V22H2V14H4V16ZM12 20H10V18H12V20ZM14 18H12V16H14V18ZM10 16H8V14H10V16ZM16 16H14V14H16V16ZM6 14H4V12H6V14ZM12 14H10V12H12V14ZM18 14H16V12H18V14ZM8 12H6V10H8V12ZM14 12H12V10H14V12ZM20 12H18V10H20V12ZM10 10H8V8H10V10ZM18 10H16V8H18V10ZM22 10H20V8H22V10ZM12 8H10V6H12V8ZM16 8H14V6H16V8ZM20 8H18V6H20V8ZM14 6H12V4H14V6ZM18 6H16V4H18V6ZM16 4H14V2H16V4Z"/></svg>  画笔</button>' +
             '<button class="av-tool' + (tool === 'eraser' ? ' on' : '') + '" type="button" data-tool="eraser">🩹 橡皮</button>' +
             '<button class="av-tool' + (tool === 'mirror' ? ' on' : '') + '" type="button" data-tool="mirror">🦋 镜像</button>' +
             '</div>') +
