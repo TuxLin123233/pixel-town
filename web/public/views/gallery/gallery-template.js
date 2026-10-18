@@ -13,7 +13,7 @@
 export const galleryTemplate = `<div class="container">
       <div class="header">
         <div class="header-text">
-          <span class="brand-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M11 2h2v2h-2zM9 4h6v2H9zM7 6h10v2H7zM5 8h14v2H5zM4 10h16v12H4zM10 16h4v6h-4z"/></svg></span>
+          <span class="brand-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#5b8def" d="M11 2h2v2h-2zM9 4h6v2H9zM7 6h10v2H7zM5 8h14v2H5z"/><path fill="#f2d7a8" d="M4 10h16v12H4z"/><path fill="#fff" d="M6 12h3v3H6zM15 12h3v3h-3z"/><path fill="#3b342c" d="M10 16h4v6h-4z"/></svg></span>
           <h1 class="brand-logo">像素小镇</h1>
           <span class="brand-sub">社区</span>
           <div id="count">加载中…</div>
