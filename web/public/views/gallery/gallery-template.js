@@ -13,7 +13,7 @@
 export const galleryTemplate = `<div class="container">
       <div class="header">
         <div class="header-text">
-          <span class="brand-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#5b8def" d="M11 2h2v2h-2zM10 4h4v2h-4zM9 6h6v2H9zM8 8h8v2H8zM7 10h10v2H7z"/><path fill="#f2d7a8" d="M6 12h12v10H6z"/><path fill="#fff" d="M8 14h2v2H8zM14 14h2v2h-2z"/><path fill="#3b342c" d="M11 17h2v5h-2z"/><path fill="#c0392b" d="M15 4h2v3h-2z"/></svg></span>
+          <span class="brand-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="lwlg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6aa1ff"/><stop offset="1" stop-color="#2f6be4"/></linearGradient><linearGradient id="lwlh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect x="6" y="6" width="84" height="84" rx="20" fill="url(#lwlg)"/><rect x="6" y="6" width="84" height="84" rx="20" fill="url(#lwlh)"/><path fill="#fff" d="M48 24 26 42h6v26h32V42h6L48 24z"/><rect x="42" y="56" width="12" height="12" fill="#2f6be4"/></svg></span>
           <h1 class="brand-logo">像素小镇</h1>
           <span class="brand-sub">社区</span>
           <div id="count">加载中…</div>
