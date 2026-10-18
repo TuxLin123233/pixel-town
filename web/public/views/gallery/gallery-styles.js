@@ -2146,5 +2146,5 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
 
       /* 字标图标 */
       .header .brand-icon { display: inline-flex; align-items: center; }
-      .header .brand-icon svg { width: 22px; height: 22px; color: var(--text); }
+      .header .brand-icon svg { width: 28px; height: 28px; }
 `
