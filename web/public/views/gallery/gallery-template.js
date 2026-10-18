@@ -13,7 +13,7 @@
 export const galleryTemplate = `<div class="container">
       <div class="header">
         <div class="header-text">
-          <span class="brand-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="lwlg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#74b2ff"/><stop offset=".52" stop-color="#4f6bff"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient><pattern id="lwlp" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 0H6M0 0V6" fill="none" stroke="#fff" stroke-opacity=".1" stroke-width="1"/></pattern><radialGradient id="lwlr" cx=".32" cy=".2" r=".85"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><clipPath id="lwlc"><rect x="6" y="6" width="84" height="84" rx="20"/></clipPath></defs><rect x="6" y="6" width="84" height="84" rx="20" fill="url(#lwlg)"/><g clip-path="url(#lwlc)"><rect x="6" y="6" width="84" height="84" fill="url(#lwlp)"/></g><rect x="6" y="6" width="84" height="84" rx="20" fill="url(#lwlr)"/><path fill="#fff" d="M48 24 26 42h6v26h32V42h6L48 24z"/><rect x="42" y="56" width="12" height="12" fill="#4f6bff"/></svg></span>
+          <img class="brand-icon" src="/icons/logo.svg" alt="" width="28" height="28">
           <h1 class="brand-logo">像素小镇</h1>
           <span class="brand-sub">社区</span>
           <div id="count">加载中…</div>
