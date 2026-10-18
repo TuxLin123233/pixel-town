@@ -13,7 +13,8 @@
 export const galleryTemplate = `<div class="container">
       <div class="header">
         <div class="header-text">
-          <h1>社区</h1>
+          <h1 class="brand-logo">像素小镇</h1>
+          <span class="brand-sub">社区</span>
           <div id="count">加载中…</div>
         </div>
         <router-link class="ig-bell" to="/notifications" aria-label="通知">

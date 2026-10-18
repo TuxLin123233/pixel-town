@@ -2135,4 +2135,12 @@ export const galleryStyles = `      /* hidden 属性兜底：避免类选择器�
       .container > #featured      { order: 9; }
       .container > .disclaimer    { order: 10; }
       .container > .copyright     { order: 11; }
+
+      /* 顶栏字标 */
+      .header .brand-logo { font-size: 20px; font-weight: 800; letter-spacing: .02em; }
+      .header .brand-sub {
+        font-size: 11px; color: var(--text-faint);
+        border: 1px solid var(--border); border-radius: 4px;
+        padding: 1px 6px; margin-left: 2px;
+      }
 `
